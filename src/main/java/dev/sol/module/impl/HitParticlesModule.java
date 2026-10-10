@@ -34,7 +34,7 @@ public class HitParticlesModule extends Module {
    private static final int MAX_SHOCKS = 24;
 
    public HitParticlesModule() {
-      super("HitParticles", "Themed particle bursts when you hit an entity", Category.VISUALS);
+      super("HitParticles", "Themed particle bursts when you hit an entity", Category.RENDER);
    }
 
    public Deque<HitParticle> particles() {

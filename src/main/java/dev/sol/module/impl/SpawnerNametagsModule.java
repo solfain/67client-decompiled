@@ -17,7 +17,7 @@ public class SpawnerNametagsModule extends Module {
    public final BlockScanCache scan = new BlockScanCache((state) -> state.method_27852(class_2246.field_10260) || state.method_27852(class_2246.field_47336), 12, 8, 400, (double)96.0F);
 
    public SpawnerNametagsModule() {
-      super("SpawnerNametags", "Shows spawner type + activation range", Category.RENDER);
+      super("SpawnerNametags", "Shows spawner type + activation range", Category.WORLD);
    }
 
    public void onTick() {

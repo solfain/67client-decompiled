@@ -28,7 +28,7 @@ public class ElytraSwapModule extends Module {
    private boolean waitingForSwitchBack;
 
    public ElytraSwapModule() {
-      super("Elytra Swap", "Swap between Elytra and Chestplate with a keybind", Category.COMBAT);
+      super("Elytra Swap", "Swap between Elytra and Chestplate with a keybind", Category.MOVEMENT);
    }
 
    protected void onEnable() {

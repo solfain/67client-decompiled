@@ -8,7 +8,7 @@ public class SwingSpeedModule extends Module {
    public final SliderSetting speed = (SliderSetting)this.addSetting(new SliderSetting("Speed", "Swing speed multiplier (<1 = slower/smoother)", 0.3, 0.1, (double)3.0F, 0.1, "x"));
 
    public SwingSpeedModule() {
-      super("SwingSpeed", "Adjusts hand swing animation speed", Category.CLIENT);
+      super("SwingSpeed", "Adjusts hand swing animation speed", Category.PLAYER);
    }
 
    public float multiplier() {

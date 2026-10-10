@@ -100,6 +100,10 @@ public class ModuleSettingsWindow {
       return out;
    }
 
+   public static String keyOf(Module module) {
+      return module.getName() + "@" + module.getCategory().name();
+   }
+
    public String key() {
       return this.key;
    }

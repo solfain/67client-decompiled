@@ -4,6 +4,7 @@ import dev.sol.hud.HudComponent;
 import dev.sol.render.nanovg.NVGRenderer;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
+import dev.sol.util.Colors;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
@@ -41,9 +42,10 @@ public class InfoHud extends HudComponent {
    public void render(NVGRenderer vg, float x, float y, float w, float h) {
       Theme theme = this.themes.current();
       float cy = y + h / 2.0F;
-      vg.rectGradient(x, y, w, h, h / 2.0F, theme.background(), theme.backgroundTo(), true);
+      vg.rect(x, y, w, h, 5.0F, Colors.withAlpha(-15790317, 0.72F));
+      vg.rect(x, y + 5.0F, 2.0F, h - 10.0F, 1.0F, theme.accent());
       float tx = x + 9.0F;
-      tx += vg.textGradient(this.label, tx, cy, 13.0F, theme.accentBright(), theme.accent());
+      tx += vg.text(this.label, tx, cy, 13.0F, theme.accent());
       vg.text(this.currentValue(), tx + 5.0F, cy, 13.0F, theme.textPrimary());
    }
 }

@@ -2,9 +2,11 @@ package dev.sol.module;
 
 public enum Category {
    COMBAT("Combat", "combat"),
-   MISC("Misc", "misc"),
+   MOVEMENT("Movement", "movement"),
+   PLAYER("Player", "player"),
    RENDER("Render", "render"),
-   VISUALS("Visuals", "visuals"),
+   WORLD("World", "world"),
+   MISC("Misc", "misc"),
    CLIENT("Client", "client");
 
    private String displayName;

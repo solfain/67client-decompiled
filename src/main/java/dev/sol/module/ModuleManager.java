@@ -1,5 +1,9 @@
 package dev.sol.module;
 
+import java.util.Comparator;
+import java.util.Locale;
+import java.util.Set;
+
 import dev.sol.module.impl.AimAssistModule;
 import dev.sol.module.impl.AnchorMacroModule;
 import dev.sol.module.impl.ArmorTrimHiderModule;
@@ -14,7 +18,6 @@ import dev.sol.module.impl.BlockEspModule;
 import dev.sol.module.impl.ChatMacroModule;
 import dev.sol.module.impl.ChunkFinderModule;
 import dev.sol.module.impl.CoordSnapperModule;
-import dev.sol.module.impl.CustomAccessoriesModule;
 import dev.sol.module.impl.CustomCrosshairModule;
 import dev.sol.module.impl.CustomFovModule;
 import dev.sol.module.impl.CustomGlintModule;
@@ -104,7 +107,6 @@ public class ModuleManager {
    public HitParticlesModule hitParticles;
    public MotionBlurModule motionBlur;
    public CustomGlintModule customGlint;
-   public CustomAccessoriesModule customAccessories;
    public ChunkFinderModule chunkFinder;
    public FreeLookModule freeLook;
    public AutoClickerModule autoClicker;
@@ -131,7 +133,6 @@ public class ModuleManager {
       this.registerPlaceholders();
       this.register(this.blockOutline = new Modules.BlockOutlineModule());
       this.register(this.hitParticles = new HitParticlesModule());
-      this.register(this.customAccessories = new CustomAccessoriesModule());
       this.register(this.motionBlur = new MotionBlurModule());
       this.register(this.hud = new Modules.HudModule());
       this.register(this.spotify = new Modules.SpotifyModule());
@@ -169,7 +170,7 @@ public class ModuleManager {
       this.register(this.fakeRoles = new FakeRolesModule());
       this.register(this.armorTrimHider = new ArmorTrimHiderModule());
       this.register(this.customCrosshair = new CustomCrosshairModule());
-      this.run("Media/StaffNames/Icons", "Marks media & staff players with icons", Category.MISC, new BooleanSetting("Media", "Show media icons", true), new BooleanSetting("Staff", "Show staff icons", true), new ModeSetting("Position", "Icon position", "Prefix", new String[]{"Prefix", "Suffix"}));
+      this.run("Media/StaffNames/Icons", "Marks media & staff players with icons", Category.WORLD, new BooleanSetting("Media", "Show media icons", true), new BooleanSetting("Staff", "Show staff icons", true), new ModeSetting("Position", "Icon position", "Prefix", new String[]{"Prefix", "Suffix"}));
       this.register(this.staffList = new StaffListModule());
       this.register(this.customGlint = new CustomGlintModule());
       this.register(this.customFov = new CustomFovModule());
@@ -195,9 +196,22 @@ public class ModuleManager {
       this.register(new Modules.Placeholder(name, description, category, settings));
    }
 
+   /**
+    * Modules that tick at the START of the client tick (before input is processed).
+    * These were all in Combat originally; some now live in Player/Movement, so the
+    * timing is keyed by name instead of category.
+    */
+   private static final Set<String> START_TICK = Set.of("AimAssist", "Triggerbot", "Auto Crystal", "Anchor Macro", "Double Anchor", "Mace Swap", "Mace Bomber", "Shield Breaker", "HitBox", "Auto Totem", "Inv Totem", "Hover Totem", "Elytra Swap");
+
+   private static boolean startTick(Module module) {
+      return START_TICK.contains(module.getName());
+   }
+
    public void register(Module module) {
       this.modules.add(module);
-      ((List)this.byCategory.get(module.getCategory())).add(module);
+      List<Module> list = (List)this.byCategory.get(module.getCategory());
+      list.add(module);
+      list.sort(Comparator.comparing((Module m) -> m.getName().toLowerCase(Locale.ROOT)));
       module.setToggleCallback(this::notifyToggle);
    }
 
@@ -247,7 +261,7 @@ public class ModuleManager {
 
    public void onTick() {
       for(Module module : this.modules) {
-         if (module.isEnabled() && module.getCategory() != Category.COMBAT) {
+         if (module.isEnabled() && !startTick(module)) {
             module.onTick();
          }
       }
@@ -256,7 +270,7 @@ public class ModuleManager {
 
    public void onCombatTick() {
       for(Module module : this.modules) {
-         if (module.isEnabled() && module.getCategory() == Category.COMBAT) {
+         if (module.isEnabled() && startTick(module)) {
             module.onTick();
          }
       }

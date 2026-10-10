@@ -17,14 +17,16 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
 public final class NVGRenderer {
-   public static final String FONT_XUONG = "xuong";
-   public static final String FONT_VANILLA = "vanilla";
+   public static final String FONT_SOL = "sol";
+   public static final String FONT_SOL_BOLD = "sol-bold";
+   public static final String FONT_PIXEL = "pixel";
    private static NVGRenderer instance;
    private long ctx = NanoVGGL3.nvgCreate(1);
-   private boolean xuongLoaded;
-   private boolean vanillaLoaded;
+   private boolean solLoaded;
+   private boolean solBoldLoaded;
+   private boolean pixelLoaded;
    private final List<ByteBuffer> retainedFontData = new ArrayList();
-   private String activeFont = "xuong";
+   private String activeFont = "sol";
    private final ArrayDeque<Float> alphaStack = new ArrayDeque();
    private float appliedAlpha = 1.0F;
 
@@ -32,10 +34,15 @@ public final class NVGRenderer {
       if (this.ctx == 0L) {
          throw new IllegalStateException("Failed to create NanoVG context");
       } else {
-         this.xuongLoaded = this.loadFont("xuong", "assets/solclient/fonts/Xuong-Regular.ttf");
-         this.vanillaLoaded = this.loadFont("vanilla", "assets/solclient/fonts/Monocraft.ttf");
-         if (this.xuongLoaded && this.vanillaLoaded) {
-            NanoVG.nvgAddFallbackFont(this.ctx, "xuong", "vanilla");
+         this.solLoaded = this.loadFont("sol", "assets/solclient/fonts/Poppins-Medium.ttf");
+         this.solBoldLoaded = this.loadFont("sol-bold", "assets/solclient/fonts/Poppins-SemiBold.ttf");
+         this.pixelLoaded = this.loadFont("pixel", "assets/solclient/fonts/Monocraft.ttf");
+         if (this.solLoaded && this.pixelLoaded) {
+            NanoVG.nvgAddFallbackFont(this.ctx, "sol", "pixel");
+         }
+
+         if (this.solBoldLoaded && this.pixelLoaded) {
+            NanoVG.nvgAddFallbackFont(this.ctx, "sol-bold", "pixel");
          }
 
       }
@@ -120,7 +127,24 @@ public final class NVGRenderer {
    }
 
    public void setFontMode(String mode) {
-      this.activeFont = "Xuong".equals(mode) && this.xuongLoaded ? "xuong" : (this.vanillaLoaded ? "vanilla" : (this.xuongLoaded ? "xuong" : null));
+      this.activeFont = "Pixel".equals(mode) && this.pixelLoaded ? "pixel" : (this.solLoaded ? "sol" : (this.pixelLoaded ? "pixel" : null));
+   }
+
+   /** Heavier face for titles; falls back to the active font (e.g. in Pixel mode). */
+   public String boldFont() {
+      return "sol".equals(this.activeFont) && this.solBoldLoaded ? "sol-bold" : this.activeFont;
+   }
+
+   public float textBold(String str, float x, float y, float size, int argb) {
+      return this.text(str, x, y, size, argb, this.boldFont());
+   }
+
+   public float textWidthBold(String str, float size) {
+      String prev = this.activeFont;
+      this.activeFont = this.boldFont();
+      float w = this.textWidth(str, size);
+      this.activeFont = prev;
+      return w;
    }
 
    public boolean hasFont() {

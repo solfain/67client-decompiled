@@ -35,7 +35,7 @@ public final class ChunkFinderModule extends Module {
    private int lastMergeRadius;
 
    public ChunkFinderModule() {
-      super("Chunk Finder", "Highlights Donut SMP chunks that match a rare world signal worth checking.", Category.RENDER);
+      super("Chunk Finder", "Highlights Donut SMP chunks that match a rare world signal worth checking.", Category.WORLD);
    }
 
    protected void onEnable() {

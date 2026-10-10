@@ -12,7 +12,7 @@ public class FastUseModule extends Module {
    public final ModeSetting items = (ModeSetting)this.addSetting(new ModeSetting("Items", "What to speed up", "All", new String[]{"All", "Pearls", "XP Bottles"}));
 
    public FastUseModule() {
-      super("FastUse", "Removes item use cooldowns", Category.MISC);
+      super("FastUse", "Removes item use cooldowns", Category.PLAYER);
    }
 
    public void onTick() {

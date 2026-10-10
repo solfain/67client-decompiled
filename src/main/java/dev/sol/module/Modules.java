@@ -22,7 +22,7 @@ public final class Modules {
       public final ModeSetting animation = (ModeSetting)this.addSetting(new ModeSetting("Animation", "Outline animation style", "Pulse", new String[]{"Pulse", "Gradient Flow", "Static"}));
 
       public BlockOutlineModule() {
-         super("CustomBlockOutline", "Glowing animated outline on the targeted block", Category.VISUALS);
+         super("CustomBlockOutline", "Glowing animated outline on the targeted block", Category.RENDER);
          this.setEnabled(true);
       }
    }
@@ -30,7 +30,7 @@ public final class Modules {
    public static class ClickGuiModule extends Module {
       public final BooleanSetting blur = (BooleanSetting)this.addSetting(new BooleanSetting("Blur", "Gaussian-blur the world behind the GUI", true));
       public final SliderSetting blurStrength = (SliderSetting)this.addSetting(new SliderSetting("Blur Strength", "How strong the background blur is", (double)6.0F, (double)1.0F, (double)10.0F, (double)1.0F));
-      public final ModeSetting font = (ModeSetting)this.addSetting(new ModeSetting("Font", "GUI font (Xuong TTF or vanilla-style)", "Xuong", new String[]{"Xuong", "Vanilla"}));
+      public final ModeSetting font = (ModeSetting)this.addSetting(new ModeSetting("Font", "GUI font: clean (Poppins) or pixel (Monocraft)", "Clean", new String[]{"Clean", "Pixel"}));
 
       public ClickGuiModule() {
          super("ClickGUI", "The Client menu. In menus, Shift opens it too.", Category.CLIENT);
@@ -112,7 +112,7 @@ public final class Modules {
       public final SusChunkScanner scanner = new SusChunkScanner(this);
 
       public SusChunkFinderModule() {
-         super("SusChunkFinder", "Finds long-loaded chunks — bases — via amethyst light & growth", Category.RENDER);
+         super("SusChunkFinder", "Finds long-loaded chunks — bases — via amethyst light & growth", Category.WORLD);
          SliderSetting var10000 = this.outlineOpacity;
          BooleanSetting var10001 = this.outline;
          Objects.requireNonNull(var10001);

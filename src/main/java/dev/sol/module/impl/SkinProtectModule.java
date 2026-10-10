@@ -27,7 +27,7 @@ public class SkinProtectModule extends Module {
    private volatile boolean fetching;
 
    public SkinProtectModule() {
-      super("SkinProtect", "Replaces skins so clips can't dox skins", Category.MISC);
+      super("SkinProtect", "Replaces skins so clips can't dox skins", Category.PLAYER);
    }
 
    protected void onEnable() {

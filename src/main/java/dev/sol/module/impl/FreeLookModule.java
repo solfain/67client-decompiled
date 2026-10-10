@@ -23,7 +23,7 @@ public class FreeLookModule extends Module {
    private class_5498 prePers;
 
    public FreeLookModule() {
-      super("FreeLook", "Allows more rotation options in third person.", Category.MISC);
+      super("FreeLook", "Allows more rotation options in third person.", Category.MOVEMENT);
       instance = this;
    }
 

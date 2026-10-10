@@ -20,7 +20,7 @@ public class AutoTotemModule extends Module {
    private int pendingHotbarSlot = -1;
 
    public AutoTotemModule() {
-      super("Auto Totem", "Totem to offhand/hotbar — hotbar select + F swap (+ SWAP from main inv when needed)", Category.COMBAT);
+      super("Auto Totem", "Totem to offhand/hotbar — hotbar select + F swap (+ SWAP from main inv when needed)", Category.PLAYER);
    }
 
    protected void onEnable() {

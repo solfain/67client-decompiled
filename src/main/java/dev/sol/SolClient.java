@@ -171,10 +171,6 @@ public class SolClient implements ClientModInitializer {
          modules.hitParticles.clear();
       }
 
-      if (modules.customAccessories != null) {
-         modules.customAccessories.clear();
-      }
-
       MotionBlurRenderer.reset();
    }
 }

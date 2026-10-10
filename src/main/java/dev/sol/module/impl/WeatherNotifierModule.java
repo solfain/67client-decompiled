@@ -22,7 +22,7 @@ public class WeatherNotifierModule extends Module {
    private Boolean lastThundering;
 
    public WeatherNotifierModule() {
-      super("WeatherNotifier", "Themed toast when the weather changes", Category.MISC);
+      super("WeatherNotifier", "Themed toast when the weather changes", Category.WORLD);
    }
 
    protected void onEnable() {
@@ -74,7 +74,7 @@ public class WeatherNotifierModule extends Module {
             }
          } else {
             boolean actionBar = this.output.check("Action Bar");
-            mc.field_1724.method_7353(class_2561.method_43470("§d[67] §fnull — null"), actionBar);
+            mc.field_1724.method_7353(class_2561.method_43470("§6[Sol] §fnull — null"), actionBar);
          }
 
          if ((Boolean)this.sound.get()) {

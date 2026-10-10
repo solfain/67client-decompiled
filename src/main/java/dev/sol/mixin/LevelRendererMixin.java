@@ -2,7 +2,6 @@ package dev.sol.mixin;
 
 import dev.sol.SolClient;
 import dev.sol.module.ModuleManager;
-import dev.sol.render.AccessoryRenderer;
 import dev.sol.render.BlockEntityEspRenderer;
 import dev.sol.render.BlockEspRenderer;
 import dev.sol.render.BlockOutlineRenderer;
@@ -76,10 +75,6 @@ public class LevelRendererMixin {
 
          if (translucentPass && modules.hitParticles != null && modules.hitParticles.isEnabled()) {
             HitParticleRenderer.render(bufferSource, poseStack, levelRenderState.field_63082.field_63078, modules.hitParticles);
-         }
-
-         if (translucentPass && modules.customAccessories != null && modules.customAccessories.isEnabled()) {
-            AccessoryRenderer.render(bufferSource, poseStack, levelRenderState.field_63082.field_63078, modules.customAccessories);
          }
 
          if (modules.freecam != null && modules.freecam.isActive()) {

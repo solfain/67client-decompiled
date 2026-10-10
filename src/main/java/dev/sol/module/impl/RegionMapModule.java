@@ -22,7 +22,7 @@ public class RegionMapModule extends Module {
    public final BooleanSetting legend = (BooleanSetting)this.addSetting(new BooleanSetting("Legend", "Show the region-type colour legend below the grid.", true));
 
    public RegionMapModule() {
-      super("RegionMap", "DonutSMP server region map on the HUD.", Category.RENDER);
+      super("RegionMap", "DonutSMP server region map on the HUD.", Category.WORLD);
    }
 
    private static int rgb(int r, int g, int b) {

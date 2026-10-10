@@ -19,7 +19,7 @@ public class MotionBlurModule extends Module {
    public final BooleanSetting fpsCompensated = (BooleanSetting)this.addSetting(new BooleanSetting("FPS Compensated", "Keep the blur consistent across framerates", true));
 
    public MotionBlurModule() {
-      super("MotionBlur", "Cinematic motion blur", Category.VISUALS);
+      super("MotionBlur", "Cinematic motion blur", Category.RENDER);
       SliderSetting var10000 = this.tint;
       BooleanSetting var10001 = this.accentTrails;
       Objects.requireNonNull(var10001);

@@ -18,7 +18,7 @@ public class AutoInventoryTotemModule extends Module {
    private int tickCounter;
 
    public AutoInventoryTotemModule() {
-      super("Inv Totem", "Moves totems only while inventory (E) is open — click-based, not world-auto", Category.COMBAT);
+      super("Inv Totem", "Moves totems only while inventory (E) is open — click-based, not world-auto", Category.PLAYER);
    }
 
    protected void onEnable() {

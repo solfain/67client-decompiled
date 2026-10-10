@@ -69,7 +69,7 @@ public class SpawnerProtectModule extends Module {
    private int miningTicks;
 
    public SpawnerProtectModule() {
-      super("SpawnerProtect", "Auto-salvages your spawners when a stranger approaches, then logs out.", Category.MISC);
+      super("SpawnerProtect", "Auto-salvages your spawners when a stranger approaches, then logs out.", Category.WORLD);
       this.currentState = SpawnerProtectModule.State.WAITING_FOR_STRANGER;
       this.targetBlock = null;
       this.targetChest = null;

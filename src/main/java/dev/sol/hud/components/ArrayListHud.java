@@ -48,7 +48,7 @@ public class ArrayListHud extends HudComponent {
          }
       }
 
-      list.sort(Comparator.comparingDouble((m) -> (double)vg.textWidth(m.getName(), 13.5F)).reversed());
+      list.sort(Comparator.comparingDouble((m) -> (double)vg.textWidthBold(m.getName(), 13.5F)).reversed());
       return list;
    }
 
@@ -56,7 +56,7 @@ public class ArrayListHud extends HudComponent {
       float max = 40.0F;
 
       for(Module m : this.animatedEntries(vg)) {
-         max = Math.max(max, vg.textWidth(m.getName(), 13.5F) + 16.0F + 2.5F + 2.0F);
+         max = Math.max(max, vg.textWidthBold(m.getName(), 13.5F) + 16.0F + 2.5F + 2.0F);
       }
 
       return max;
@@ -83,19 +83,18 @@ public class ArrayListHud extends HudComponent {
          if (!(t <= 0.01F)) {
             int accent = sync ? theme.accent() : (Integer)this.hudModule.listColor.get();
             int accentBright = sync ? theme.accentBright() : Colors.lighten(accent, 0.35F);
-            float textW = vg.textWidth(m.getName(), 13.5F);
+            float textW = vg.textWidthBold(m.getName(), 13.5F);
             float barW = textW + 16.0F + 2.5F + 2.0F;
             float slideOff = (1.0F - t) * (barW + 12.0F) * (float)(right ? 1 : -1);
             float barX = (float)Math.round((right ? x + w - barW : x) + slideOff);
             float rowTop = (float)Math.round(rowY);
             vg.save();
             vg.alpha(t);
-            vg.rectGradient(barX, rowTop, barW, 20.0F, 5.0F, Colors.withAlpha(-15330788, 0.86F), Colors.withAlpha(-15791084, 0.86F), true);
-            float stripX = right ? barX + barW - 2.5F : barX;
-            vg.glow(stripX - 1.0F, rowTop + 2.0F, 4.5F, 16.0F, 2.0F, 3.0F, Colors.withAlpha(accent, 0.35F));
-            vg.rect(stripX, rowTop + 2.0F, 2.5F, 16.0F, 1.25F, accent);
+            vg.rect(barX, rowTop, barW, 20.0F, 0.0F, Colors.withAlpha(-15790317, 0.72F));
+            float lineX = right ? barX + barW - 2.0F : barX;
+            vg.rect(lineX, rowTop, 2.0F, 20.0F, 0.0F, accent);
             float textX = (float)Math.round(right ? barX + 8.0F : barX + 2.5F + 2.0F + 8.0F - 2.0F);
-            vg.textGradient(m.getName(), textX, rowTop + 10.0F, 13.5F, accentBright, accent);
+            vg.textBold(m.getName(), textX, rowTop + 10.0F, 13.5F, Colors.lerp(accent, accentBright, 0.25F));
             vg.restore();
             rowY += 20.0F * t;
          }

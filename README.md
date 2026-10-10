@@ -8,14 +8,28 @@ A Fabric client mod for **Minecraft 1.21.11**: a NanoVG ClickGUI, HUD editor, th
 
 *(This preview is a mockup drawn with the same sizes, colours and font as the code. It's not a real screenshot.)*
 
-## The new UI
+## The UI
 
-- **Top bar** with the Sol logo, **Modules / Configs** tabs, and a search box. Start typing anywhere to search.
-- **Category windows** with solid accent title bars and compact 20px module rows. Enabled modules get an accent bar and highlight. The title bar shows how many modules are on. Click a title to collapse it, drag it to move it.
-- **Settings window**: right-click a module to open its settings in a separate draggable window. It has a description, an enable switch, and a scrollable list of settings. Close it with Esc, the ✕, or by clicking outside.
-- **Restyled controls**: square checkboxes, thin sliders with a square handle, `‹ mode ›` selectors (left-click goes forward, right-click goes back), and flat text fields and key boxes.
-- **Themes**: Sol (default orange), Ember, Nebula, Ocean, Mint, Frost and Rainbow, plus custom accent colours.
-- **HUD**: new watermark (sun logo + "Sol Client" + version) and flatter notifications.
+One centred window. No sidebar and no floating panels.
+
+- **Top row**: the Sol logo, a search box, and **Themes** / **Configs** buttons. Start typing anywhere to search every category at once.
+- **Category tabs**: Combat, Movement, Player, Render, World, Misc and Client, with icons and a sliding accent underline. A dot on a tab means something in it is enabled. ←/→ or Tab switches categories.
+- **Module cards** in a responsive grid. Each card shows the name, a short description, an on/off switch and the keybind (if one is set). Enabled cards get an accent outline and tint.
+  Left-click a card to toggle it. Right-click it (or click the `···`) to open its settings window.
+- **Themes view**: accent swatches for Sol (default orange), Ember, Nebula, Ocean, Mint, Frost and Rainbow, plus custom accents with a colour picker, and the sound settings.
+- **Fonts**: Poppins by default ("Clean"). You can switch to Monocraft ("Pixel") in ClickGUI → Font.
+- **HUD**: sun watermark, a flat module list with a thin accent edge, and flat info pills.
+
+## Jump circles
+
+Three styles to choose from: **Ripple** (expanding rings), **Halo** (a spinning glow ring) and **Pulse** (a quick flash ring).
+Settings: size, colour or rainbow, lifetime, ring count, spin, sparks and a maximum number on screen.
+
+## Changes from the original
+
+- Modules have been re-sorted into new categories, alphabetical within each one.
+- CustomAccessories and the Fabric gametest suite have been removed. GambleRigger is not included.
+- Configs are now keyed `Name@CATEGORY`, so **configs from the old client won't carry over**.
 
 ## Building
 
@@ -25,7 +39,7 @@ A Fabric client mod for **Minecraft 1.21.11**: a NanoVG ClickGUI, HUD editor, th
 
 Requires JDK 21. The sources came from a decompiled jar, so they use **intermediary** names
 (`class_310`, `method_1551`, …). `build.gradle` uses intermediary as its mappings so they compile as-is.
-The first build may still turn up a few decompiler artifacts that need hand-fixing.
+This hasn't been compiled yet. The first build will likely turn up a few decompiler artifacts and API mismatches that need hand-fixing.
 
 ## Layout
 
@@ -33,6 +47,12 @@ The first build may still turn up a few decompiler artifacts that need hand-fixi
 src/main/java/dev/sol/          mod source (package dev.sol, entrypoint SolClient)
 src/main/resources/             fabric.mod.json, solclient.mixins.json, assets/solclient/
 ```
+
+## Credits
+
+- Original code: the **67Client** author. Used and modified with their permission.
+- Fonts: [Poppins](src/main/resources/assets/solclient/fonts/Poppins-OFL.txt) and [Monocraft](src/main/resources/assets/solclient/fonts/Monocraft-OFL.txt), both under the SIL Open Font License.
+- Category icons: Lawnicons (see `assets/solclient/icons/LICENSE-lawnicons.txt`).
 
 ## Known gaps
 

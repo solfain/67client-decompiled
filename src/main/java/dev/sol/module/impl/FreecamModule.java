@@ -60,7 +60,7 @@ public class FreecamModule extends Module {
    private int autopilotWarmupTicks;
 
    public FreecamModule() {
-      super("Freecam", "Detached camera (WASD = fly). Body can keep walking; mining uses real aim.", Category.MISC);
+      super("Freecam", "Detached camera (WASD = fly). Body can keep walking; mining uses real aim.", Category.MOVEMENT);
       instance = this;
    }
 

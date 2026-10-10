@@ -36,7 +36,7 @@ public class StaffListModule extends Module {
    public final StaffTracker tracker;
 
    public StaffListModule() {
-      super("StaffList", "Lists online staff on the HUD (DonutSMP coloured-star detection)", Category.MISC);
+      super("StaffList", "Lists online staff on the HUD (DonutSMP coloured-star detection)", Category.WORLD);
       this.rankKeywords = (StringSetting)this.addSetting(new StringSetting("Rank Keywords", "Words in a name tag that mark staff (comma-separated), most senior first", StaffDetector.DEFAULT_RANK_KEYWORDS_STRING, 256, "owner, admin, mod…"));
       this.starSymbols = (StringSetting)this.addSetting(new StringSetting("Star Symbols", "Marker glyphs that mean 'staff'. Paste the server's star here if detection misses", "★☆✦✧✪✩✫✬✭✮✯⭐✰❂⚝✴✵✶✷✸✹⍟", 96, "★ ✦ ⭐"));
       this.fontIcons = (BooleanSetting)this.addSetting(new BooleanSetting("Font Icons", "Also treat custom resource-pack icons (private-use glyphs) as staff stars", true));
@@ -92,7 +92,7 @@ public class StaffListModule extends Module {
                SolClient.notifications().pushInfo(rank + " " + e.name() + " online" + tail);
             }
          } else if (this.alerts.check("Chat")) {
-            mc.field_1724.method_7353(class_2561.method_43470("§d[67] §f" + rank + " §b" + e.name() + "§7 is online" + tail), false);
+            mc.field_1724.method_7353(class_2561.method_43470("§6[Sol] §f" + rank + " §b" + e.name() + "§7 is online" + tail), false);
          }
 
          if ((Boolean)this.alertSound.get()) {

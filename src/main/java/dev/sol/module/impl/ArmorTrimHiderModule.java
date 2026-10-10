@@ -27,7 +27,7 @@ public class ArmorTrimHiderModule extends Module {
    private final List<class_6880<class_8056>> patterns = new ArrayList();
 
    public ArmorTrimHiderModule() {
-      super("ArmorTrimHider", "Hides or randomizes worn armor trims", Category.MISC);
+      super("ArmorTrimHider", "Hides or randomizes worn armor trims", Category.RENDER);
    }
 
    public boolean affectsOwn() {

@@ -22,6 +22,6 @@ public class NameTagsModule extends Module {
    public final SliderSetting range = (SliderSetting)this.addSetting(new SliderSetting("Range", "Only tag within this distance", (double)64.0F, (double)8.0F, (double)256.0F, (double)4.0F, "m"));
 
    public NameTagsModule() {
-      super("NameTags", "HUD-styled nametags for players & items", Category.MISC);
+      super("NameTags", "HUD-styled nametags for players & items", Category.RENDER);
    }
 }
