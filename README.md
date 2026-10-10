@@ -38,8 +38,8 @@ Settings: size, colour or rainbow, lifetime, ring count, spin, sparks and a maxi
 ./gradlew build          # output: build/libs/sol-client-1.0.0.jar
 ```
 
-Every push also builds the jar on GitHub Actions (`.github/workflows/build.yml`). Download it from the
-run's **Artifacts** section on the Actions tab.
+Every push also builds the jar on GitHub Actions (`.github/workflows/build.yml`) and publishes it as the
+[`latest` release](../../releases/tag/latest), where it downloads directly as a `.jar`.
 
 Requires JDK 21. The sources came from a decompiled jar, so they use **intermediary** names
 (`class_310`, `method_1551`, …). `build.gradle` uses intermediary as its mappings so they compile as-is.
