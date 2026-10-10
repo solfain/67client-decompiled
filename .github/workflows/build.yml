@@ -4,6 +4,10 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,7 +24,36 @@ jobs:
       - name: Build
         run: |
           chmod +x gradlew
-          ./gradlew build --no-daemon --stacktrace -Dorg.gradle.jvmargs=-Xmx3G
+          set -o pipefail
+          ./gradlew build --no-daemon --stacktrace -Dorg.gradle.jvmargs=-Xmx3G 2>&1 | tee build.log
+
+      - name: Publish build log as check runs
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json, re, subprocess, os
+          log = open('build.log', errors='replace').read() if os.path.exists('build.log') else 'no log'
+          lines = log.splitlines()
+          errs = [i for i, l in enumerate(lines) if re.search(r'\.java:\d+: error:', l)]
+          out = []
+          for i in errs:
+              out.append(lines[i].split('src/main/java/')[-1])
+              for j in range(i + 1, min(i + 4, len(lines))):
+                  if re.search(r'\.java:\d+: (error|warning):', lines[j]): break
+                  if lines[j].strip().startswith(('symbol', 'location', 'required', 'found', 'reason')):
+                      out.append('    ' + lines[j].strip())
+          body = '\n'.join(out) if out else '\n'.join(lines[-200:])
+          header = f'{len(errs)} javac errors\n\n'
+          chunks = [body[k:k + 60000] for k in range(0, len(body), 60000)] or ['']
+          for n, c in enumerate(chunks[:20], 1):
+              payload = {'name': f'build-log-{n}', 'head_sha': os.environ['GITHUB_SHA'], 'status': 'completed',
+                         'conclusion': 'neutral', 'output': {'title': f'build log {n}/{len(chunks)}',
+                         'summary': header, 'text': c}}
+              subprocess.run(['gh', 'api', f"repos/{os.environ['GITHUB_REPOSITORY']}/check-runs", '--input', '-'],
+                             input=json.dumps(payload).encode(), check=False, stdout=subprocess.DEVNULL)
+          PY
 
       - name: Upload jar
         uses: actions/upload-artifact@v4
