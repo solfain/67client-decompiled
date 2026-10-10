@@ -1,0 +1,16 @@
+{
+	"ui.gui_open": {"sounds": ["solclient:ui/gui_open"]},
+	"ui.gui_close": {"sounds": ["solclient:ui/gui_close"]},
+	"ui.hover": {"sounds": ["solclient:ui/hover"]},
+	"ui.toggle_on": {"sounds": ["solclient:ui/toggle_on"]},
+	"ui.toggle_off": {"sounds": ["solclient:ui/toggle_off"]},
+	"ui.slider": {"sounds": ["solclient:ui/slider"]},
+	"ui.select": {"sounds": ["solclient:ui/select"]},
+	"ui.keybind": {"sounds": ["solclient:ui/keybind"]},
+	"ui.notify_on": {"sounds": ["solclient:ui/notify_on"]},
+	"ui.notify_off": {"sounds": ["solclient:ui/notify_off"]},
+	"startup.sad": {"sounds": [{"name": "solclient:startup/startup_sad", "stream": true}]},
+	"startup.song": {"sounds": [{"name": "solclient:startup/startup_song", "stream": true}]},
+	"startup.tiki": {"sounds": [{"name": "solclient:startup/startup_tiki", "stream": true}]},
+	"startup.sol": {"sounds": [{"name": "solclient:startup/startup_sol", "stream": true}]}
+}

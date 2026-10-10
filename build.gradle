@@ -1,0 +1,53 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
+    // The sources were decompiled from a remapped jar, so they reference
+    // intermediary names (class_310, method_1551, field_1724 ...).
+    // Using intermediary as the "named" mappings lets them compile as-is.
+    mappings "net.fabricmc:intermediary:${project.minecraft_version}:v2"
+
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+    // NanoVG (bundled into the jar, like the original)
+    def nvg = "org.lwjgl:lwjgl-nanovg:${project.lwjgl_version}"
+    implementation nvg
+    include nvg
+    ['natives-windows', 'natives-windows-arm64', 'natives-linux', 'natives-linux-arm64',
+     'natives-macos', 'natives-macos-arm64'].each { cls ->
+        runtimeOnly "${nvg}:${cls}"
+        include "${nvg}:${cls}"
+    }
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+    it.options.encoding = 'UTF-8'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
