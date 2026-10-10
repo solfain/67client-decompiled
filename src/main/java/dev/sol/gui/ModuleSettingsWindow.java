@@ -24,7 +24,6 @@ import dev.sol.settings.StringSetting;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
-import dev.sol.util.UiSounds;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -325,7 +324,6 @@ public class ModuleSettingsWindow {
          return false;
       } else if (this.closeHit(mx, my)) {
          this.close();
-         UiSounds.guiClose();
          return true;
       } else if (this.headerHit(mx, my)) {
          if (button == 0) {
@@ -340,7 +338,6 @@ public class ModuleSettingsWindow {
          if (my >= toggleTop && my <= toggleTop + TOGGLE_ROW_H) {
             if (button == 0) {
                this.module.toggle();
-               UiSounds.toggle(this.module.isEnabled());
             }
 
             return true;

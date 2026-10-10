@@ -6,7 +6,6 @@ import dev.sol.render.anim.Animation;
 import dev.sol.render.nanovg.NVGRenderer;
 import dev.sol.theme.Theme;
 import dev.sol.util.Colors;
-import dev.sol.util.UiSounds;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.class_310;
@@ -323,13 +322,11 @@ public class ConfigPanel {
                this.runConfirm();
             } else if (this.hit(mx, my, this.confirmCancelX, this.confirmCancelY, this.confirmCancelW, this.confirmCancelH) || !this.hit(mx, my, this.confirmCardX, this.confirmCardY, this.confirmCardW, this.confirmCardH)) {
                this.pendingConfirm = null;
-               UiSounds.select();
             }
 
             return true;
          } else if (mx >= this.closeX - 5.0F && mx <= this.closeX + this.closeSize + 5.0F && my >= this.closeY - 5.0F && my <= this.closeY + this.closeSize + 5.0F) {
             this.close();
-            UiSounds.guiClose();
             return true;
          } else {
             for(Hit h : this.hits) {
@@ -341,7 +338,6 @@ public class ConfigPanel {
 
             if (mx < this.cardX || mx > this.cardX + 600.0F || my < this.cardY || my > this.cardY + this.cardH) {
                this.close();
-               UiSounds.guiClose();
             }
 
             return true;
@@ -372,7 +368,6 @@ public class ConfigPanel {
          switch (keyCode) {
             case 256:
                this.pendingConfirm = null;
-               UiSounds.select();
                break;
             case 257:
             case 335:
@@ -382,7 +377,6 @@ public class ConfigPanel {
          return true;
       } else if (keyCode == 256) {
          this.close();
-         UiSounds.guiClose();
          return true;
       } else {
          return true;
@@ -415,7 +409,6 @@ public class ConfigPanel {
          case 1:
             if (store.slot(slot).filled()) {
                this.pendingConfirm = new Confirm(ConfigPanel.Action.SAVE, slot, "Overwrite \"" + store.slot(slot).name() + "\"?", "This replaces the config saved in slot " + (slot + 1) + ".", (String)null);
-               UiSounds.select();
             } else {
                this.doSave(slot);
             }
@@ -430,20 +423,17 @@ public class ConfigPanel {
             String clip = this.readClipboard();
             if (clip == null || clip.isBlank()) {
                this.toast("Nothing on the clipboard to import");
-               UiSounds.select();
                return;
             }
 
             if (store.slot(slot).filled()) {
                this.pendingConfirm = new Confirm(ConfigPanel.Action.IMPORT, slot, "Import over \"" + store.slot(slot).name() + "\"?", "This replaces slot " + (slot + 1) + " with the pasted config.", clip);
-               UiSounds.select();
             } else {
                this.doImport(slot, clip);
             }
             break;
          case 5:
             this.pendingConfirm = new Confirm(ConfigPanel.Action.DELETE, slot, "Delete \"" + store.slot(slot).name() + "\"?", "This permanently removes slot " + (slot + 1) + ".", (String)null);
-            UiSounds.select();
       }
 
    }
@@ -467,7 +457,6 @@ public class ConfigPanel {
       this.store().slot(slot).name();
       if (this.store().delete(slot)) {
          this.toast("Deleted \"null\"");
-         UiSounds.select();
       } else {
          this.toast("Couldn't delete the config");
       }
@@ -478,7 +467,6 @@ public class ConfigPanel {
       if (this.store().save(slot)) {
          String var10001 = this.store().slot(slot).name();
          this.toast("Saved to \"" + var10001 + "\"");
-         UiSounds.toggle(true);
       } else {
          this.toast("Couldn't save the config");
       }
@@ -489,7 +477,6 @@ public class ConfigPanel {
       if (this.store().activate(slot)) {
          String var10001 = this.store().slot(slot).name();
          this.toast("Activated \"" + var10001 + "\"");
-         UiSounds.toggle(true);
       } else {
          this.toast("That slot is empty");
       }
@@ -504,7 +491,6 @@ public class ConfigPanel {
          this.setClipboard(json);
          String var10001 = this.store().slot(slot).name();
          this.toast("Copied \"" + var10001 + "\" to clipboard");
-         UiSounds.select();
       }
 
    }
@@ -512,14 +498,12 @@ public class ConfigPanel {
    private void doImport(int slot, String payload) {
       ConfigStore.ImportResult result = this.store().importInto(slot, payload);
       this.toast(result.message());
-      UiSounds.toggle(true);
    }
 
    private void beginRename(int slot) {
       this.renamingSlot = slot;
       this.renameBuffer.setLength(0);
       this.renameBuffer.append(this.store().slot(slot).name());
-      UiSounds.select();
    }
 
    private void commitRename() {

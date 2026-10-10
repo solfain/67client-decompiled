@@ -45,8 +45,7 @@ public final class StaffDetector {
             String combined = var100001 + " " + plain(teamPrefix) + " " + plain(teamSuffix) + " " + (teamName == null ? "" : teamName);
             rank = deriveRank(stripName(combined, name), cfg.rankKeywords());
             hasRank = rank != null;
-            byte label = -1;
-            switch (color) {
+            switch (cfg.mode()) {
                case "Star Only":
                   var10000 = hasStar;
                   break label103;

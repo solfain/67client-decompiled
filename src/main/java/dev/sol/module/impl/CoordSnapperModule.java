@@ -47,7 +47,7 @@ public class CoordSnapperModule extends Module {
          } else {
             String var10000;
             label25: {
-               switch (var4) {
+               switch ((String)this.format.get()) {
                   case "Command":
                      int var5 = pos.method_10263();
                      var10000 = "/tp " + var5 + " " + pos.method_10264() + " " + pos.method_10260();

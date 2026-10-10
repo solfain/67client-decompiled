@@ -1,35 +1,23 @@
 package dev.sol.gui;
 
-import dev.sol.SolClient;
-import dev.sol.gui.widget.BooleanWidget;
 import dev.sol.gui.widget.ColorWidget;
-import dev.sol.gui.widget.SettingWidget;
-import dev.sol.gui.widget.SliderWidget;
 import dev.sol.render.anim.Animation;
 import dev.sol.render.nanovg.NVGRenderer;
-import dev.sol.settings.BooleanSetting;
 import dev.sol.settings.ColorSetting;
-import dev.sol.settings.Setting;
-import dev.sol.settings.SliderSetting;
-import dev.sol.theme.SoundSettings;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
-import dev.sol.util.UiSounds;
-import java.util.ArrayList;
 import java.util.List;
 
-/** Content of the "Themes" tab: accent swatch tiles, custom accent picker and sound options. */
+/** Content of the "Themes" tab: accent swatch tiles and the custom accent picker. */
 public class ThemesView {
    private static final float TILE_W = 118.0F;
    private static final float TILE_H = 66.0F;
    private static final float GAP = 10.0F;
    private static final float SECTION_H = 30.0F;
-   private static final int STARTUP_FIRST_WIDGET = 5;
    private final ThemeManager themes;
    private final ColorSetting accentProxy;
    private final ColorWidget accentWidget;
-   private final List<SettingWidget> soundWidgets = new ArrayList();
    private final Animation scroll = new Animation(160.0F, 0.0F);
    private float maxScroll;
    private float x;
@@ -53,16 +41,6 @@ public class ThemesView {
          }
       };
       this.accentWidget = new ColorWidget(themes, this.accentProxy);
-      SoundSettings sounds = SolClient.sounds();
-      if (sounds != null) {
-         for(Setting<?> setting : sounds.all()) {
-            if (setting instanceof SliderSetting slider) {
-               this.soundWidgets.add(new SliderWidget(themes, slider));
-            } else if (setting instanceof BooleanSetting bool) {
-               this.soundWidgets.add(new BooleanWidget(themes, bool));
-            }
-         }
-      }
 
    }
 
@@ -83,12 +61,6 @@ public class ThemesView {
       float hgt = SECTION_H + this.tilesHeight() + 16.0F;
       if (this.theme().isCustom()) {
          hgt += this.accentWidget.height(vg) + 12.0F;
-      }
-
-      hgt += SECTION_H * 2.0F;
-
-      for(SettingWidget widget : this.soundWidgets) {
-         hgt += widget.height(vg) + 4.0F;
       }
 
       return hgt + 12.0F;
@@ -161,30 +133,12 @@ public class ThemesView {
          }
       }
 
-      if (newHover != this.hoveredTile && newHover != null) {
-         UiSounds.hover();
-      }
-
       this.hoveredTile = newHover;
       cy += this.tilesHeight() + 16.0F;
       if (active.isCustom()) {
          this.accentWidget.setBounds(x, cy, Math.min(300.0F, w));
          this.accentWidget.render(vg, hmx, hmy);
          cy += this.accentWidget.height(vg) + 12.0F;
-      }
-
-      cy = this.section(vg, "Sounds", cy);
-      float colW = Math.min(360.0F, w);
-
-      for(int i = 0; i < this.soundWidgets.size(); ++i) {
-         if (i == STARTUP_FIRST_WIDGET) {
-            cy = this.section(vg, "Startup sound", cy + 6.0F) - 6.0F;
-         }
-
-         SettingWidget widget = (SettingWidget)this.soundWidgets.get(i);
-         widget.setBounds(x, cy, colW);
-         widget.render(vg, hmx, hmy);
-         cy += widget.height(vg) + 4.0F;
       }
 
       vg.restore();
@@ -207,12 +161,6 @@ public class ThemesView {
       } else if (this.accentWidget.mouseClicked(mx, my, button)) {
          return true;
       } else {
-         for(SettingWidget widget : this.soundWidgets) {
-            if (widget.mouseClicked(mx, my, button)) {
-               return true;
-            }
-         }
-
          if (button != 0) {
             return false;
          } else {
@@ -239,7 +187,6 @@ public class ThemesView {
                      this.accentWidget.setExpanded(true);
                   }
 
-                  UiSounds.select();
                   return true;
                }
             }
@@ -252,18 +199,10 @@ public class ThemesView {
    public void mouseDragged(float mx, float my) {
       this.accentWidget.mouseDragged(mx, my);
 
-      for(SettingWidget widget : this.soundWidgets) {
-         widget.mouseDragged(mx, my);
-      }
-
    }
 
    public void mouseReleased() {
       this.accentWidget.mouseReleased();
-
-      for(SettingWidget widget : this.soundWidgets) {
-         widget.mouseReleased();
-      }
 
    }
 

@@ -20,7 +20,6 @@ import dev.sol.module.impl.ChunkFinderModule;
 import dev.sol.module.impl.CoordSnapperModule;
 import dev.sol.module.impl.CustomCrosshairModule;
 import dev.sol.module.impl.CustomFovModule;
-import dev.sol.module.impl.CustomGlintModule;
 import dev.sol.module.impl.DebugHoleEspModule;
 import dev.sol.module.impl.DoubleAnchorModule;
 import dev.sol.module.impl.ElytraSwapModule;
@@ -106,7 +105,6 @@ public class ModuleManager {
    public CustomFovModule customFov;
    public HitParticlesModule hitParticles;
    public MotionBlurModule motionBlur;
-   public CustomGlintModule customGlint;
    public ChunkFinderModule chunkFinder;
    public FreeLookModule freeLook;
    public AutoClickerModule autoClicker;
@@ -172,7 +170,6 @@ public class ModuleManager {
       this.register(this.customCrosshair = new CustomCrosshairModule());
       this.run("Media/StaffNames/Icons", "Marks media & staff players with icons", Category.WORLD, new BooleanSetting("Media", "Show media icons", true), new BooleanSetting("Staff", "Show staff icons", true), new ModeSetting("Position", "Icon position", "Prefix", new String[]{"Prefix", "Suffix"}));
       this.register(this.staffList = new StaffListModule());
-      this.register(this.customGlint = new CustomGlintModule());
       this.register(this.customFov = new CustomFovModule());
       this.register(this.coordSnapper = new CoordSnapperModule());
       this.register(this.autoWalk = new AutoWalkModule());

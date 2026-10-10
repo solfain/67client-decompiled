@@ -5,7 +5,6 @@ import dev.sol.settings.StringSetting;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
-import dev.sol.util.UiSounds;
 
 public class StringWidget extends SettingWidget {
    private static final float HEIGHT = 34.0F;
@@ -49,7 +48,6 @@ public class StringWidget extends SettingWidget {
    public boolean mouseClicked(float mx, float my, int button) {
       if (button == 0 && this.contains(mx, my)) {
          this.focused = true;
-         UiSounds.select();
          return true;
       } else {
          this.focused = false;

@@ -42,7 +42,7 @@ public class AutoWalkModule extends Module {
          } else if ((Boolean)this.disableOnY.get() && mc.field_1724.field_6036 != mc.field_1724.method_23318()) {
             this.toggle();
          } else if (!(Boolean)this.waitForChunks.get() || this.chunkAheadLoaded(mc)) {
-            switch (var2) {
+            switch ((String)this.direction.get()) {
                case "Backwards":
                   mc.field_1690.field_1881.method_23481(true);
                   break;
@@ -78,8 +78,7 @@ public class AutoWalkModule extends Module {
          double yawRad = Math.toRadians((double)mc.field_1724.method_36454());
          double fx = -Math.sin(yawRad);
          double fz = Math.cos(yawRad);
-         byte bz = -1;
-         switch (bx) {
+         switch ((String)this.direction.get()) {
             case "Backwards":
                dx = -fx;
                dz = -fz;

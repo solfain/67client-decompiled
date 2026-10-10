@@ -50,7 +50,7 @@ public class CustomCrosshairModule extends Module {
       }
 
       label52: {
-         switch (var9) {
+         switch ((String)this.style.get()) {
             case "Chevron":
                if (line != 0) {
                   vg.chevron(cx, cy + s * 0.15F, s + 2.0F, t + 2.0F, line, true);

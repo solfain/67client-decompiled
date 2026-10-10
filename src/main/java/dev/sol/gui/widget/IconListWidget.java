@@ -6,7 +6,6 @@ import dev.sol.settings.IconListSetting;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
-import dev.sol.util.UiSounds;
 import net.minecraft.class_310;
 import net.minecraft.class_437;
 
@@ -45,7 +44,6 @@ public class IconListWidget extends SettingWidget {
          if (var5 instanceof ClickGuiScreen) {
             ClickGuiScreen gui = (ClickGuiScreen)var5;
             gui.openIconPicker(this.setting);
-            UiSounds.select();
             return true;
          } else {
             return false;

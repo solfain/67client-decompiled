@@ -6,7 +6,6 @@ import dev.sol.settings.BooleanSetting;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
-import dev.sol.util.UiSounds;
 
 /** Square checkbox on the right, label on the left. */
 public class BooleanWidget extends SettingWidget {
@@ -45,7 +44,6 @@ public class BooleanWidget extends SettingWidget {
    public boolean mouseClicked(float mx, float my, int button) {
       if (button == 0 && this.contains(mx, my)) {
          this.setting.toggle();
-         UiSounds.checkbox((Boolean)this.setting.get());
          return true;
       } else {
          return false;

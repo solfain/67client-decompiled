@@ -37,11 +37,6 @@ public final class OverlayRenderer {
    }
 
    public static void render() {
-      try {
-         GlintTextureTinter.tick();
-      } catch (Throwable var19) {
-      }
-
       if (!crashed && hudManager != null) {
          class_310 mc = class_310.method_1551();
          class_276 target = mc.method_1522();

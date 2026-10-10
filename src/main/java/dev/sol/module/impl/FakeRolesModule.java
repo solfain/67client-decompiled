@@ -19,7 +19,7 @@ public class FakeRolesModule extends Module {
    public static final String ROLE_SRADMIN = "SR.ADMIN";
    private static final int GRAY = 8355711;
    private static final int GREEN = 5635925;
-   private static final int PINK = 16733695;
+   private static final int AQUA = 5636095;
    private static final int RED = 16733269;
    private static final int WHITE = 16777215;
    public final ModeSetting role = (ModeSetting)this.addSetting(new ModeSetting("Role", "Which fake rank tag to wear in front of your name", "None", new String[]{"None", "SR.MOD", "MEDIA", "SR.ADMIN"}));
@@ -47,13 +47,13 @@ public class FakeRolesModule extends Module {
    }
 
    private int roleColor() {
-      switch (var1) {
+      switch ((String)this.role.get()) {
          case "SR.MOD":
             return 5635925;
          case "SR.ADMIN":
             return 16733269;
          case "MEDIA":
-            return 16733695;
+            return 5636095;
       }
 
       return 16777215;
@@ -68,7 +68,7 @@ public class FakeRolesModule extends Module {
    }
 
    private class_2583 nameStyle() {
-      switch (var1) {
+      switch ((String)this.role.get()) {
          case "SR.MOD":
             return class_2583.field_24360.method_36139(5635925).method_10982(true);
          case "SR.ADMIN":

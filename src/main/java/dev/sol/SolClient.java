@@ -16,19 +16,14 @@ import dev.sol.render.OverlayRenderer;
 import dev.sol.render.SusChunkRenderer;
 import dev.sol.spotify.SpotifyService;
 import dev.sol.suschunk.ServerLightCache;
-import dev.sol.theme.SoundSettings;
 import dev.sol.theme.ThemeManager;
-import dev.sol.util.UiSoundEvents;
-import dev.sol.util.UiSounds;
 import java.util.Objects;
 import java.util.function.Supplier;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.minecraft.class_310;
-import net.minecraft.class_442;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,8 +39,6 @@ public class SolClient implements ClientModInitializer {
    private static HudManager hud;
    private static NotificationManager notifications;
    private static SpotifyService spotify;
-   private static SoundSettings soundSettings;
-   private static boolean startupSoundPlayed;
 
    public static ModuleManager modules() {
       return modules;
@@ -71,10 +64,6 @@ public class SolClient implements ClientModInitializer {
       return spotify;
    }
 
-   public static SoundSettings sounds() {
-      return soundSettings;
-   }
-
    public static NotificationManager notifications() {
       return notifications;
    }
@@ -84,9 +73,7 @@ public class SolClient implements ClientModInitializer {
       ProtectedContent.init(contentKey);
       ProtectedContent.activate(LOGGER, "dev.sol.secured.SecuredFeature");
       LOGGER.info("{} {} initializing", "Sol Client", "1.0.0");
-      UiSoundEvents.bootstrap();
       themes = new ThemeManager();
-      soundSettings = new SoundSettings();
       modules = new ModuleManager();
       spotify = new SpotifyService();
       notifications = new NotificationManager(themes, modules.hud);
@@ -106,33 +93,17 @@ public class SolClient implements ClientModInitializer {
       ClickGuiState var9 = ClickGuiScreen.state();
       Objects.requireNonNull(var9);
       var10000.addSection("panels", var6, var9::fromJson);
-      var10000 = config;
-      SoundSettings var7 = soundSettings;
-      Objects.requireNonNull(var7);
-      Supplier var8 = var7::toJson;
-      SoundSettings var10 = soundSettings;
-      Objects.requireNonNull(var10);
-      var10000.addSection("sounds", var8, var10::fromJson);
       config.load();
       configStore = new ConfigStore(config);
       configStore.loadAll();
-      UiSounds.init(soundSettings);
       modules.setOpenGuiAction(() -> class_310.method_1551().method_1507(new ClickGuiScreen()));
       modules.setToggleListener((module, enabled) -> {
          if (!ConfigStore.applying && module.getCategory() != Category.CLIENT && class_310.method_1551().field_1687 != null && (Boolean)modules.hud.notifications.get()) {
             notifications.push(module.getName(), enabled);
-            UiSounds.notification(enabled);
          }
 
       });
       OverlayRenderer.init(hud, notifications);
-      ScreenEvents.AFTER_INIT.register((ScreenEvents.AfterInit)(client, screen, scaledWidth, scaledHeight) -> {
-         if (screen instanceof class_442 && !startupSoundPlayed) {
-            startupSoundPlayed = true;
-            UiSounds.playStartup();
-         }
-
-      });
       spotify.start();
       ClientPlayConnectionEvents.JOIN.register((ClientPlayConnectionEvents.Join)(handler, sender, client) -> clearSusState());
       ClientPlayConnectionEvents.DISCONNECT.register((ClientPlayConnectionEvents.Disconnect)(handler, client) -> clearSusState());

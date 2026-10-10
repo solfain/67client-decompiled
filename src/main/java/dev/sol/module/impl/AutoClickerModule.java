@@ -45,7 +45,7 @@ public class AutoClickerModule extends Module {
    public void onTick() {
       class_310 mc = class_310.method_1551();
       if (mc.field_1724 != null && ((Boolean)this.inScreens.get() || mc.field_1755 == null)) {
-         switch (var2) {
+         switch ((String)this.leftMode.get()) {
             case "Hold":
                mc.field_1690.field_1886.method_23481(true);
                break;
@@ -57,30 +57,16 @@ public class AutoClickerModule extends Module {
                }
          }
 
-         while(true) {
-            var2 = (String)this.rightMode.get();
-            switch (var2.hashCode()) {
-               case 2255071:
-                  if (!var2.equals("Hold")) {
-                     return;
-                  }
-
-                  mc.field_1690.field_1886.method_23481(true);
-                  break;
-               case 77378595:
-                  if (!var2.equals("Press")) {
-                     return;
-                  }
-
-                  ++this.leftTimer;
-                  if (this.leftTimer > this.leftDelay.getInt()) {
-                     this.leftClick(mc);
-                     this.leftTimer = 0;
-                  }
-                  break;
-               default:
-                  return;
-            }
+         switch ((String)this.rightMode.get()) {
+            case "Hold":
+               mc.field_1690.field_1904.method_23481(true);
+               break;
+            case "Press":
+               ++this.rightTimer;
+               if (this.rightTimer > this.rightDelay.getInt()) {
+                  this.rightClick(mc);
+                  this.rightTimer = 0;
+               }
          }
       }
    }

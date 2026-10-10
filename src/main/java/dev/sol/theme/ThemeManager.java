@@ -15,7 +15,7 @@ public class ThemeManager {
    public ThemeManager() {
       this.themes.add(new Theme("Sol", -26368, false));
       this.themes.add(new Theme("Ember", -1356483, false));
-      this.themes.add(new Theme("Nebula", -7258654, false));
+      this.themes.add(new Theme("Indigo", -9673729, false));
       this.themes.add(new Theme("Ocean", -14836752, false));
       this.themes.add(new Theme("Mint", -13249650, false));
       this.themes.add(new Theme("Frost", -6237441, false));

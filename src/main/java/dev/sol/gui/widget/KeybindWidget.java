@@ -5,7 +5,6 @@ import dev.sol.settings.KeybindSetting;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
-import dev.sol.util.UiSounds;
 
 /** Click the key box, then press a key (Esc clears, any mouse button but left binds it). */
 public class KeybindWidget extends SettingWidget {
@@ -52,12 +51,10 @@ public class KeybindWidget extends SettingWidget {
          } else {
             this.setting.set(button);
             this.listening = false;
-            UiSounds.keybindSet();
             return true;
          }
       } else if (button == 0 && this.contains(mx, my)) {
          this.listening = true;
-         UiSounds.keybindListen();
          return true;
       } else {
          return false;
@@ -75,7 +72,6 @@ public class KeybindWidget extends SettingWidget {
          }
 
          this.listening = false;
-         UiSounds.keybindSet();
          return true;
       }
    }

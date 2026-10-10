@@ -20,7 +20,6 @@ import dev.sol.settings.IconListSetting;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
-import dev.sol.util.UiSounds;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,7 +103,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
 
    public void method_49589() {
       super.method_49589();
-      UiSounds.guiOpen();
    }
 
    public static ClickGuiState state() {
@@ -123,7 +121,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
       if (!this.closing) {
          this.closing = true;
          this.openAnim.setTarget(0.0F);
-         UiSounds.guiClose();
       }
 
    }
@@ -207,7 +204,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
       if (!tab.equals(STATE.tab())) {
          STATE.setTab(tab);
          this.scroll.snapTo(0.0F);
-         UiSounds.select();
       }
 
       this.search.setLength(0);
@@ -296,7 +292,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
 
    private void openSettings(Module module) {
       STATE.setExpanded(ModuleSettingsWindow.keyOf(module), true);
-      UiSounds.select();
    }
 
    private void closeSettingsWindow() {
@@ -337,7 +332,7 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
             if (this.onThemes()) {
                float cx = this.wx + PAD;
                float cy = this.wy + TOP_H + TABS_H + PAD;
-               this.renderTitle(vg, "Themes", "Accent colors and sounds", cx, cy);
+               this.renderTitle(vg, "Themes", "Accent colors", cx, cy);
                this.gridTop = cy + TITLE_H;
                this.gridBottom = this.wy + this.wh - PAD;
                this.themesView.render(vg, mx, my, cx, this.gridTop, this.ww - PAD * 2.0F - 10.0F, this.gridBottom - this.gridTop);
@@ -554,10 +549,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
       }
 
       vg.restore();
-      if (newHover != this.hoveredCard && newHover != null) {
-         UiSounds.hover();
-      }
-
       this.hoveredCard = newHover;
       if (this.maxScroll > 0.5F) {
          float thumbH = Math.max(24.0F, viewH * (viewH / (viewH + this.maxScroll)));
@@ -711,13 +702,11 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
             }
 
             this.searchFocused = true;
-            UiSounds.select();
             return true;
          } else {
             this.searchFocused = false;
             if (this.btnHit(this.configsBtnX, this.configsBtnW, mx, my)) {
                this.configPanel.open();
-               UiSounds.guiOpen();
                return true;
             } else if (this.btnHit(this.themesBtnX, this.themesBtnW, mx, my)) {
                this.selectTab(ClickGuiState.THEMES_TAB);
@@ -745,7 +734,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
                            this.openSettings(hit.module);
                         } else if (button == 0) {
                            hit.module.toggle();
-                           UiSounds.toggle(hit.module.isEnabled());
                         }
 
                         return true;
@@ -821,7 +809,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
       } else if (this.settingsOpen()) {
          if (!this.settingsWindow.keyPressed(key) && key == 256) {
             this.closeSettingsWindow();
-            UiSounds.guiClose();
          }
 
          return true;

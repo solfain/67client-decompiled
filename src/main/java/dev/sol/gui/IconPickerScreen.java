@@ -10,7 +10,6 @@ import dev.sol.settings.ColorSetting;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
-import dev.sol.util.UiSounds;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -321,7 +320,6 @@ public class IconPickerScreen extends class_437 implements NvgDrawable {
             this.colorWidget.mouseClicked(mx, my, event.method_74245());
          } else {
             this.closeColor();
-            UiSounds.select();
          }
 
          return true;
@@ -332,11 +330,9 @@ public class IconPickerScreen extends class_437 implements NvgDrawable {
          this.selectedOnly = !this.selectedOnly;
          this.filterDirty = true;
          this.searchFocused = false;
-         UiSounds.toggle(this.selectedOnly);
          return true;
       } else if (inRect(mx, my, this.searchRect)) {
          this.searchFocused = true;
-         UiSounds.select();
          return true;
       } else {
          this.searchFocused = false;
@@ -349,7 +345,6 @@ public class IconPickerScreen extends class_437 implements NvgDrawable {
                } else if (event.method_74245() == 0) {
                   boolean wasSelected = cell.selected();
                   cell.toggle();
-                  UiSounds.toggle(cell.enabled());
                   if (this.selectedOnly && wasSelected && !cell.selected()) {
                      this.filterDirty = true;
                   }
@@ -373,7 +368,6 @@ public class IconPickerScreen extends class_437 implements NvgDrawable {
          this.colorWidget = new ColorWidget(this.themes, target);
          this.colorWidget.setExpanded(true);
          this.searchFocused = false;
-         UiSounds.select();
       }
 
    }

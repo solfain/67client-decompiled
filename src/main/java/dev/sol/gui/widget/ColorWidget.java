@@ -6,7 +6,6 @@ import dev.sol.settings.ColorSetting;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
-import dev.sol.util.UiSounds;
 
 public class ColorWidget extends SettingWidget {
    private static final float ROW = 22.0F;
@@ -132,7 +131,6 @@ public class ColorWidget extends SettingWidget {
          }
 
          this.hexFocused = false;
-         UiSounds.select();
          return true;
       } else if (!this.expanded) {
          return false;
@@ -147,7 +145,6 @@ public class ColorWidget extends SettingWidget {
       } else if (inRect(mx, my, this.floatVal + 38.0F, this.bottomTop(), this.width - 38.0F, 18.0F)) {
          this.hexFocused = true;
          this.hexBuffer.setLength(0);
-         UiSounds.select();
          return true;
       } else {
          if (this.hexFocused) {
@@ -235,7 +232,6 @@ public class ColorWidget extends SettingWidget {
          try {
             this.setting.set(-16777216 | Integer.parseInt(this.hexBuffer.toString(), 16));
             this.syncFromSetting();
-            UiSounds.keybindSet();
          } catch (NumberFormatException var2) {
          }
       }

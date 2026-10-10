@@ -16,7 +16,7 @@ One centred window. No sidebar and no floating panels.
 - **Category tabs**: Combat, Movement, Player, Render, World, Misc and Client, with icons and a sliding accent underline. A dot on a tab means something in it is enabled. ←/→ or Tab switches categories.
 - **Module cards** in a responsive grid. Each card shows the name, a short description, an on/off switch and the keybind (if one is set). Enabled cards get an accent outline and tint.
   Left-click a card to toggle it. Right-click it (or click the `···`) to open its settings window.
-- **Themes view**: accent swatches for Sol (default orange), Ember, Nebula, Ocean, Mint, Frost and Rainbow, plus custom accents with a colour picker, and the sound settings.
+- **Themes view**: accent swatches for Sol (default orange), Ember, Indigo, Ocean, Mint, Frost and Rainbow, plus custom accents with a colour picker.
 - **Fonts**: Poppins by default ("Clean"). You can switch to Monocraft ("Pixel") in ClickGUI → Font.
 - **HUD**: sun watermark, a flat module list with a thin accent edge, and flat info pills.
 
@@ -28,7 +28,8 @@ Settings: size, colour or rainbow, lifetime, ring count, spin, sparks and a maxi
 ## Changes from the original
 
 - Modules have been re-sorted into new categories, alphabetical within each one.
-- CustomAccessories and the Fabric gametest suite have been removed. GambleRigger is not included.
+- Removed: CustomAccessories, CustomGlint (and its glint textures), the client UI sound system, and the Fabric gametest suite. GambleRigger is not included.
+- Fixed decompiler bugs: switches on undefined variables in AutoClicker, AutoWalk, CoordSnapper, CustomCrosshair, FakeRoles and StaffDetector, plus an AutoClicker loop that could freeze the game.
 - Configs are now keyed `Name@CATEGORY`, so **configs from the old client won't carry over**.
 
 ## Building
@@ -56,5 +57,4 @@ src/main/resources/             fabric.mod.json, solclient.mixins.json, assets/s
 
 ## Known gaps
 
-- **Sound files are missing.** The `.ogg` files referenced in `assets/solclient/sounds.json` weren't in the decompiled dump. Add them under `assets/solclient/sounds/ui/` and `assets/solclient/sounds/startup/`, or UI sounds will be silent.
 - **AimAssist's logic is missing.** The original shipped it as an encrypted class (`dev.sol.secured.AimAssistLogic`). That class isn't in the dump, so the module loads but does nothing.

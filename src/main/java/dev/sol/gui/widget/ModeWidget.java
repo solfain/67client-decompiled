@@ -5,7 +5,6 @@ import dev.sol.settings.ModeSetting;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
-import dev.sol.util.UiSounds;
 import java.util.List;
 
 /**
@@ -68,7 +67,6 @@ public class ModeWidget extends SettingWidget {
          int idx = Math.max(0, modes.indexOf(this.setting.get()));
          idx = Math.floorMod(idx + dir, modes.size());
          this.setting.set((String)modes.get(idx));
-         UiSounds.select();
       }
    }
 

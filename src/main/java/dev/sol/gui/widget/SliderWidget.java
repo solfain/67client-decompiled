@@ -6,7 +6,6 @@ import dev.sol.settings.SliderSetting;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
-import dev.sol.util.UiSounds;
 
 /** Label + value on one line, thin track with a small square handle underneath. */
 public class SliderWidget extends SettingWidget {
@@ -70,7 +69,6 @@ public class SliderWidget extends SettingWidget {
       double before = this.setting.getNormalized();
       this.setting.setNormalized((double)((mx - this.floatVal) / this.width));
       if (this.setting.getNormalized() != before) {
-         UiSounds.sliderTick((float)this.setting.getNormalized());
       }
    }
 }

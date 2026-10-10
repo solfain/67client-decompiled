@@ -2,7 +2,6 @@ package dev.sol.suschunk;
 
 import dev.sol.SolClient;
 import dev.sol.module.Modules;
-import dev.sol.util.UiSounds;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -539,7 +538,6 @@ public class SusChunkScanner {
                String message = "Sus zone · " + dist + "m · " + bx + ", " + bz;
                if (this.module.notifications.check("Toast") && SolClient.notifications() != null) {
                   SolClient.notifications().pushInfo(message);
-                  UiSounds.notification(true);
                } else if (this.module.notifications.check("Chat")) {
                   mc.field_1724.method_7353(class_2561.method_43470("§6[Sol] §fnull"), false);
                }
