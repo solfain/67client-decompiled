@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 import net.minecraft.class_1792;
 
-public class IconListSetting extends Setting<List<Entry>> {
+public class IconListSetting extends Setting<List<IconListSetting.Entry>> {
    private final Map<String, Entry> byKey = new LinkedHashMap();
 
    public IconListSetting(String name, String description) {
@@ -47,7 +47,7 @@ public class IconListSetting extends Setting<List<Entry>> {
    }
 
    public long enabledCount() {
-      return ((List)this.value).stream().filter((e) -> (Boolean)e.enabled.get()).count();
+      return this.value.stream().filter((e) -> (Boolean)e.enabled.get()).count();
    }
 
    public JsonElement toJson() {

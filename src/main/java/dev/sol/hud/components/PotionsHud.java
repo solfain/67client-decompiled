@@ -82,7 +82,7 @@ public class PotionsHud extends HudComponent {
             float rowX = right ? x + w - rowW : x;
             float cy = rowY + 12.0F;
             vg.rect(rowX, rowY + 1.0F, rowW, 22.0F, 7.0F, Colors.withAlpha(-15462118, 0.78F));
-            class_2960 effectId = (class_2960)effect.method_5579().method_40230().map((k) -> k.method_29177()).orElse((Object)null);
+            class_2960 effectId = (class_2960)effect.method_5579().method_40230().map((k) -> k.method_29177()).orElse(null);
             if (effectId != null) {
                int image = NVGImages.fromResource(class_2960.method_60655(effectId.method_12836(), "textures/mob_effect/" + effectId.method_12832() + ".png"));
                if (image > 0) {

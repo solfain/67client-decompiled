@@ -94,7 +94,7 @@ public class NameProtectModule extends Module {
       }
 
       if (others) {
-         for(String name : new ArrayList(this.seen.values())) {
+         for(String name : new ArrayList<String>(this.seen.values())) {
             map.putIfAbsent(name, this.styledFor(name));
          }
       }

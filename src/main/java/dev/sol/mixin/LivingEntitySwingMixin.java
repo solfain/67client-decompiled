@@ -15,7 +15,7 @@ public class LivingEntitySwingMixin {
       at = {@At("RETURN")}
    )
    private int solclient$swingSpeed(int original) {
-      class_1309 self = (class_1309)this;
+      class_1309 self = (class_1309)(Object)this;
       if (class_310.method_1551().field_1724 != self) {
          return original;
       } else {

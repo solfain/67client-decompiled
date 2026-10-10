@@ -87,7 +87,7 @@ public final class StaffDetector {
          }
 
          return Optional.empty();
-      }, class_2583.field_24360).orElse((Object)null);
+      }, class_2583.field_24360).orElse(null);
    }
 
    private static boolean isMarker(int cp, DetectConfig cfg) {

@@ -48,7 +48,7 @@ public class ArrayListHud extends HudComponent {
          }
       }
 
-      list.sort(Comparator.comparingDouble((m) -> (double)vg.textWidthBold(m.getName(), 13.5F)).reversed());
+      list.sort(Comparator.comparingDouble((Module m) -> (double)vg.textWidthBold(m.getName(), 13.5F)).reversed());
       return list;
    }
 

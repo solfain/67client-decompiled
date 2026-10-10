@@ -14,7 +14,7 @@ import net.minecraft.class_2248;
 import net.minecraft.class_2960;
 import net.minecraft.class_7923;
 
-public class BlockListSetting extends Setting<List<Target>> {
+public class BlockListSetting extends Setting<List<BlockListSetting.Target>> {
    public static final int DEFAULT_COLOR = -16711736;
    private final Set<class_2960> ids = new HashSet();
 
@@ -31,7 +31,7 @@ public class BlockListSetting extends Setting<List<Target>> {
    }
 
    public long enabledCount() {
-      return ((List)this.value).stream().filter((t) -> (Boolean)t.enabled.get()).count();
+      return this.value.stream().filter((t) -> (Boolean)t.enabled.get()).count();
    }
 
    public boolean contains(class_2960 id) {

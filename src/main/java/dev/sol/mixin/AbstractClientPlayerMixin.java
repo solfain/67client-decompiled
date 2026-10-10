@@ -24,7 +24,7 @@ public class AbstractClientPlayerMixin {
          if (skinProtect != null && skinProtect.isEnabled()) {
             class_8685 replacement = skinProtect.replacementSkin();
             if (replacement != null) {
-               class_742 self = (class_742)this;
+               class_742 self = (class_742)(Object)this;
                if (skinProtect.shouldReplace(self.method_5667())) {
                   cir.setReturnValue(replacement);
                }

@@ -27,7 +27,7 @@ public abstract class LocalPlayerFreecamMixin {
    }
 
    private void solclient$reapply() {
-      class_746 self = (class_746)this;
+      class_746 self = (class_746)(Object)this;
       class_310 mc = class_310.method_1551();
       if (mc.field_1724 == self) {
          FreecamModule f = FreecamModule.get();

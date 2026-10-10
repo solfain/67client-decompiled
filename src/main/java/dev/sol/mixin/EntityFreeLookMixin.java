@@ -17,7 +17,7 @@ public class EntityFreeLookMixin {
    )
    private void solclient$freeLookTurn(double d, double e, CallbackInfo ci) {
       class_310 mc = class_310.method_1551();
-      if (this == mc.field_1724) {
+      if ((Object)this == mc.field_1724) {
          FreeLookModule freeLook = FreeLookModule.get();
          if (freeLook != null && freeLook.cameraMode()) {
             freeLook.addCameraLook(d, e);

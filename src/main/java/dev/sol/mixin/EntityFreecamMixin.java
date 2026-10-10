@@ -17,7 +17,7 @@ public class EntityFreecamMixin {
       cancellable = true
    )
    private void solclient$freecamSeeOwnBody(class_1657 viewer, CallbackInfoReturnable<Boolean> cir) {
-      class_1297 self = (class_1297)this;
+      class_1297 self = (class_1297)(Object)this;
       class_310 mc = class_310.method_1551();
       if (mc.field_1724 != null && self == mc.field_1724 && viewer == mc.field_1724) {
          FreecamModule freecam = FreecamModule.get();

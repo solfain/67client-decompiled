@@ -17,7 +17,7 @@ public class LivingEntityJumpMixin {
       at = {@At("HEAD")}
    )
    private void solclient$onJump(CallbackInfo ci) {
-      if (this instanceof class_746 player) {
+      if ((Object)this instanceof class_746 player) {
          if (player == class_310.method_1551().field_1724) {
             ModuleManager modules = SolClient.modules();
             if (modules != null && modules.jumpCircles != null && modules.jumpCircles.isEnabled()) {

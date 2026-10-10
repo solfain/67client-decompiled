@@ -16,7 +16,7 @@ public class KeyboardInputFreecamMixin {
    )
    private void solclient$freecamReapplyCachedBodyInput(CallbackInfo ci) {
       class_310 mc = class_310.method_1551();
-      if (mc.field_1724 != null && mc.field_1724.field_3913 == this) {
+      if (mc.field_1724 != null && mc.field_1724.field_3913 == (Object)this) {
          FreecamModule f = FreecamModule.get();
          if (f != null && f.isActive()) {
             FreecamModule.reapplyBodyInput(mc);

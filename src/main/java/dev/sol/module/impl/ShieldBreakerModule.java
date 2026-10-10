@@ -47,9 +47,9 @@ public class ShieldBreakerModule extends Module {
                this.resetState();
             }
          } else if (client.field_1765 != null && client.field_1765.method_17783() == class_240.field_1331) {
-            class_1297 axeSlot = ((class_3966)client.field_1765).method_17782();
-            if (axeSlot instanceof class_1657) {
-               class_1657 targetPlayer = (class_1657)axeSlot;
+            class_1297 hitEntity = ((class_3966)client.field_1765).method_17782();
+            if (hitEntity instanceof class_1657) {
+               class_1657 targetPlayer = (class_1657)hitEntity;
                if (targetPlayer.method_6039() && !(client.field_1724.method_6047().method_7909() instanceof class_1743)) {
                   int axeSlot = this.findAxeSlot(client);
                   if (axeSlot != -1) {
