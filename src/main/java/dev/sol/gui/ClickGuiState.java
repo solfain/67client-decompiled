@@ -5,7 +5,6 @@ import dev.sol.module.Category;
 import java.util.HashSet;
 import java.util.Set;
 
-/** Persistent ClickGUI state: which tab is selected and which module's settings are open. */
 public class ClickGuiState {
    public static final String THEMES_TAB = "__themes__";
    private final Set<String> expandedModules = new HashSet();
@@ -29,7 +28,6 @@ public class ClickGuiState {
       return null;
    }
 
-   /** The module whose settings window is open, or null. Only one is open at a time. */
    public String openModuleKey() {
       return this.expandedModules.isEmpty() ? null : (String)this.expandedModules.iterator().next();
    }

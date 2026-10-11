@@ -9,7 +9,6 @@ import java.util.Locale;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
-/** Small readout: letter-spaced caption + bold value on a glass panel with a top accent rule. */
 public class InfoHud extends HudComponent {
    private static final float HEIGHT = 20.0F;
    private static final float CAPTION = 8.5F;

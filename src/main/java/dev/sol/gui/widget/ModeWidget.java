@@ -7,11 +7,6 @@ import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
 import java.util.List;
 
-/**
- * Compact mode selector: label on the left, a "‹ Mode ›" box on the right.
- * Left-click (or the right arrow) goes to the next mode, right-click (or the
- * left arrow) to the previous one.
- */
 public class ModeWidget extends SettingWidget {
    private static final float HEIGHT = 20.0F;
    private static final float BOX_H = 16.0F;

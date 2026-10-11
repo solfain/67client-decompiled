@@ -163,8 +163,8 @@ public class ConfigStore {
          return null;
       } else {
          String json = GSON.toJson(file);
-         this.sanitizeFileName(this.slots[i].name);
-         this.write(this.dir.resolve("null.json"), file);
+         String fileName = this.sanitizeFileName(this.slots[i].name);
+         this.write(this.dir.resolve(fileName + ".json"), file);
          return json;
       }
    }

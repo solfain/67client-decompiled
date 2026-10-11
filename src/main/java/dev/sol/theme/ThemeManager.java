@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ThemeManager {
-   /** Sol's signature accent — a warm solar orange. */
    public static final int SOL = -26368;
    private final List<Theme> themes = new ArrayList();
    private Theme current;

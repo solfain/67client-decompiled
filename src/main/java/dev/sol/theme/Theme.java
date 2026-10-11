@@ -2,19 +2,11 @@ package dev.sol.theme;
 
 import dev.sol.util.Colors;
 
-/**
- * Sol Client palette.
- *
- * Flat, neutral greys with a single accent colour (Meteor-style): no tinted
- * gradients, no heavy glows. Every GUI surface pulls its colours from here so
- * swapping the accent re-skins the whole client.
- */
 public class Theme {
-   // Base greys (ARGB, fully opaque — alpha is applied per surface below)
-   private static final int BASE_0 = 0xFF0E0E10; // deepest (window body)
-   private static final int BASE_1 = 0xFF151518; // header / inputs
-   private static final int BASE_2 = 0xFF1C1C20; // raised rows / chips
-   private static final int BASE_3 = 0xFF2A2A30; // outlines / tracks
+   private static final int BASE_0 = 0xFF0E0E10;
+   private static final int BASE_1 = 0xFF151518;
+   private static final int BASE_2 = 0xFF1C1C20;
+   private static final int BASE_3 = 0xFF2A2A30;
 
    private String name;
    private int accent;
@@ -54,14 +46,11 @@ public class Theme {
       return Colors.withAlpha(this.accent(), 0.30F);
    }
 
-   /** Text drawn on top of a solid accent fill (headers, active tabs). */
    public int onAccent() {
       int a = this.accent();
       float lum = (0.299F * (float)Colors.red(a) + 0.587F * (float)Colors.green(a) + 0.114F * (float)Colors.blue(a)) / 255.0F;
       return lum > 0.62F ? 0xFF101012 : 0xFFFFFFFF;
    }
-
-   // ---- surfaces -------------------------------------------------------
 
    public int background() {
       return Colors.withAlpha(BASE_0, 0.86F);
@@ -98,8 +87,6 @@ public class Theme {
    public int moduleActiveFill() {
       return Colors.withAlpha(this.accent(), 0.16F);
    }
-
-   // ---- text -----------------------------------------------------------
 
    public int textPrimary() {
       return 0xFFEDEDED;

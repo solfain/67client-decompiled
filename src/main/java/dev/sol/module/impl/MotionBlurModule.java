@@ -11,12 +11,12 @@ import java.util.Objects;
 public class MotionBlurModule extends Module {
    public final SliderSetting strength = (SliderSetting)this.addSetting((new SliderSetting("Strength", "Blur strength", (double)30.0F, (double)5.0F, (double)100.0F, (double)5.0F, "%")).withLabel((v) -> {
       int pct = (int)Math.round(v);
-      String tier = pct <= 20 ? "Subtle" : (pct <= 45 ? "Balanced" : (pct <= 70 ? "Smooth" : (pct <= 90 ? "Heavy" : "Cinematic")));
-      return pct + "% · " + tier;
+      String tier = pct <= 20 ? "Light" : (pct <= 45 ? "Medium" : (pct <= 70 ? "Strong" : (pct <= 90 ? "Heavy" : "Max")));
+      return pct + "% (" + tier + ")";
    }));
-   public final BooleanSetting accentTrails = (BooleanSetting)this.addSetting(new BooleanSetting("Accent Trails", "Tint the trails with your theme accent (Sol look)", true));
+   public final BooleanSetting accentTrails = (BooleanSetting)this.addSetting(new BooleanSetting("Accent Trails", "Color the trails with your theme color", true));
    public final SliderSetting tint = (SliderSetting)this.addSetting(new SliderSetting("Tint", "How strongly trails take the theme color", (double)30.0F, (double)0.0F, (double)100.0F, (double)5.0F, "%"));
-   public final BooleanSetting fpsCompensated = (BooleanSetting)this.addSetting(new BooleanSetting("FPS Compensated", "Keep the blur consistent across framerates", true));
+   public final BooleanSetting fpsCompensated = (BooleanSetting)this.addSetting(new BooleanSetting("FPS Compensated", "Keep the blur the same at any FPS", true));
 
    public MotionBlurModule() {
       super("MotionBlur", "Cinematic motion blur", Category.RENDER);

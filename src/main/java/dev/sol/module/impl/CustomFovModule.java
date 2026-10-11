@@ -12,9 +12,9 @@ import net.minecraft.class_310;
 public class CustomFovModule extends Module {
    private static final double EASE_SPEED = (double)12.0F;
    private static final double SPRINT_SPEED = 0.2825;
-   public final SliderSetting fov = (SliderSetting)this.addSetting((new SliderSetting("FOV", "Target field of view", (double)95.0F, (double)30.0F, (double)140.0F, (double)1.0F, "°")).withLabel((v) -> (int)v + "° · " + tag((int)v)));
+   public final SliderSetting fov = (SliderSetting)this.addSetting((new SliderSetting("FOV", "Target field of view", (double)95.0F, (double)30.0F, (double)140.0F, (double)1.0F, "°")).withLabel((v) -> (int)v + "° (" + tag((int)v) + ")"));
    public final BooleanSetting smooth = (BooleanSetting)this.addSetting(new BooleanSetting("Smooth", "Ease FOV changes in and out", true));
-   public final BooleanSetting noSprintZoom = (BooleanSetting)this.addSetting(new BooleanSetting("No Sprint Zoom", "Cancel the vanilla sprint / speed FOV punch", true));
+   public final BooleanSetting noSprintZoom = (BooleanSetting)this.addSetting(new BooleanSetting("No Sprint Zoom", "Stop the FOV change when you sprint", true));
    public final BooleanSetting speedFov = (BooleanSetting)this.addSetting(new BooleanSetting("Speed FOV", "Widen the view with your movement speed", false));
    public final SliderSetting speedStrength = (SliderSetting)this.addSetting(new SliderSetting("Speed Strength", "Extra degrees at full sprint", (double)12.0F, (double)0.0F, (double)30.0F, (double)1.0F, "°"));
    private double current = (double)-1.0F;

@@ -18,7 +18,7 @@ public class CustomCrosshairModule extends Module {
    public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Crosshair color", -26368));
    public final BooleanSetting rainbow = (BooleanSetting)this.addSetting(new BooleanSetting("Rainbow", "Cycle through the rainbow", false));
    public final BooleanSetting centerDot = (BooleanSetting)this.addSetting(new BooleanSetting("Center Dot", "Add a filled dot at the very center", false));
-   public final BooleanSetting outline = (BooleanSetting)this.addSetting(new BooleanSetting("Outline", "Dark border for contrast on any background", true));
+   public final BooleanSetting outline = (BooleanSetting)this.addSetting(new BooleanSetting("Outline", "Dark border so it is easy to see", true));
    public final BooleanSetting glow = (BooleanSetting)this.addSetting(new BooleanSetting("Glow", "Soft glow behind the crosshair", true));
    public final BooleanSetting hideVanilla = (BooleanSetting)this.addSetting(new BooleanSetting("Hide Vanilla", "Hide Minecraft's default crosshair", true));
 
@@ -146,7 +146,6 @@ public class CustomCrosshairModule extends Module {
    }
 
    private void logo(NVGRenderer vg, float cx, float cy, float s, int col) {
-      // Sol sun mark: a core disc with 8 rays
       float core = Math.max(1.5F, s * 0.45F);
       float inner = core + Math.max(1.5F, s * 0.35F);
       float outer = inner + Math.max(2.0F, s * 0.6F);

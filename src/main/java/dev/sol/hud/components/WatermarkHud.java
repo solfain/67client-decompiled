@@ -11,7 +11,6 @@ import dev.sol.util.Colors;
 import java.util.function.BooleanSupplier;
 import net.minecraft.class_310;
 
-/** Watermark: [sun] S O L | 1.0.0 | 144 fps on a glass panel with a top accent rule. */
 public class WatermarkHud extends HudComponent {
    private static final float HEIGHT = 21.0F;
    private static final float NAME = 10.5F;

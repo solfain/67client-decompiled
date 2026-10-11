@@ -17,7 +17,7 @@ public class BlockEspModule extends Module {
    public final ColorSetting sideColor = (ColorSetting)this.addSetting(new ColorSetting("Fill Overlay", "Default fill tint", 419495880));
    public final BooleanSetting tracers = (BooleanSetting)this.addSetting(new BooleanSetting("Tracers", "Draw lines from the crosshair to each block", false));
    public final BooleanSetting tracer = (BooleanSetting)this.addSetting(new BooleanSetting("Tracer", "Secondary tracer enable", true));
-   public final ColorSetting tracerColor = (ColorSetting)this.addSetting(new ColorSetting("Default Tracer Tint", "Tracer line color / alpha", 2097217480));
+   public final ColorSetting tracerColor = (ColorSetting)this.addSetting(new ColorSetting("Default Tracer Tint", "Tracer line color", 2097217480));
    public final SliderSetting highlightAlpha = (SliderSetting)this.addSetting(new SliderSetting("Highlight Alpha", "Box opacity", (double)255.0F, (double)0.0F, (double)255.0F, (double)5.0F));
    public final SliderSetting rangeExtraChunks = (SliderSetting)this.addSetting(new SliderSetting("Range Extra Chunks", "Extra scan radius beyond render distance", (double)1.0F, (double)0.0F, (double)4.0F, (double)1.0F));
 

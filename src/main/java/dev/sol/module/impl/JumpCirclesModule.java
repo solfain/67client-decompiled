@@ -13,7 +13,7 @@ import net.minecraft.class_5819;
 import net.minecraft.class_746;
 
 public class JumpCirclesModule extends Module {
-   public final ModeSetting style = (ModeSetting)this.addSetting(new ModeSetting("Style", "Ripple: staggered expanding rings. Halo: spinning dashed ring. Pulse: a glowing disc that beats twice.", "Ripple", new String[]{"Ripple", "Halo", "Pulse"}));
+   public final ModeSetting style = (ModeSetting)this.addSetting(new ModeSetting("Style", "Ripple: rings that grow outward. Halo: a spinning ring. Pulse: a disc that flashes twice.", "Ripple", new String[]{"Ripple", "Halo", "Pulse"}));
    public final SliderSetting size = (SliderSetting)this.addSetting(new SliderSetting("Size", "Effect radius in blocks", (double)1.0F, (double)0.5F, (double)3.0F, 0.1, "x"));
    public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Effect color (alpha is animated)", -26368));
    public final SliderSetting lifetime = (SliderSetting)this.addSetting(new SliderSetting("Lifetime", "How long each effect lasts", (double)1.2F, (double)0.4F, (double)4.0F, 0.1, "s"));
@@ -21,7 +21,7 @@ public class JumpCirclesModule extends Module {
    public final SliderSetting spin = (SliderSetting)this.addSetting(new SliderSetting("Spin", "Halo: rotation speed", (double)120.0F, (double)0.0F, (double)360.0F, (double)10.0F, "\u00b0/s"));
    public final BooleanSetting rainbow = (BooleanSetting)this.addSetting(new BooleanSetting("Rainbow", "Cycle the color through the rainbow", false));
    public final BooleanSetting particles = (BooleanSetting)this.addSetting(new BooleanSetting("Sparks", "Kick out a flat ring of sparks when you jump", true));
-   public final SliderSetting maxCircles = (SliderSetting)this.addSetting(new SliderSetting("Max", "Max simultaneous effects (oldest drops first)", (double)8.0F, (double)1.0F, (double)30.0F, (double)1.0F));
+   public final SliderSetting maxCircles = (SliderSetting)this.addSetting(new SliderSetting("Max", "Most effects at once. The oldest goes first", (double)8.0F, (double)1.0F, (double)30.0F, (double)1.0F));
    private final Deque<JumpCircle> circles = new ArrayDeque();
    private int spawnCounter;
 
@@ -72,7 +72,6 @@ public class JumpCirclesModule extends Module {
       int count = 14;
       double offset = random.method_43058() * Math.PI * (double)2.0F;
 
-      // evenly spaced flat burst that skims outward along the ground
       for(int i = 0; i < count; ++i) {
          double angle = offset + Math.PI * (double)2.0F * (double)i / (double)count;
          double speed = 0.18 + random.method_43058() * 0.08;

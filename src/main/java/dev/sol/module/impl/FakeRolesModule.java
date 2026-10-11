@@ -28,7 +28,7 @@ public class FakeRolesModule extends Module {
    public final BooleanSetting chat = (BooleanSetting)this.addSetting(new BooleanSetting("Chat", "Show the tag before your name in chat messages", true));
 
    public FakeRolesModule() {
-      super("FakeRoles", "Fake [SR.MOD] / [MEDIA] / [SR.ADMIN] rank tag on your own name", Category.MISC);
+      super("FakeRoles", "Puts a fake [SR.MOD], [MEDIA] or [SR.ADMIN] tag on your name", Category.MISC);
    }
 
    public boolean isActive() {

@@ -22,8 +22,8 @@ import net.minecraft.class_3414;
 import net.minecraft.class_3417;
 
 public class StaffListModule extends Module {
-   public final ModeSetting detectBy = (ModeSetting)this.addSetting(new ModeSetting("Detect By", "How staff are recognised: the DonutSMP coloured star, a text rank prefix, or both", "Star + Rank", new String[]{"Star + Rank", "Star Only", "Rank Only", "Names Only"}));
-   public final StringSetting staffNames = (StringSetting)this.addSetting(new StringSetting("Staff Names", "Extra known staff usernames (comma-separated) — always shown when online", "", 220, "e.g. Notch, jeb_"));
+   public final ModeSetting detectBy = (ModeSetting)this.addSetting(new ModeSetting("Detect By", "How staff are found: the DonutSMP star, a rank word, or both", "Star + Rank", new String[]{"Star + Rank", "Star Only", "Rank Only", "Names Only"}));
+   public final StringSetting staffNames = (StringSetting)this.addSetting(new StringSetting("Staff Names", "Extra staff names, split by commas. Always shown when online", "", 220, "e.g. Notch, jeb_"));
    public final StringSetting rankKeywords;
    public final StringSetting starSymbols;
    public final BooleanSetting fontIcons;
@@ -36,13 +36,13 @@ public class StaffListModule extends Module {
    public final StaffTracker tracker;
 
    public StaffListModule() {
-      super("StaffList", "Lists online staff on the HUD (DonutSMP coloured-star detection)", Category.WORLD);
-      this.rankKeywords = (StringSetting)this.addSetting(new StringSetting("Rank Keywords", "Words in a name tag that mark staff (comma-separated), most senior first", StaffDetector.DEFAULT_RANK_KEYWORDS_STRING, 256, "owner, admin, mod…"));
-      this.starSymbols = (StringSetting)this.addSetting(new StringSetting("Star Symbols", "Marker glyphs that mean 'staff'. Paste the server's star here if detection misses", "★☆✦✧✪✩✫✬✭✮✯⭐✰❂⚝✴✵✶✷✸✹⍟", 96, "★ ✦ ⭐"));
-      this.fontIcons = (BooleanSetting)this.addSetting(new BooleanSetting("Font Icons", "Also treat custom resource-pack icons (private-use glyphs) as staff stars", true));
+      super("StaffList", "Shows online staff on the HUD", Category.WORLD);
+      this.rankKeywords = (StringSetting)this.addSetting(new StringSetting("Rank Keywords", "Words in a name that mean staff, split by commas. Highest rank first", StaffDetector.DEFAULT_RANK_KEYWORDS_STRING, 256, "owner, admin, mod..."));
+      this.starSymbols = (StringSetting)this.addSetting(new StringSetting("Star Symbols", "Symbols that mean staff. Paste the server's star here if it gets missed", "★☆✦✧✪✩✫✬✭✮✯⭐✰❂⚝✴✵✶✷✸✹⍟", 96, "★ ✦ ⭐"));
+      this.fontIcons = (BooleanSetting)this.addSetting(new BooleanSetting("Font Icons", "Also count resource pack icons as staff stars", true));
       this.showRank = (BooleanSetting)this.addSetting(new BooleanSetting("Show Rank", "Show each staff member's rank label when the server exposes one", true));
       this.showPing = (BooleanSetting)this.addSetting(new BooleanSetting("Show Ping", "Show each staff member's latency", false));
-      this.vanished = (BooleanSetting)this.addSetting(new BooleanSetting("Vanished Staff", "Include soft-vanished staff (spectator / hidden from tab), marked separately", true));
+      this.vanished = (BooleanSetting)this.addSetting(new BooleanSetting("Vanished Staff", "Also show hidden staff (spectator or not in tab)", true));
       this.maxRows = (SliderSetting)this.addSetting(new SliderSetting("Max Rows", "Most staff rows to show before collapsing into a '+N more' line", (double)6.0F, (double)1.0F, (double)20.0F, (double)1.0F));
       this.alerts = (ModeSetting)this.addSetting(new ModeSetting("Alerts", "Announce when a new staff member appears in your tab", "Toast", new String[]{"Toast", "Chat", "Off"}));
       this.alertSound = (BooleanSetting)this.addSetting(new BooleanSetting("Alert Sound", "Play a bell when a staff alert fires", true));

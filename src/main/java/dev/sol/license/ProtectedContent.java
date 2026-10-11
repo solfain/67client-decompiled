@@ -21,7 +21,7 @@ public final class ProtectedContent {
          } else {
             if (!hasPlaintext(parent, implFqcn)) {
                if (log != null) {
-                  log.debug("[secured] {} not present — skipping", implFqcn);
+                  log.debug("[secured] {} not found, skipping", implFqcn);
                }
 
                return null;

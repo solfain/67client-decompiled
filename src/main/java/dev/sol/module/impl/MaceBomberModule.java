@@ -26,7 +26,7 @@ public class MaceBomberModule extends Module {
    private boolean strafing;
 
    public MaceBomberModule() {
-      super("Mace Bomber", "Times a fully-charged mace smash on the way down", Category.COMBAT);
+      super("Mace Bomber", "Hits with the mace at the right time while falling", Category.COMBAT);
    }
 
    protected void onDisable() {

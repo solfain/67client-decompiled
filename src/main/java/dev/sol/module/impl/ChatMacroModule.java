@@ -21,8 +21,8 @@ public class ChatMacroModule extends Module {
 
       for(int i = 0; i < 3; ++i) {
          String num = Integer.toString(i + 1);
-         this.messages[i] = (StringSetting)this.addSetting(new StringSetting("Message null", "Message or /command for slot null", "", 256, "/say hi"));
-         this.keys[i] = (KeybindSetting)this.addSetting(new KeybindSetting("Key null", "Key that runs slot null", -1));
+         this.messages[i] = (StringSetting)this.addSetting(new StringSetting("Message " + num, "Message or /command for slot " + num, "", 256, "/say hi"));
+         this.keys[i] = (KeybindSetting)this.addSetting(new KeybindSetting("Key " + num, "Key that runs slot " + num, -1));
          this.messages[i].visibleWhen(() -> this.slot.check(num));
          this.keys[i].visibleWhen(() -> this.slot.check(num));
       }

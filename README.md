@@ -1,65 +1,52 @@
 # Sol Client
 
-A Fabric client mod for **Minecraft 1.21.11**: a NanoVG ClickGUI, HUD editor, themes and modules.
+A Fabric mod for Minecraft 1.21.11.
 
-> Based on **67Client**, modified and rebranded with the original author's permission.
+Based on 67Client. Changed and renamed with the owner's permission.
 
-![ClickGUI preview](docs/clickgui-preview.png)
+## Download
 
-*(This preview is a mockup drawn with the same sizes, colours and font as the code. It's not a real screenshot.)*
+Get the jar here: [sol-client-1.0.0.jar](https://github.com/solfain/67client-decompiled/releases/download/latest/sol-client-1.0.0.jar)
 
-## The UI
+Put it in your mods folder with Fabric Loader and Fabric API.
 
-One centred window. No sidebar and no floating panels.
+## Menu
 
-- **Top row**: the Sol logo, a search box, and **Themes** / **Configs** buttons. Start typing anywhere to search every category at once.
-- **Category tabs**: Combat, Movement, Player, Render, World, Misc and Client, with icons and a sliding accent underline. A dot on a tab means something in it is enabled. ←/→ or Tab switches categories.
-- **Module cards** in a responsive grid. Each card shows the name, a short description, an on/off switch and the keybind (if one is set). Enabled cards get an accent outline and tint.
-  Left-click a card to toggle it. Right-click it (or click the `···`) to open its settings window.
-- **Themes view**: accent swatches for Sol (default orange), Ember, Indigo, Ocean, Mint, Frost and Rainbow, plus custom accents with a colour picker.
-- **Fonts**: Poppins by default ("Clean"). You can switch to Monocraft ("Pixel") in ClickGUI → Font.
-- **HUD**: smoked-glass panels with a thin accent rule on top, letter-spaced captions and bold values. No glows or gradients. The module list is plain shadowed text with an accent tick, the radar is square, toasts have a status chip and a lifetime bar, and HUD edit mode uses corner brackets.
+Press Right Shift to open it. Modules are cards, sorted into tabs at the top. Left click a card to turn it on or off. Right click it to change its settings. Start typing to search.
 
-  ![HUD preview](docs/hud-preview.png)
+There are themes (Sol, Ember, Indigo, Ocean, Mint, Frost and Rainbow) and two fonts (Poppins and Monocraft).
+
+## HUD
+
+Open chat to move and resize the HUD.
+
+![HUD](docs/hud-preview.png)
 
 ## Jump circles
 
-Three styles to choose from: **Ripple** (expanding rings), **Halo** (a spinning glow ring) and **Pulse** (a quick flash ring).
-Settings: size, colour or rainbow, lifetime, ring count, spin, sparks and a maximum number on screen.
+Three styles: Ripple, Halo and Pulse.
 
-## Changes from the original
+## What changed
 
-- Modules have been re-sorted into new categories, alphabetical within each one.
-- Removed: CustomAccessories, CustomGlint (and its glint textures), the client UI sound system, and the Fabric gametest suite. GambleRigger is not included.
-- Fixed decompiler bugs: switches on undefined variables in AutoClicker, AutoWalk, CoordSnapper, CustomCrosshair, FakeRoles and StaffDetector, plus an AutoClicker loop that could freeze the game.
-- Configs are now keyed `Name@CATEGORY`, so **configs from the old client won't carry over**.
+* Modules are in new categories.
+* Removed CustomAccessories, CustomGlint, the UI sounds and GambleRigger.
+* Fixed bugs from the decompiler. For example, every config was saved to the same file, and some chat messages showed "null".
+* Old configs will not load.
 
-## Building
+## Build it yourself
 
-```bash
-./gradlew build          # output: build/libs/sol-client-1.0.0.jar
-```
+You need JDK 21. Run `./gradlew build`. The jar ends up in `build/libs`.
 
-Every push also builds the jar on GitHub Actions (`.github/workflows/build.yml`) and publishes it as the
-[`latest` release](../../releases/tag/latest), where it downloads directly as a `.jar`.
+Every push also builds the jar on GitHub and puts it on the [latest release](https://github.com/solfain/67client-decompiled/releases/tag/latest).
 
-Requires JDK 21. The sources came from a decompiled jar, so they use **intermediary** names
-(`class_310`, `method_1551`, …). `build.gradle` uses intermediary as its mappings so they compile as-is.
-It compiles cleanly on GitHub Actions, but hasn't been tested in-game yet.
+It builds fine but has not been tested in game yet.
 
-## Layout
+## Known problems
 
-```
-src/main/java/dev/sol/          mod source (package dev.sol, entrypoint SolClient)
-src/main/resources/             fabric.mod.json, solclient.mixins.json, assets/solclient/
-```
+AimAssist does nothing. Its code was missing from the original jar.
 
 ## Credits
 
-- Original code: the **67Client** author. Used and modified with their permission.
-- Fonts: [Poppins](src/main/resources/assets/solclient/fonts/Poppins-OFL.txt) and [Monocraft](src/main/resources/assets/solclient/fonts/Monocraft-OFL.txt), both under the SIL Open Font License.
-- Category icons: Lawnicons (see `assets/solclient/icons/LICENSE-lawnicons.txt`).
-
-## Known gaps
-
-- **AimAssist's logic is missing.** The original shipped it as an encrypted class (`dev.sol.secured.AimAssistLogic`). That class isn't in the dump, so the module loads but does nothing.
+* Original code by the 67Client owner.
+* Fonts: Poppins and Monocraft (SIL Open Font License).
+* Icons: Lawnicons.

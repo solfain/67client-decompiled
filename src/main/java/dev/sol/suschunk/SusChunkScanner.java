@@ -535,7 +535,7 @@ public class SusChunkScanner {
                int bx = (int)Math.round(zone.centroidX());
                int bz = (int)Math.round(zone.centroidZ());
                int dist = (int)Math.hypot((double)bx - mc.field_1724.method_23317(), (double)bz - mc.field_1724.method_23321());
-               String message = "Sus zone · " + dist + "m · " + bx + ", " + bz;
+               String message = "Sus zone " + dist + "m away at " + bx + ", " + bz;
                if (this.module.notifications.check("Toast") && SolClient.notifications() != null) {
                   SolClient.notifications().pushInfo(message);
                } else if (this.module.notifications.check("Chat")) {

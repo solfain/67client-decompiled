@@ -14,7 +14,7 @@ public class FreeLookModule extends Module {
    private static FreeLookModule instance;
    public final ModeSetting mode = (ModeSetting)this.addSetting(new ModeSetting("Mode", "Which entity the mouse rotates.", "Player", new String[]{"Player", "Camera"}));
    public final BooleanSetting togglePerspective = (BooleanSetting)this.addSetting(new BooleanSetting("Toggle Perspective", "Switch to third person on toggle.", true));
-   public final BooleanSetting throughWalls = (BooleanSetting)this.addSetting(new BooleanSetting("Through Walls", "See through walls — the third-person camera ignores wall collision.", false));
+   public final BooleanSetting throughWalls = (BooleanSetting)this.addSetting(new BooleanSetting("Through Walls", "Lets the third person camera go through walls", false));
    public final SliderSetting sensitivity = (SliderSetting)this.addSetting(new SliderSetting("Camera Sensitivity", "How fast the camera moves in Camera mode.", (double)8.0F, (double)0.0F, (double)10.0F, 0.1));
    public final BooleanSetting arrows = (BooleanSetting)this.addSetting(new BooleanSetting("Arrows Control Opposite", "Control the other entity's rotation with the arrow keys.", true));
    public final SliderSetting arrowSpeed = (SliderSetting)this.addSetting(new SliderSetting("Arrow Speed", "Rotation speed with the arrow keys.", (double)4.0F, (double)0.0F, (double)10.0F, (double)0.5F));

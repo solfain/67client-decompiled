@@ -32,17 +32,6 @@ import net.minecraft.class_2561;
 import net.minecraft.class_332;
 import net.minecraft.class_437;
 
-/**
- * Sol Client ClickGUI ("Sol Hub").
- *
- * One centred window:
- *   row 1  brand · search · Themes · Configs
- *   row 2  category tabs with a sliding underline
- *   body   a scrollable grid of module cards (name, description, switch, keybind)
- *
- * Left-click a card toggles it, right-click (or the ··· button) opens the
- * module's {@link ModuleSettingsWindow}. Typing anywhere searches all modules.
- */
 public class ClickGuiScreen extends class_437 implements NvgDrawable {
    private static final ClickGuiState STATE = new ClickGuiState();
    private static final float RADIUS = 10.0F;
@@ -76,7 +65,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
    private boolean settingsPressed;
    private boolean themesPressed;
    private Module hoveredCard;
-   // layout, refreshed every frame
    private float wx;
    private float wy;
    private float ww;
@@ -160,8 +148,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
       }
 
    }
-
-   // ------------------------------------------------------------------ helpers
 
    private Theme theme() {
       return SolClient.themes().current();
@@ -253,8 +239,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
       }
    }
 
-   // ------------------------------------------------------------------ settings window sync
-
    private Module findModule(String key) {
       if (key == null) {
          return null;
@@ -306,8 +290,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
       return this.settingsWindow != null && !this.settingsWindow.isClosing();
    }
 
-   // ------------------------------------------------------------------ rendering
-
    public void renderNvg(NVGRenderer vg, float mouseX, float mouseY, float uiWidth, float uiHeight) {
       vg.setFontMode((String)this.guiModule().font.get());
       if (vg.hasFont()) {
@@ -356,13 +338,11 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
    private void renderTopRow(NVGRenderer vg, float mx, float my) {
       Theme theme = this.theme();
       float cy = this.wy + TOP_H / 2.0F;
-      // brand
       float bx = this.wx + PAD;
       drawSun(vg, bx + 8.0F, cy, 5.0F, theme.accent());
       float tx = bx + 24.0F;
       tx += vg.textBold("Sol", tx, cy, 18.0F, theme.textPrimary()) + 5.0F;
       vg.text("Client", tx, cy + 0.5F, 14.0F, theme.textDisabled());
-      // buttons (right aligned): Configs, Themes
       float right = this.wx + this.ww - PAD;
       this.configsBtnW = vg.textWidth("Configs", 12.5F) + 30.0F;
       this.configsBtnX = right - this.configsBtnW;
@@ -370,7 +350,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
       this.themesBtnX = this.configsBtnX - 8.0F - this.themesBtnW;
       this.button(vg, "Themes", this.themesBtnX, this.themesBtnW, cy, mx, my, this.onThemes(), 0);
       this.button(vg, "Configs", this.configsBtnX, this.configsBtnW, cy, mx, my, this.configPanel.isOpen(), 1);
-      // search pill
       this.searchX = this.themesBtnX - 12.0F - SEARCH_W;
       this.searchY = cy - 14.0F;
       float sh = 28.0F;
@@ -409,12 +388,10 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
       int col = active ? theme.accent() : (hover ? theme.textPrimary() : theme.textMuted());
       float gx = x + 13.0F;
       if (glyph == 0) {
-         // palette: three dots
          vg.circle(gx - 2.5F, cy - 2.0F, 2.0F, col);
          vg.circle(gx + 2.5F, cy - 2.0F, 2.0F, col);
          vg.circle(gx, cy + 2.5F, 2.0F, col);
       } else {
-         // stacked sheets
          vg.rectOutline(gx - 4.0F, cy - 3.0F, 7.0F, 7.0F, 1.5F, 1.3F, col);
          vg.line(gx - 1.5F, cy - 5.0F, gx + 5.0F, cy - 5.0F, 1.3F, col);
          vg.line(gx + 5.0F, cy - 5.0F, gx + 5.0F, cy + 1.5F, 1.3F, col);
@@ -446,7 +423,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
          }
 
          vg.text(label, lx, cy, 12.5F, col);
-         // enabled-count dot
          int on = 0;
          for(Module m : SolClient.modules().inCategory(c)) {
             if (m.isEnabled()) {
@@ -510,7 +486,7 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
          title = c == null ? "" : c.getDisplayName();
       }
 
-      this.renderTitle(vg, title, list.size() + (list.size() == 1 ? " module" : " modules") + (on > 0 ? "  \u00b7  " + on + " on" : ""), cx, cy);
+      this.renderTitle(vg, title, list.size() + (list.size() == 1 ? " module" : " modules") + (on > 0 ? ", " + on + " on" : ""), cx, cy);
       this.gridTop = cy + TITLE_H;
       this.gridBottom = this.wy + this.wh - PAD;
       float viewH = this.gridBottom - this.gridTop;
@@ -575,20 +551,17 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
 
       int border = Colors.lerp(Colors.lerp(theme.outline(), theme.textDisabled(), ht), theme.accent(), et * 0.85F);
       vg.rectOutline(x, yy, w, CARD_H, 8.0F, 1.0F, border);
-      // name
       float nameY = yy + 18.0F;
       vg.save();
       vg.scissor(x, yy, w - 50.0F, CARD_H);
       vg.textBold(m.getName(), x + 14.0F, nameY, 13.5F, Colors.lerp(theme.textPrimary(), theme.accentBright(), et * 0.4F));
       vg.restore();
-      // switch
       float sw = 28.0F;
       float sh = 15.0F;
       float sx = x + w - 14.0F - sw;
       float sy = nameY - sh / 2.0F;
       vg.rect(sx, sy, sw, sh, sh / 2.0F, Colors.lerp(theme.track(), theme.accent(), et));
       vg.circle(sx + sh / 2.0F + (sw - sh) * et, nameY, sh / 2.0F - 2.5F, Colors.lerp(theme.textMuted(), -1, et));
-      // description (2 lines)
       List<String> lines = this.wrap(vg, m.getDescription(), w - 28.0F - 30.0F, 11.0F, 2);
       float dy = yy + 37.0F;
       for(String line : lines) {
@@ -596,7 +569,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
          dy += 14.0F;
       }
 
-      // bottom-right: keybind chip + settings dots
       float dotsX = x + w - 22.0F;
       float dotsY = yy + CARD_H - 14.0F;
       boolean hasSettings = !m.getSettings().isEmpty();
@@ -625,7 +597,7 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
 
    private void renderFooter(NVGRenderer vg, float uiWidth, float uiHeight) {
       Theme theme = this.theme();
-      String hint = "Click a card to toggle   \u00b7   Right-click for settings   \u00b7   Start typing to search";
+      String hint = "Click to toggle. Right click for settings. Type to search.";
       float hy = this.wy + this.wh + 18.0F;
       if (hy < uiHeight - 4.0F) {
          vg.text(hint, (uiWidth - vg.textWidth(hint, 11.0F)) / 2.0F, hy, 11.0F, Colors.withAlpha(theme.textMuted(), 0.75F));
@@ -635,7 +607,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
       vg.text(version, uiWidth - 12.0F - vg.textWidth(version, 10.5F), uiHeight - 12.0F, 10.5F, theme.textDisabled());
    }
 
-   /** The Sol sun mark: core disc + 8 short rays. */
    public static void drawSun(NVGRenderer vg, float cx, float cy, float r, int color) {
       vg.circle(cx, cy, r, color);
       float inner = r + 2.0F;
@@ -649,8 +620,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
       }
 
    }
-
-   // ------------------------------------------------------------------ public helpers
 
    public void openSearch(String query) {
       this.search.setLength(0);
@@ -675,8 +644,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
       return mx >= x && mx <= x + w && my >= cy - BTN_H / 2.0F && my <= cy + BTN_H / 2.0F;
    }
 
-   // ------------------------------------------------------------------ input
-
    public boolean method_25402(class_11909 event, boolean doubled) {
       float mx = this.uiX(event.comp_4798());
       float my = this.uiY(event.comp_4799());
@@ -695,7 +662,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
 
          return true;
       } else {
-         // search pill
          if (mx >= this.searchX && mx <= this.searchX + SEARCH_W && my >= this.searchY && my <= this.searchY + 28.0F) {
             if (!this.search.isEmpty() && mx >= this.searchX + SEARCH_W - 28.0F) {
                this.search.setLength(0);
@@ -833,7 +799,6 @@ public class ClickGuiScreen extends class_437 implements NvgDrawable {
 
          return true;
       } else if (!event.method_74231() && !this.guiModule().getKeybind().matches(key)) {
-         // arrow keys / tab cycle categories
          if (key == 262 || key == 263 || key == 258) {
             Category c = STATE.category();
             int idx = c == null ? 0 : c.ordinal();

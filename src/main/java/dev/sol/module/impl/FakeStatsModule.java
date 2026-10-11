@@ -29,8 +29,8 @@ public class FakeStatsModule extends Module {
    public final SliderSetting deathsLine = (SliderSetting)this.addSetting((new SliderSetting("Deaths Line", "Which sidebar line is deaths. 0 = auto by name.", (double)4.0F, (double)0.0F, (double)15.0F, (double)1.0F)).withLabel(FakeStatsModule::lineLabel));
    public final StringSetting playtime = (StringSetting)this.addSetting(new StringSetting("Playtime", "Fake playtime, any text. Blank = off.", "", 32, "e.g. 365d 12h"));
    public final SliderSetting playtimeLine = (SliderSetting)this.addSetting((new SliderSetting("Playtime Line", "Which sidebar line is playtime. 0 = auto by name.", (double)5.0F, (double)0.0F, (double)15.0F, (double)1.0F)).withLabel(FakeStatsModule::lineLabel));
-   public final BooleanSetting sidebar = (BooleanSetting)this.addSetting(new BooleanSetting("Sidebar", "Rewrite the server scoreboard (leaderboard) on the right.", true));
-   public final BooleanSetting balanceCommand = (BooleanSetting)this.addSetting(new BooleanSetting("Balance Command", "Intercept /bal & /balance to show your fake balance.", true));
+   public final BooleanSetting sidebar = (BooleanSetting)this.addSetting(new BooleanSetting("Sidebar", "Change the scoreboard on the right side.", true));
+   public final BooleanSetting balanceCommand = (BooleanSetting)this.addSetting(new BooleanSetting("Balance Command", "Makes /bal and /balance show your fake balance.", true));
    public final BooleanSetting deductOnPay = (BooleanSetting)this.addSetting(new BooleanSetting("Deduct On Pay", "FakePay subtracts what you pay from Money.", true));
    private String lastMoneyText;
    private double liveBalance;
@@ -38,7 +38,7 @@ public class FakeStatsModule extends Module {
    private int drawIndex;
 
    public FakeStatsModule() {
-      super("FakeStats", "Fake balance + editable leaderboard, wired to FakePay", Category.MISC);
+      super("FakeStats", "Fake balance and leaderboard. Works with FakePay", Category.MISC);
       this.moneyLine.visibleWhen(() -> (Boolean)this.sidebar.get() && !((String)this.money.get()).isBlank());
       this.shardsLine.visibleWhen(() -> (Boolean)this.sidebar.get() && !((String)this.shards.get()).isBlank());
       this.killsLine.visibleWhen(() -> (Boolean)this.sidebar.get() && !((String)this.kills.get()).isBlank());

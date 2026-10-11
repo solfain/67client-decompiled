@@ -11,7 +11,7 @@ public class ModeSetting extends Setting<String> {
       super(name, description, defaultValue);
       this.modes = List.of(modes);
       if (!this.modes.contains(defaultValue)) {
-         throw new IllegalArgumentException("Default mode 'null' not in modes for null");
+         throw new IllegalArgumentException("Default mode '" + defaultValue + "' not in modes for " + name);
       }
    }
 

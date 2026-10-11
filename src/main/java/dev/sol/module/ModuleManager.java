@@ -168,7 +168,7 @@ public class ModuleManager {
       this.register(this.fakeRoles = new FakeRolesModule());
       this.register(this.armorTrimHider = new ArmorTrimHiderModule());
       this.register(this.customCrosshair = new CustomCrosshairModule());
-      this.run("Media/StaffNames/Icons", "Marks media & staff players with icons", Category.WORLD, new BooleanSetting("Media", "Show media icons", true), new BooleanSetting("Staff", "Show staff icons", true), new ModeSetting("Position", "Icon position", "Prefix", new String[]{"Prefix", "Suffix"}));
+      this.run("Media/StaffNames/Icons", "Marks media and staff players with icons", Category.WORLD, new BooleanSetting("Media", "Show media icons", true), new BooleanSetting("Staff", "Show staff icons", true), new ModeSetting("Position", "Icon position", "Prefix", new String[]{"Prefix", "Suffix"}));
       this.register(this.staffList = new StaffListModule());
       this.register(this.customFov = new CustomFovModule());
       this.register(this.coordSnapper = new CoordSnapperModule());
@@ -193,11 +193,6 @@ public class ModuleManager {
       this.register(new Modules.Placeholder(name, description, category, settings));
    }
 
-   /**
-    * Modules that tick at the START of the client tick (before input is processed).
-    * These were all in Combat originally; some now live in Player/Movement, so the
-    * timing is keyed by name instead of category.
-    */
    private static final Set<String> START_TICK = Set.of("AimAssist", "Triggerbot", "Auto Crystal", "Anchor Macro", "Double Anchor", "Mace Swap", "Mace Bomber", "Shield Breaker", "HitBox", "Auto Totem", "Inv Totem", "Hover Totem", "Elytra Swap");
 
    private static boolean startTick(Module module) {

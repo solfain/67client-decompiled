@@ -19,11 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
 
-/**
- * Enabled-module list. No row backgrounds: bold text with a soft shadow and a thin accent
- * tick on the outer edge. Rows ease in/out horizontally and fade toward a lighter tint
- * further down the list.
- */
 public class ArrayListHud extends HudComponent {
    private static final float ROW = 15.0F;
    private static final float FONT = 12.0F;

@@ -138,7 +138,6 @@ public class NotificationManager extends HudComponent {
       vg.save();
       vg.alpha(fadeOut);
       HudStyle.plain(vg, x, y, w, h);
-      // status chip
       float chipX = x + 9.0F;
       float chipY = y + (h - chip) / 2.0F;
       if (weather != null) {
@@ -160,7 +159,6 @@ public class NotificationManager extends HudComponent {
          vg.textBold(title, tx, y + h / 2.0F, 12.0F, accent ? theme.textPrimary() : theme.textMuted());
       }
 
-      // lifetime bar along the bottom edge
       vg.rect(x, y + h - 1.5F, w * remaining, 1.5F, 0.0F, accent ? theme.accent() : Colors.withAlpha(-1, 0.3F));
       vg.restore();
       return h;
@@ -224,7 +222,6 @@ public class NotificationManager extends HudComponent {
       RAIN,
       THUNDER,
       CLEAR;
-
 
    }
 }

@@ -4,13 +4,6 @@ import dev.sol.render.nanovg.NVGRenderer;
 import dev.sol.theme.Theme;
 import dev.sol.util.Colors;
 
-/**
- * Shared look for every Sol HUD element.
- *
- * Square-ish smoked-glass panels, a thin accent rule across the top edge,
- * letter-spaced uppercase captions and bold values. No glows, no gradients,
- * no pills, no side strips.
- */
 public final class HudStyle {
    public static final float RADIUS = 2.0F;
    public static final float RULE = 1.5F;
@@ -31,20 +24,17 @@ public final class HudStyle {
       return Colors.withAlpha(EDGE, 0.06F);
    }
 
-   /** Glass panel with a top accent rule. */
    public static void panel(NVGRenderer vg, Theme theme, float x, float y, float w, float h) {
       vg.rect(x, y, w, h, RADIUS, panelColor());
       vg.rectOutline(x, y, w, h, RADIUS, 1.0F, edgeColor());
       vg.rect(x, y, w, RULE, 0.0F, theme.accent());
    }
 
-   /** Glass panel without the accent rule (for nested/secondary surfaces). */
    public static void plain(NVGRenderer vg, float x, float y, float w, float h) {
       vg.rect(x, y, w, h, RADIUS, panelColor());
       vg.rectOutline(x, y, w, h, RADIUS, 1.0F, edgeColor());
    }
 
-   /** Letter-spaced text; returns the advance. */
    public static float spaced(NVGRenderer vg, String text, float x, float cy, float size, int color, boolean bold) {
       float spacing = size * 0.18F;
       float cx = x;
@@ -70,10 +60,6 @@ public final class HudStyle {
       return text.isEmpty() ? 0.0F : w - spacing;
    }
 
-   /**
-    * Panel header: spaced uppercase caption on the left, optional muted value on the right,
-    * hairline divider underneath. Returns the y where content should start.
-    */
    public static float header(NVGRenderer vg, Theme theme, String caption, String right, float x, float y, float w) {
       float cy = y + RULE + HEADER_H / 2.0F;
       spaced(vg, caption.toUpperCase(), x + PAD, cy, CAPTION, theme.accent(), true);
@@ -96,7 +82,6 @@ public final class HudStyle {
       return w;
    }
 
-   /** Text with a 1px drop shadow (used where there is no panel behind). */
    public static float shadowed(NVGRenderer vg, String text, float x, float cy, float size, int color, boolean bold) {
       int shadow = Colors.withAlpha(0xFF000000, 0.55F * (float)Colors.alpha(color) / 255.0F);
       if (bold) {
@@ -108,13 +93,11 @@ public final class HudStyle {
       }
    }
 
-   /** Thin flat progress bar (track + fill, square ends). */
    public static void bar(NVGRenderer vg, float x, float y, float w, float h, float frac, int fill) {
       vg.rect(x, y, w, h, 0.0F, Colors.withAlpha(EDGE, 0.10F));
       vg.rect(x, y, Math.max(0.0F, w * Math.clamp(frac, 0.0F, 1.0F)), h, 0.0F, fill);
    }
 
-   /** Four corner brackets around a box (used for the HUD editor). */
    public static void brackets(NVGRenderer vg, float x, float y, float w, float h, float len, float stroke, int color) {
       float l = Math.min(len, Math.min(w, h) / 2.0F);
       vg.line(x, y, x + l, y, stroke, color);

@@ -20,7 +20,7 @@ public abstract class Module {
       this.name = name;
       this.description = description;
       this.category = category;
-      this.keybind = new KeybindSetting("Keybind", "Toggles null", -1);
+      this.keybind = new KeybindSetting("Keybind", "Toggles " + name, -1);
    }
 
    protected <T extends Setting<?>> T addSetting(T setting) {

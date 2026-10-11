@@ -21,7 +21,7 @@ import net.minecraft.class_2745;
 import net.minecraft.class_310;
 
 public class StorageEspModule extends Module {
-   public final ModeSetting mode = (ModeSetting)this.addSetting(new ModeSetting("Mode", "Box style — hollow outline or translucent fill", "Outline", new String[]{"Outline", "Full"}));
+   public final ModeSetting mode = (ModeSetting)this.addSetting(new ModeSetting("Mode", "Box style: outline or see-through fill", "Outline", new String[]{"Outline", "Full"}));
    public final SliderSetting range = (SliderSetting)this.addSetting(new SliderSetting("Range", "Max distance a container is highlighted", (double)128.0F, (double)16.0F, (double)256.0F, (double)8.0F));
    public final SliderSetting highlightAlpha = (SliderSetting)this.addSetting(new SliderSetting("Highlight Alpha", "Box opacity (0-255)", (double)200.0F, (double)0.0F, (double)255.0F, (double)1.0F));
    public final BooleanSetting tracers = (BooleanSetting)this.addSetting(new BooleanSetting("Tracers", "Draw lines from the crosshair to each container", false));

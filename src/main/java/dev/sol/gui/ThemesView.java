@@ -9,7 +9,6 @@ import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
 import java.util.List;
 
-/** Content of the "Themes" tab: accent swatch tiles and the custom accent picker. */
 public class ThemesView {
    private static final float TILE_W = 118.0F;
    private static final float TILE_H = 66.0F;

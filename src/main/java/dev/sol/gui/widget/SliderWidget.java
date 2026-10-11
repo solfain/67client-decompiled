@@ -7,7 +7,6 @@ import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
 
-/** Label + value on one line, thin track with a small square handle underneath. */
 public class SliderWidget extends SettingWidget {
    public static final float HEIGHT = 28.0F;
    private static final float TRACK_H = 3.0F;

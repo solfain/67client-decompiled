@@ -15,7 +15,6 @@ import net.minecraft.class_2960;
 import net.minecraft.class_310;
 import net.minecraft.class_7923;
 
-/** Armor: item icons on a glass panel, each with a durability percentage underneath. */
 public class ArmorHud extends HudComponent {
    private static final class_1304[] SLOTS;
    private static final float ICON = 18.0F;

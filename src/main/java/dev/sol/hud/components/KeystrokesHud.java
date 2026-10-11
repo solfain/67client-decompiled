@@ -15,7 +15,6 @@ import net.minecraft.class_304;
 import net.minecraft.class_310;
 import net.minecraft.class_315;
 
-/** Keystrokes: square outlined keys that fill solid accent while pressed. */
 public class KeystrokesHud extends HudComponent {
    private static final float KEY = 25.0F;
    private static final float GAP = 3.0F;
@@ -50,7 +49,6 @@ public class KeystrokesHud extends HudComponent {
       }
 
       vg.rectOutline(x, y, w, h, HudStyle.RADIUS, 1.0F, Colors.lerp(Colors.withAlpha(-1, 0.10F), theme.accent(), t));
-      // underline that "charges" while held
       vg.rect(x + 4.0F, y + h - 3.0F, (w - 8.0F) * t, 1.0F, 0.0F, Colors.withAlpha(theme.onAccent(), 0.6F * t));
    }
 

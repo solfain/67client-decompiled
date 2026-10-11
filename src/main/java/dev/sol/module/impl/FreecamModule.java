@@ -22,9 +22,9 @@ public class FreecamModule extends Module {
    public final SliderSetting speed = (SliderSetting)this.addSetting(new SliderSetting("Speed", "Camera fly speed", (double)1.0F, 0.1, (double)50.0F, 0.1, "x"));
    public final SliderSetting verticalMultiplier = (SliderSetting)this.addSetting(new SliderSetting("Vertical speed", "Up/down speed multiplier", (double)1.0F, 0.2, (double)5.0F, 0.05, "x"));
    public final BooleanSetting smoothing = (BooleanSetting)this.addSetting(new BooleanSetting("Smoothing", "Ease camera movement", true));
-   public final BooleanSetting showPlayerModel = (BooleanSetting)this.addSetting(new BooleanSetting("Show own body", "Render your body while detached", true));
+   public final BooleanSetting showPlayerModel = (BooleanSetting)this.addSetting(new BooleanSetting("Show own body", "Show your body while in freecam", true));
    public final BooleanSetting showHands = (BooleanSetting)this.addSetting(new BooleanSetting("Show hands", "Keep first-person hands visible", true));
-   public final BooleanSetting bodyFollowsKeys = (BooleanSetting)this.addSetting(new BooleanSetting("Body uses movement keys", "Physical WASD also move the body", false));
+   public final BooleanSetting bodyFollowsKeys = (BooleanSetting)this.addSetting(new BooleanSetting("Body uses movement keys", "WASD also moves your body", false));
    public final SliderSetting lookSensitivity = (SliderSetting)this.addSetting(new SliderSetting("Look Sensitivity", "Camera look sensitivity", (double)0.5F, 0.1, (double)2.0F, 0.05));
    public final SliderSetting freecamChunkDistance = (SliderSetting)this.addSetting(new SliderSetting("Chunk distance", "Chunks to load around the camera", (double)12.0F, (double)2.0F, (double)32.0F, (double)1.0F));
    private double currentX;
@@ -60,7 +60,7 @@ public class FreecamModule extends Module {
    private int autopilotWarmupTicks;
 
    public FreecamModule() {
-      super("Freecam", "Detached camera (WASD = fly). Body can keep walking; mining uses real aim.", Category.MOVEMENT);
+      super("Freecam", "Fly the camera away from your body with WASD", Category.MOVEMENT);
       instance = this;
    }
 

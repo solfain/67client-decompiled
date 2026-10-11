@@ -113,7 +113,7 @@ public class ConfigPanel {
       vg.line(gx + 4.0F, gy + 5.5F, gx + 11.0F, gy + 5.5F, 1.4F, theme.accent());
       vg.line(gx + 4.0F, gy + 9.5F, gx + 9.0F, gy + 9.5F, 1.4F, theme.accent());
       vg.textBold("Configs", gx + 28.0F, this.cardY + 26.0F, 19.0F, theme.textPrimary());
-      vg.text("Save, activate & share your full client setup", gx + 28.0F, this.cardY + 44.0F, 12.0F, theme.textMuted());
+      vg.text("Save, load and share your settings", gx + 28.0F, this.cardY + 44.0F, 12.0F, theme.textMuted());
       this.closeSize = 16.0F;
       this.closeX = this.cardX + 600.0F - 18.0F - this.closeSize;
       this.closeY = this.cardY + 20.0F;
@@ -153,7 +153,7 @@ public class ConfigPanel {
          }
       }
 
-      String status = this.renamingSlot == slot.index() ? "Enter to confirm · Esc to cancel" : (slot.filled() ? "Saved · " + relativeTime(slot.savedAt()) : "Empty slot");
+      String status = this.renamingSlot == slot.index() ? "Enter to save, Esc to cancel" : (slot.filled() ? "Saved " + relativeTime(slot.savedAt()) : "Empty slot");
       vg.text(status, nameX, y + 40.0F, 11.5F, theme.textMuted());
       this.layoutButtons(vg, theme, slot, x + w - 16.0F, y, mx, my);
    }
@@ -262,7 +262,7 @@ public class ConfigPanel {
 
    private void renderFooter(NVGRenderer vg, Theme theme) {
       float y = this.cardY + this.cardH - 19.0F;
-      vg.text("Export copies to your clipboard & a file · Import pastes it", this.cardX + 18.0F, y, 11.0F, theme.textMuted());
+      vg.text("Export copies the config to your clipboard. Import pastes it.", this.cardX + 18.0F, y, 11.0F, theme.textMuted());
       vg.text("v1", this.cardX + 600.0F - 18.0F - vg.textWidth("v1", 11.0F), y, 11.0F, theme.textDisabled());
    }
 
@@ -449,9 +449,9 @@ public class ConfigPanel {
    }
 
    private void doDelete(int slot) {
-      this.store().slot(slot).name();
+      String name = this.store().slot(slot).name();
       if (this.store().delete(slot)) {
-         this.toast("Deleted \"null\"");
+         this.toast("Deleted \"" + name + "\"");
       } else {
          this.toast("Couldn't delete the config");
       }

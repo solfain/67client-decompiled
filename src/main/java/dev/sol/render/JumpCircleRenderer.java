@@ -36,7 +36,6 @@ public final class JumpCircleRenderer {
             int baseRgb = currentBaseRgb(module);
             String style = (String)module.style.get();
             if ("Halo".equals(style)) {
-               // soft glow underneath, then the spinning dashed ring on top
                class_4588 glow = bufferSource.method_73477(class_12249.method_76002(TEXTURE_GLOW));
                for(JumpCirclesModule.JumpCircle circle : circles) {
                   renderHaloGlow(poseStack, glow, circle, cam, now, lifetime, size, baseRgb);
@@ -64,7 +63,6 @@ public final class JumpCircleRenderer {
 
    }
 
-   /** Several thin rings that start one after another and race outwards. */
    private static void renderRipple(class_4587 poseStack, class_4588 buffer, JumpCirclesModule.JumpCircle circle, class_243 cam, long now, float lifetime, float size, int baseRgb, int rings) {
       float age = circle.ageSeconds(now);
       float stagger = Math.min(RING_STAGGER * lifetime, lifetime / (float)(rings + 1));
@@ -93,7 +91,6 @@ public final class JumpCircleRenderer {
       poseStack.method_22909();
    }
 
-   /** A dashed ring that pops in, spins, then tightens and fades. */
    private static void renderHalo(class_4587 poseStack, class_4588 buffer, JumpCirclesModule.JumpCircle circle, class_243 cam, long now, float lifetime, float size, int baseRgb, float spinDegPerSec) {
       float age = circle.ageSeconds(now);
       float scale;
@@ -111,7 +108,6 @@ public final class JumpCircleRenderer {
       poseStack.method_22909();
    }
 
-   /** A glowing disc that beats twice (lub-dub) and fades out. */
    private static void renderPulse(class_4587 poseStack, class_4588 buffer, JumpCirclesModule.JumpCircle circle, class_243 cam, long now, float lifetime, float size, int baseRgb) {
       float age = circle.ageSeconds(now);
       float t = clamp01(age / lifetime);
@@ -124,20 +120,17 @@ public final class JumpCircleRenderer {
       poseStack.method_22909();
    }
 
-   /** Pushes the pose and moves it to the circle's ground position. Caller must pop. */
    private static void place(class_4587 poseStack, JumpCirclesModule.JumpCircle circle, class_243 cam, float lift) {
       poseStack.method_22903();
       poseStack.method_22904(circle.doubleVal - cam.field_1352, circle.doubleVal2 + (double)lift - cam.field_1351, circle.doubleVal3 - cam.field_1350);
    }
 
-   /** Fade in over 0.12s, hold, fade out over the last 0.3s. */
    private static float envelope(float age, float lifetime) {
       float in = clamp01(age / 0.12F);
       float out = 1.0F - easeInQuad(clamp01((age - (lifetime - 0.3F)) / 0.3F));
       return easeOutCubic(in) * out;
    }
 
-   /** Smooth 0 -> 1 -> 0 hump between a and b. */
    private static float bump(float t, float a, float b) {
       if (!(t <= a) && !(t >= b)) {
          float x = (t - a) / (b - a);

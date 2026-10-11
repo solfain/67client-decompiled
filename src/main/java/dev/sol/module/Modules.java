@@ -22,13 +22,13 @@ public final class Modules {
       public final ModeSetting animation = (ModeSetting)this.addSetting(new ModeSetting("Animation", "Outline animation style", "Pulse", new String[]{"Pulse", "Gradient Flow", "Static"}));
 
       public BlockOutlineModule() {
-         super("CustomBlockOutline", "Glowing animated outline on the targeted block", Category.RENDER);
+         super("CustomBlockOutline", "Outline on the block you look at", Category.RENDER);
          this.setEnabled(true);
       }
    }
 
    public static class ClickGuiModule extends Module {
-      public final BooleanSetting blur = (BooleanSetting)this.addSetting(new BooleanSetting("Blur", "Gaussian-blur the world behind the GUI", true));
+      public final BooleanSetting blur = (BooleanSetting)this.addSetting(new BooleanSetting("Blur", "Blur the world behind the menu", true));
       public final SliderSetting blurStrength = (SliderSetting)this.addSetting(new SliderSetting("Blur Strength", "How strong the background blur is", (double)6.0F, (double)1.0F, (double)10.0F, (double)1.0F));
       public final ModeSetting font = (ModeSetting)this.addSetting(new ModeSetting("Font", "GUI font: clean (Poppins) or pixel (Monocraft)", "Clean", new String[]{"Clean", "Pixel"}));
 
@@ -55,11 +55,11 @@ public final class Modules {
       public final ColorSetting listColor = (ColorSetting)this.addSetting(new ColorSetting("List Color", "ArrayList color when Theme Sync is off", -26368));
       public final SliderSetting radarRange = (SliderSetting)this.addSetting(new SliderSetting("Radar Range", "Scan radius in blocks", (double)48.0F, (double)16.0F, (double)128.0F, (double)4.0F, "m"));
       public final BooleanSetting radarHeads = (BooleanSetting)this.addSetting(new BooleanSetting("Radar Heads", "Skin faces instead of dots", true));
-      public final BooleanSetting notifications = (BooleanSetting)this.addSetting(new BooleanSetting("Notifications", "Themed toasts when modules toggle & the weather changes", true));
-      public final SliderSetting notifyDuration = (SliderSetting)this.addSetting(new SliderSetting("Notify Duration", "How long a toast lingers before fading out", (double)2.5F, (double)1.0F, (double)6.0F, (double)0.5F, "s"));
+      public final BooleanSetting notifications = (BooleanSetting)this.addSetting(new BooleanSetting("Notifications", "Show a popup when a module turns on or off", true));
+      public final SliderSetting notifyDuration = (SliderSetting)this.addSetting(new SliderSetting("Notify Duration", "How long popups stay on screen", (double)2.5F, (double)1.0F, (double)6.0F, (double)0.5F, "s"));
 
       public HudModule() {
-         super("HUD", "All HUD elements — move & resize via chat (T)", Category.CLIENT);
+         super("HUD", "All HUD elements. Open chat (T) to move and resize them", Category.CLIENT);
          this.setEnabled(true);
          SliderSetting var10000 = this.notifyDuration;
          BooleanSetting var10001 = this.notifications;
@@ -80,20 +80,20 @@ public final class Modules {
    }
 
    public static class SpotifyModule extends Module {
-      public final ModeSetting source = (ModeSetting)this.addSetting(new ModeSetting("Source", "Auto uses the real Spotify session (Windows); Demo shows sample data", "Auto", new String[]{"Auto", "Demo"}));
+      public final ModeSetting source = (ModeSetting)this.addSetting(new ModeSetting("Source", "Auto reads Spotify (Windows only). Demo shows fake songs", "Auto", new String[]{"Auto", "Demo"}));
       public final BooleanSetting controls = (BooleanSetting)this.addSetting(new BooleanSetting("Controls", "Show prev / play / next buttons", true));
       public final BooleanSetting volume = (BooleanSetting)this.addSetting(new BooleanSetting("Volume", "Show a slider for Spotify's app volume (Windows)", true));
       public final BooleanSetting hideWhenIdle = (BooleanSetting)this.addSetting(new BooleanSetting("Hide When Idle", "Hide the card when nothing plays", true));
 
       public SpotifyModule() {
-         super("SpotifyHUD", "Now playing — skip and seek from the HUD", Category.CLIENT);
+         super("SpotifyHUD", "Shows what is playing. Skip and seek from the HUD", Category.CLIENT);
          this.setEnabled(true);
       }
    }
 
    public static class SusChunkFinderModule extends Module {
-      public final SliderSetting sensitivity = (SliderSetting)this.addSetting((new SliderSetting("Sensitivity", "Higher = stricter: more weighted evidence before a chunk flags", (double)3.0F, (double)1.0F, (double)10.0F, (double)1.0F)).withLabel((v) -> (int)v + " (" + (int)v * 5 + ")"));
-      public final BooleanSetting amethyst = (BooleanSetting)this.addSetting(new BooleanSetting("Amethyst", "Hidden grown clusters via server block light 5 — the strongest signal", true));
+      public final SliderSetting sensitivity = (SliderSetting)this.addSetting((new SliderSetting("Sensitivity", "Higher means more proof is needed before a chunk is flagged", (double)3.0F, (double)1.0F, (double)10.0F, (double)1.0F)).withLabel((v) -> (int)v + " (" + (int)v * 5 + ")"));
+      public final BooleanSetting amethyst = (BooleanSetting)this.addSetting(new BooleanSetting("Amethyst", "Finds grown amethyst by its light level. Best sign of a base", true));
       public final BooleanSetting kelp = (BooleanSetting)this.addSetting(new BooleanSetting("Kelp", "Fully grown / unusually tall kelp columns", true));
       public final BooleanSetting bamboo = (BooleanSetting)this.addSetting(new BooleanSetting("Bamboo", "Fully grown, max-height bamboo", true));
       public final BooleanSetting berries = (BooleanSetting)this.addSetting(new BooleanSetting("Berries", "Sweet berry bushes at max growth stage", true));
@@ -102,17 +102,17 @@ public final class Modules {
       public final SliderSetting scanSpeed = (SliderSetting)this.addSetting(new SliderSetting("Scan Speed", "Chunks scanned per tick", (double)10.0F, (double)2.0F, (double)24.0F, (double)1.0F));
       public final SliderSetting renderY = (SliderSetting)this.addSetting(new SliderSetting("Render Y", "Height the flat chunk highlights render at", (double)100.0F, (double)-64.0F, (double)320.0F, (double)1.0F));
       public final SliderSetting fillOpacity = (SliderSetting)this.addSetting(new SliderSetting("Fill Opacity", "Fill opacity of the chunk quads", (double)90.0F, (double)0.0F, (double)255.0F, (double)1.0F));
-      public final BooleanSetting outline = (BooleanSetting)this.addSetting(new BooleanSetting("Outline", "Crisp border along the chunk edges", true));
+      public final BooleanSetting outline = (BooleanSetting)this.addSetting(new BooleanSetting("Outline", "Draw a line along the chunk edges", true));
       public final SliderSetting outlineOpacity = (SliderSetting)this.addSetting(new SliderSetting("Outline Opacity", "Border opacity", (double)200.0F, (double)0.0F, (double)255.0F, (double)1.0F));
-      public final BooleanSetting smartMode = (BooleanSetting)this.addSetting(new BooleanSetting("Smart Mode", "Merge nearby flags into zones with a centroid marker", true));
+      public final BooleanSetting smartMode = (BooleanSetting)this.addSetting(new BooleanSetting("Smart Mode", "Merge nearby flags into one zone with a marker in the middle", true));
       public final SliderSetting mergeRadius = (SliderSetting)this.addSetting(new SliderSetting("Merge Radius", "Flags within this many chunks merge into one zone", (double)3.0F, (double)1.0F, (double)8.0F, (double)1.0F, " ch"));
-      public final BooleanSetting centroidMarker = (BooleanSetting)this.addSetting(new BooleanSetting("Centroid Marker", "Mark each zone's weighted centre — the likely base spot", true));
-      public final BooleanSetting showOnRadar = (BooleanSetting)this.addSetting(new BooleanSetting("Show on Radar", "Pulse sus zones on the Radar; far zones clamp to the edge", true));
+      public final BooleanSetting centroidMarker = (BooleanSetting)this.addSetting(new BooleanSetting("Centroid Marker", "Mark the middle of each zone, where the base most likely is", true));
+      public final BooleanSetting showOnRadar = (BooleanSetting)this.addSetting(new BooleanSetting("Show on Radar", "Show sus zones on the radar", true));
       public final ModeSetting notifications = (ModeSetting)this.addSetting(new ModeSetting("Notifications", "Announce each new zone once, with coords and distance", "Toast", new String[]{"Toast", "Chat", "Off"}));
       public final SusChunkScanner scanner = new SusChunkScanner(this);
 
       public SusChunkFinderModule() {
-         super("SusChunkFinder", "Finds long-loaded chunks — bases — via amethyst light & growth", Category.WORLD);
+         super("SusChunkFinder", "Finds chunks that have been loaded a long time, like bases, using amethyst growth", Category.WORLD);
          SliderSetting var10000 = this.outlineOpacity;
          BooleanSetting var10001 = this.outline;
          Objects.requireNonNull(var10001);

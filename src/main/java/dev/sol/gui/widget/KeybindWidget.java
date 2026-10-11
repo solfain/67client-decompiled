@@ -6,7 +6,6 @@ import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
 
-/** Click the key box, then press a key (Esc clears, any mouse button but left binds it). */
 public class KeybindWidget extends SettingWidget {
    public static final float HEIGHT = 20.0F;
    private KeybindSetting setting;

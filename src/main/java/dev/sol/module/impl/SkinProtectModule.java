@@ -20,7 +20,7 @@ import net.minecraft.class_8685;
 
 public class SkinProtectModule extends Module {
    private static final HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(8L)).build();
-   public final StringSetting ign = (StringSetting)this.addSetting(new StringSetting("Skin IGN", "Username whose skin is applied", "Notch", 16, "Type a username…"));
+   public final StringSetting ign = (StringSetting)this.addSetting(new StringSetting("Skin IGN", "Username whose skin is applied", "Notch", 16, "Type a username..."));
    public final ModeSetting applyTo = (ModeSetting)this.addSetting(new ModeSetting("Apply To", "Whose skin gets replaced", "Everyone", new String[]{"Everyone", "Others", "Self"}));
    private volatile class_8685 replacement;
    private volatile String fetchedFor = "";
@@ -72,7 +72,7 @@ public class SkinProtectModule extends Module {
 
    private void resolve(String username) {
       try {
-         JsonObject profile = getJson("https://api.mojang.com/users/profiles/minecraft/null");
+         JsonObject profile = getJson("https://api.mojang.com/users/profiles/minecraft/" + username);
          if (profile == null || !profile.has("id")) {
             SolClient.LOGGER.warn("[SkinProtect] Unknown username: {}", username);
             return;

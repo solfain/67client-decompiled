@@ -15,14 +15,14 @@ import net.minecraft.class_3417;
 
 public class WeatherNotifierModule extends Module {
    public final BooleanSetting rain = (BooleanSetting)this.addSetting(new BooleanSetting("Rain", "Announce when rain starts/stops", true));
-   public final BooleanSetting thunder = (BooleanSetting)this.addSetting(new BooleanSetting("Thunder", "Announce when a thunderstorm starts/stops", true));
+   public final BooleanSetting thunder = (BooleanSetting)this.addSetting(new BooleanSetting("Thunder", "Tell you when a thunderstorm starts or stops", true));
    public final BooleanSetting sound = (BooleanSetting)this.addSetting(new BooleanSetting("Sound", "Play a ping on each change", true));
    public final ModeSetting output = (ModeSetting)this.addSetting(new ModeSetting("Output", "How the change is shown", "Notification", new String[]{"Notification", "Chat", "Action Bar"}));
    private Boolean lastRaining;
    private Boolean lastThundering;
 
    public WeatherNotifierModule() {
-      super("WeatherNotifier", "Themed toast when the weather changes", Category.WORLD);
+      super("WeatherNotifier", "Shows a popup when the weather changes", Category.WORLD);
    }
 
    protected void onEnable() {
@@ -74,7 +74,7 @@ public class WeatherNotifierModule extends Module {
             }
          } else {
             boolean actionBar = this.output.check("Action Bar");
-            mc.field_1724.method_7353(class_2561.method_43470("§6[Sol] §fnull — null"), actionBar);
+            mc.field_1724.method_7353(class_2561.method_43470("§6[Sol] §f" + title + (subtitle != null ? " §7" + subtitle : "")), actionBar);
          }
 
          if ((Boolean)this.sound.get()) {

@@ -27,13 +27,6 @@ import dev.sol.util.Colors;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Floating settings window for a single module.
- *
- * Opened by right-clicking a module row. Shows the module's description, an
- * enable switch and every setting widget in a scrollable list. Drag it by the
- * title bar; click outside, press Escape or hit the x to close.
- */
 public class ModuleSettingsWindow {
    public static final float WIDTH = 286.0F;
    private static final float HEADER_H = 28.0F;
@@ -71,7 +64,6 @@ public class ModuleSettingsWindow {
       this.open.setTarget(1.0F);
    }
 
-   /** Builds the setting widgets for a module, followed by its keybind. */
    public static List<SettingWidget> createWidgets(ThemeManager themes, Module module) {
       List<SettingWidget> out = new ArrayList();
 
@@ -123,7 +115,6 @@ public class ModuleSettingsWindow {
       return this.closing;
    }
 
-   /** True once the close animation has fully finished. */
    public boolean isGone() {
       return this.closing && this.open.isDone() && this.open.value() <= 0.01F;
    }
@@ -203,7 +194,6 @@ public class ModuleSettingsWindow {
          float wx = this.x;
          float wy = this.y + (1.0F - t) * 10.0F;
 
-         // dim everything behind the window
          vg.rect(0.0F, 0.0F, uiWidth, uiHeight, 0.0F, Colors.withAlpha(0xFF000000, 0.28F * t));
          vg.save();
          vg.alpha(t);
@@ -211,7 +201,6 @@ public class ModuleSettingsWindow {
          vg.rectVaryingGradient(wx, wy + HEADER_H, WIDTH, totalH - HEADER_H, 0.0F, 0.0F, RADIUS, RADIUS, Colors.withAlpha(theme.background(), 0.97F), Colors.withAlpha(theme.background(), 0.97F));
          vg.rectOutline(wx, wy, WIDTH, totalH, RADIUS, 1.0F, theme.outline());
 
-         // title bar
          vg.rectVaryingGradient(wx, wy, WIDTH, HEADER_H, RADIUS, RADIUS, 0.0F, 0.0F, theme.accent(), Colors.lerp(theme.accent(), theme.accentDark(), 0.18F));
          int onAccent = theme.onAccent();
          float hcy = wy + HEADER_H / 2.0F;
@@ -226,7 +215,6 @@ public class ModuleSettingsWindow {
 
          vg.cross(closeX, hcy - 6.0F, 12.0F, 1.6F, onAccent);
 
-         // description
          float cy = wy + HEADER_H + 8.0F;
          for(String line : this.descLines) {
             vg.text(line, wx + PAD, cy + DESC_LINE / 2.0F, DESC_SIZE, theme.textMuted());
@@ -237,7 +225,6 @@ public class ModuleSettingsWindow {
             cy += 6.0F;
          }
 
-         // enable switch row
          this.enable.setTarget(this.module.isEnabled() ? 1.0F : 0.0F);
          float et = this.enable.value();
          float rowCy = cy + TOGGLE_ROW_H / 2.0F;
@@ -256,7 +243,6 @@ public class ModuleSettingsWindow {
          vg.rect(wx + PAD, cy, WIDTH - PAD * 2.0F, 1.0F, 0.0F, theme.outline());
          cy += 1.0F;
 
-         // scrollable settings list
          this.viewTop = cy;
          vg.save();
          vg.scissor(wx, this.viewTop, WIDTH, this.viewH);
@@ -307,7 +293,6 @@ public class ModuleSettingsWindow {
       return mx >= closeX - 2.0F && mx <= closeX + 14.0F && my >= hcy - 8.0F && my <= hcy + 8.0F;
    }
 
-   /** @return false when the click landed outside the window (caller should close it). */
    public boolean mouseClicked(float mx, float my, int button) {
       if (this.closing) {
          return false;
@@ -345,7 +330,6 @@ public class ModuleSettingsWindow {
             boolean inView = my >= this.viewTop && my <= this.viewTop + this.viewH;
             for(SettingWidget widget : this.widgets) {
                if (widget.isVisible()) {
-                  // every widget sees the click so text fields can drop focus when you click elsewhere
                   widget.mouseClicked(inView ? mx : -10000.0F, inView ? my : -10000.0F, button);
                }
             }

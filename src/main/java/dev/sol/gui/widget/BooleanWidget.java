@@ -7,7 +7,6 @@ import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
 import dev.sol.util.Colors;
 
-/** Square checkbox on the right, label on the left. */
 public class BooleanWidget extends SettingWidget {
    public static final float HEIGHT = 20.0F;
    private static final float BOX = 12.0F;

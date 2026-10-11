@@ -29,12 +29,12 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 public class AutoCrystalModule extends Module {
-   public final KeybindSetting activateKey = (KeybindSetting)this.addSetting(new KeybindSetting("Activate Key", "Hold to place + break (default RMB)", 1));
+   public final KeybindSetting activateKey = (KeybindSetting)this.addSetting(new KeybindSetting("Activate Key", "Hold to place and break (right click by default)", 1));
    public final SliderSetting breakDelay = (SliderSetting)this.addSetting(new SliderSetting("Break Delay", "Ticks between crystal breaks", (double)1.0F, (double)0.0F, (double)20.0F, (double)1.0F, "t"));
    public final SliderSetting placeDelay = (SliderSetting)this.addSetting(new SliderSetting("Place Delay", "Ticks between crystal places", (double)1.0F, (double)0.0F, (double)20.0F, (double)1.0F, "t"));
    public final BooleanSetting autoObsidian = (BooleanSetting)this.addSetting(new BooleanSetting("Auto Obsidian", "Lay an obsidian base when you're not aiming at one", true));
    public final SliderSetting obsidianDelay = (SliderSetting)this.addSetting(new SliderSetting("Obsidian Delay", "Ticks between obsidian placements", (double)2.0F, (double)0.0F, (double)20.0F, (double)1.0F, "t"));
-   public final SliderSetting range = (SliderSetting)this.addSetting(new SliderSetting("Break Range", "Max distance to a crystal you'll break (vanilla reach ~3)", (double)3.0F, (double)1.0F, (double)6.0F, (double)0.5F, "m"));
+   public final SliderSetting range = (SliderSetting)this.addSetting(new SliderSetting("Break Range", "Max distance to a crystal you will break", (double)3.0F, (double)1.0F, (double)6.0F, (double)0.5F, "m"));
    public final BooleanSetting switchBack = (BooleanSetting)this.addSetting(new BooleanSetting("Switch Back", "Return to your original hotbar slot when released", true));
    private int breakCooldown;
    private int placeCooldown;
@@ -44,7 +44,7 @@ public class AutoCrystalModule extends Module {
    private boolean wasActive;
 
    public AutoCrystalModule() {
-      super("Auto Crystal", "Hold RMB to auto place + break crystals, laying an obsidian base when needed", Category.COMBAT);
+      super("Auto Crystal", "Hold right click to place and break crystals. Places obsidian when needed", Category.COMBAT);
    }
 
    protected void onEnable() {

@@ -169,7 +169,7 @@ public class IconPickerScreen extends class_437 implements NvgDrawable {
          vg.rect(l.getFloat(), l.getFloat2(), l.panelW(), l.panelH(), 10.0F, Colors.withAlpha(theme.background(), 0.97F));
          vg.rectOutline(l.getFloat(), l.getFloat2(), l.panelW(), l.panelH(), 10.0F, 1.0F, theme.outline());
          vg.textBold(this.model.title(), l.getFloat() + 12.0F, l.getFloat2() + 16.0F, 16.0F, theme.textPrimary());
-         String hint = "Left-click: toggle   ·   Right-click: color   ·   " + this.model.activeCount() + " active";
+         String hint = "Left click to toggle, right click for color. " + this.model.activeCount() + " active";
          vg.text(hint, l.getFloat() + 12.0F, l.getFloat2() + 31.0F, 11.0F, theme.textDisabled());
          float closeCx = l.getFloat() + l.panelW() - 12.0F - 3.0F;
          float closeCy = l.getFloat2() + 18.0F;
@@ -193,7 +193,7 @@ public class IconPickerScreen extends class_437 implements NvgDrawable {
          vg.circleOutline(ix, iy - 1.0F, 4.0F, 1.4F, theme.textMuted());
          vg.line(ix + 3.0F, iy + 2.0F, ix + 6.0F, iy + 5.0F, 1.4F, theme.textMuted());
          if (this.search.length() == 0 && !this.searchFocused) {
-            vg.text("Search…  (" + this.filtered.size() + " shown)", sx + 24.0F, iy, 12.5F, theme.textDisabled());
+            vg.text("Search (" + this.filtered.size() + " shown)", sx + 24.0F, iy, 12.5F, theme.textDisabled());
          } else {
             float w = vg.text(this.search.toString(), sx + 24.0F, iy, 12.5F, theme.textPrimary());
             if (this.searchFocused && blink) {
@@ -250,7 +250,7 @@ public class IconPickerScreen extends class_437 implements NvgDrawable {
 
          vg.restore();
          if (this.filtered.isEmpty() && this.selectedOnly) {
-            vg.text("Nothing selected yet — turn off \"Selected only\" to browse.", l.gridX() + 4.0F, l.gridY() + 16.0F, 12.5F, theme.textDisabled());
+            vg.text("Nothing selected yet. Turn off \"Selected only\" to see everything.", l.gridX() + 4.0F, l.gridY() + 16.0F, 12.5F, theme.textDisabled());
          }
 
          if (this.maxScroll > 0.0F) {

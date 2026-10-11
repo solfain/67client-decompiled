@@ -45,9 +45,9 @@ import net.minecraft.class_746;
 
 public class SpawnerProtectModule extends Module {
    public final SliderSetting targetStackCount = (SliderSetting)this.addSetting(new SliderSetting("Stacks To Deposit", "How many full stacks of spawners to mine before stashing.", (double)3.0F, (double)1.0F, (double)30.0F, (double)1.0F));
-   public final SliderSetting scanRange = (SliderSetting)this.addSetting(new SliderSetting("Trigger Range", "Horizontal distance a stranger triggers the routine.", (double)64.0F, (double)16.0F, (double)128.0F, (double)1.0F, "m"));
+   public final SliderSetting scanRange = (SliderSetting)this.addSetting(new SliderSetting("Trigger Range", "How close a stranger can get before it starts.", (double)64.0F, (double)16.0F, (double)128.0F, (double)1.0F, "m"));
    public final SliderSetting rotationSpeed = (SliderSetting)this.addSetting(new SliderSetting("Rotation Speed", "Degrees per tick the look direction is nudged toward its target.", (double)15.0F, (double)1.0F, (double)30.0F, (double)1.0F));
-   public final BooleanSetting detectBlockUpdates = (BooleanSetting)this.addSetting(new BooleanSetting("Detect Block Updates", "Detects distant players by their out-of-render block break/place packets.", true));
+   public final BooleanSetting detectBlockUpdates = (BooleanSetting)this.addSetting(new BooleanSetting("Detect Block Updates", "Finds far away players when they break or place blocks.", true));
    public final StringSetting whitelist = (StringSetting)this.addSetting(new StringSetting("Whitelist", "Comma-separated names to ignore.", "", 256, "Steve, Alex"));
    public final SliderSetting breakRange = (SliderSetting)this.addSetting(new SliderSetting("Break Range", "How close a spawner must be before it is broken.", (double)5.5F, (double)1.0F, (double)8.0F, (double)0.5F, "m"));
    public final BooleanSetting doubleCheck = (BooleanSetting)this.addSetting(new BooleanSetting("Double Check", "Requires two distant breaks within the window before triggering.", true));
@@ -69,7 +69,7 @@ public class SpawnerProtectModule extends Module {
    private int miningTicks;
 
    public SpawnerProtectModule() {
-      super("SpawnerProtect", "Auto-salvages your spawners when a stranger approaches, then logs out.", Category.WORLD);
+      super("SpawnerProtect", "Mines your spawners when a stranger comes close, then logs out.", Category.WORLD);
       this.currentState = SpawnerProtectModule.State.WAITING_FOR_STRANGER;
       this.targetBlock = null;
       this.targetChest = null;
@@ -622,7 +622,7 @@ public class SpawnerProtectModule extends Module {
    private void handleFinalExit() {
       if (this.lagWaitTicks == 0) {
          this.sendWebhook("\ud83c\udfc1 **DONE.** Waiting for items to save...");
-         this.say("Task done — waiting 2s for the server to save, then disconnecting...");
+         this.say("Done. Waiting 2 seconds for the server to save, then leaving...");
       }
 
       ++this.lagWaitTicks;
@@ -800,7 +800,7 @@ public class SpawnerProtectModule extends Module {
       }
 
       try {
-         SolClient.notifications().pushInfo("SpawnerProtect · " + msg.replaceAll("§.", ""));
+         SolClient.notifications().pushInfo("SpawnerProtect: " + msg.replaceAll("§.", ""));
       } catch (Exception var4) {
       }
 
@@ -809,7 +809,7 @@ public class SpawnerProtectModule extends Module {
    private void say(String msg) {
       class_746 player = this.mc.field_1724;
       if (player != null) {
-         player.method_7353(class_2561.method_43470("§7[SpawnerProtect] null"), false);
+         player.method_7353(class_2561.method_43470("§7[SpawnerProtect] " + msg), false);
       }
 
    }

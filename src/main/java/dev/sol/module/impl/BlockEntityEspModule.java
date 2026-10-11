@@ -33,15 +33,15 @@ public class BlockEntityEspModule extends Module {
    private static final String OTHER = "other";
    private static final int MAX_ENTRIES = 8192;
    public final IconListSetting blockEntities = (IconListSetting)this.addSetting(new IconListSetting("Block Entities", "Which block-entity types to highlight"));
-   public final ModeSetting mode = (ModeSetting)this.addSetting(new ModeSetting("Mode", "Box style — hollow outline or translucent fill", "Full", new String[]{"Full", "Outline"}));
+   public final ModeSetting mode = (ModeSetting)this.addSetting(new ModeSetting("Mode", "Box style: outline or see-through fill", "Full", new String[]{"Full", "Outline"}));
    public final SliderSetting range = (SliderSetting)this.addSetting(new SliderSetting("Range", "Max distance a block entity is highlighted", (double)128.0F, (double)16.0F, (double)512.0F, (double)8.0F));
    public final SliderSetting highlightAlpha = (SliderSetting)this.addSetting(new SliderSetting("Highlight Alpha", "Box opacity (0-255)", (double)180.0F, (double)0.0F, (double)255.0F, (double)1.0F));
    public final BooleanSetting tracers = (BooleanSetting)this.addSetting(new BooleanSetting("Tracers", "Draw lines from the crosshair to each block entity", false));
-   public final BooleanSetting showGhosts = (BooleanSetting)this.addSetting(new BooleanSetting("Show Ghosts", "Keep entries the server sent but that are gone client-side", true));
+   public final BooleanSetting showGhosts = (BooleanSetting)this.addSetting(new BooleanSetting("Show Ghosts", "Keep players the server listed who are not here anymore", true));
    public final ColorSetting ghostTint = (ColorSetting)this.addSetting(new ColorSetting("Ghost Tint", "Color blended into ghost entries", -922791856));
    public final BooleanSetting chunkPackets = (BooleanSetting)this.addSetting(new BooleanSetting("Chunk Packets", "Read block entities from chunk-data packets", true));
    public final BooleanSetting beUpdatePackets = (BooleanSetting)this.addSetting(new BooleanSetting("BE Update Packets", "Read block entities from block-entity update packets", true));
-   public final BooleanSetting worldRescan = (BooleanSetting)this.addSetting(new BooleanSetting("World Rescan", "Also snapshot already-loaded chunks when enabled", true));
+   public final BooleanSetting worldRescan = (BooleanSetting)this.addSetting(new BooleanSetting("World Rescan", "Also scan chunks that are already loaded when turned on", true));
    private final Map<String, String> aliases = new HashMap();
    private final Map<Long, Cached> cache = new ConcurrentHashMap();
 
@@ -95,13 +95,13 @@ public class BlockEntityEspModule extends Module {
          } else {
             int slash = typeId.indexOf(58);
             if (slash >= 0) {
-               typeId.substring(slash + 1);
-               if (this.blockEntities.get("minecraft:null") != null) {
-                  return "minecraft:null";
+               String plain = "minecraft:" + typeId.substring(slash + 1);
+               if (this.blockEntities.get(plain) != null) {
+                  return plain;
                }
 
-               if (this.aliases.containsKey("minecraft:null")) {
-                  return (String)this.aliases.get("minecraft:null");
+               if (this.aliases.containsKey(plain)) {
+                  return (String)this.aliases.get(plain);
                }
             }
 

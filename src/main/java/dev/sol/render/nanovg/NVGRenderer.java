@@ -130,7 +130,6 @@ public final class NVGRenderer {
       this.activeFont = "Pixel".equals(mode) && this.pixelLoaded ? "pixel" : (this.solLoaded ? "sol" : (this.pixelLoaded ? "pixel" : null));
    }
 
-   /** Heavier face for titles; falls back to the active font (e.g. in Pixel mode). */
    public String boldFont() {
       return "sol".equals(this.activeFont) && this.solBoldLoaded ? "sol-bold" : this.activeFont;
    }
@@ -630,10 +629,12 @@ public final class NVGRenderer {
       if (this.textWidth(str, size) <= maxWidth) {
          return this.text(str, x, y, size, argb);
       } else {
-         for(String cut = str; cut.length() > 1 && this.textWidth("null…", size) > maxWidth; cut = cut.substring(0, cut.length() - 1)) {
+         String cut = str;
+         while(cut.length() > 1 && this.textWidth(cut + "...", size) > maxWidth) {
+            cut = cut.substring(0, cut.length() - 1);
          }
 
-         return this.text("null…", x, y, size, argb);
+         return this.text(cut + "...", x, y, size, argb);
       }
    }
 

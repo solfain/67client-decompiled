@@ -20,7 +20,7 @@ public class DoubleAnchorModule extends Module {
    public final KeybindSetting activateKey = (KeybindSetting)this.addSetting(new KeybindSetting("Activate Key", "Hold to run the combo", 72));
    public final SliderSetting timing = (SliderSetting)this.addSetting(new SliderSetting("Timing", "Delay between the two blows", (double)120.0F, (double)40.0F, (double)400.0F, (double)10.0F, "ms"));
    public final SliderSetting detonateSlot = (SliderSetting)this.addSetting(new SliderSetting("Detonate Slot", "Hotbar slot to hold while detonating (anything but glowstone)", (double)1.0F, (double)1.0F, (double)9.0F, (double)1.0F));
-   public final BooleanSetting rePlace = (BooleanSetting)this.addSetting(new BooleanSetting("Re-Place", "Place a fresh anchor for the second blow if the first is consumed", true));
+   public final BooleanSetting rePlace = (BooleanSetting)this.addSetting(new BooleanSetting("Re-Place", "Place a new anchor for the second hit if the first one is gone", true));
    public final BooleanSetting switchBack = (BooleanSetting)this.addSetting(new BooleanSetting("Switch Back", "Return to the previous hotbar slot when done", true));
    private int step;
    private int tickCounter;
@@ -28,7 +28,7 @@ public class DoubleAnchorModule extends Module {
    private int previousSlot = -1;
 
    public DoubleAnchorModule() {
-      super("Double Anchor", "Two rapid anchor charge→detonate cycles", Category.COMBAT);
+      super("Double Anchor", "Charges and blows up two anchors fast", Category.COMBAT);
    }
 
    protected void onEnable() {

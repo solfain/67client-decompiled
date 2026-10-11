@@ -125,7 +125,7 @@ public final class OverlayRenderer {
       Theme theme = SolClient.themes().current();
       float mx = uiMouseX();
       float my = uiMouseY();
-      HudStyle.spaced(vg, "DRAG TO MOVE  ·  SCROLL TO RESIZE", (uiWidth - HudStyle.spacedWidth(vg, "DRAG TO MOVE  ·  SCROLL TO RESIZE", 10.0F, true)) / 2.0F, 22.0F, 10.0F, Colors.withAlpha(theme.textMuted(), 0.9F), true);
+      HudStyle.spaced(vg, "DRAG TO MOVE, SCROLL TO RESIZE", (uiWidth - HudStyle.spacedWidth(vg, "DRAG TO MOVE, SCROLL TO RESIZE", 10.0F, true)) / 2.0F, 22.0F, 10.0F, Colors.withAlpha(theme.textMuted(), 0.9F), true);
 
       for(HudManager.Placement p : hudManager.layout(vg, uiWidth, uiHeight, true)) {
          boolean hidden = !p.component().visible();

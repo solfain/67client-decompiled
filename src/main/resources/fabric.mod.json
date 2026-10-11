@@ -3,7 +3,7 @@
   "id": "solclient",
   "version": "${version}",
   "name": "Sol Client",
-  "description": "Sol Client — NanoVG ClickGUI and HUD for Minecraft 1.21.11.",
+  "description": "Sol Client for Minecraft 1.21.11.",
   "authors": [
     "Sol Client"
   ],

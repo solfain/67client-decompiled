@@ -18,7 +18,6 @@ import net.minecraft.class_1657;
 import net.minecraft.class_2960;
 import net.minecraft.class_310;
 
-/** Potion effects: one glass panel with an "EFFECTS" header and hairline-separated rows. */
 public class PotionsHud extends HudComponent {
    private static final float ROW = 19.0F;
    private static final float ICON = 14.0F;

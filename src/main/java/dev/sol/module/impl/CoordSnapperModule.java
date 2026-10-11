@@ -42,7 +42,7 @@ public class CoordSnapperModule extends Module {
          class_2338 pos = this.resolvePos(mc);
          if (pos == null) {
             if ((Boolean)this.notify.get()) {
-               SolClient.notifications().pushInfo("CoordSnapper · no block in view");
+               SolClient.notifications().pushInfo("CoordSnapper: no block in view");
             }
          } else {
             String var10000;
@@ -65,7 +65,7 @@ public class CoordSnapperModule extends Module {
             mc.field_1774.method_1455(var10000);
             this.lastCopied = var10000;
             if ((Boolean)this.notify.get()) {
-               SolClient.notifications().pushInfo("Copied · null");
+               SolClient.notifications().pushInfo("Copied: " + var10000);
             }
          }
       }

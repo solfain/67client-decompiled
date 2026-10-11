@@ -19,7 +19,7 @@ import net.minecraft.class_5250;
 public class FakePayModule extends Module {
    private static final int WHITE = 16777215;
    private static final int RED = 16733525;
-   public final StringSetting command = (StringSetting)this.addSetting(new StringSetting("Command", "Command name to hijack, without the slash.", "pay", 32, "pay"));
+   public final StringSetting command = (StringSetting)this.addSetting(new StringSetting("Command", "Command to take over, without the slash.", "pay", 32, "pay"));
    public final ModeSetting feedback = (ModeSetting)this.addSetting(new ModeSetting("Feedback", "Where the confirmation shows.", "Both", new String[]{"Both", "Action Bar", "Chat"}));
    public final StringSetting currency = (StringSetting)this.addSetting(new StringSetting("Currency", "Symbol before the amount (colored).", "$", 4, "$"));
    public final ColorSetting currencyColor = (ColorSetting)this.addSetting(new ColorSetting("Currency Color", "Color of the currency symbol (DonutSMP blue by default).", -16740609));
@@ -28,7 +28,7 @@ public class FakePayModule extends Module {
    public final BooleanSetting selfGuard = (BooleanSetting)this.addSetting(new BooleanSetting("Self-Pay Guard", "Block paying your own name, like the real command.", true));
 
    public FakePayModule() {
-      super("FakePay", "Fakes a /pay for clips — blocks the real command", Category.MISC);
+      super("FakePay", "Fakes a /pay for clips. The real command is not sent", Category.MISC);
    }
 
    public boolean tryIntercept(String rawCommand) {
@@ -79,10 +79,10 @@ public class FakePayModule extends Module {
                         stats.deduct(amount);
                      }
 
-                     class_5250 line = class_2561.method_43473().method_10852(class_2561.method_43470("You paid null").method_54663(16777215));
+                     class_5250 line = class_2561.method_43473().method_10852(class_2561.method_43470("You paid " + player).method_54663(16777215));
                      String symbol = (String)this.currency.get();
                      if (!symbol.isEmpty()) {
-                        line.method_10852(class_2561.method_43470(" null").method_54663((Integer)this.currencyColor.get() & 16777215)).method_10852(class_2561.method_43470(Amounts.shortForm(amount)).method_54663(16777215));
+                        line.method_10852(class_2561.method_43470(" " + symbol).method_54663((Integer)this.currencyColor.get() & 16777215)).method_10852(class_2561.method_43470(Amounts.shortForm(amount)).method_54663(16777215));
                      } else {
                         line.method_10852(class_2561.method_43470(" " + Amounts.shortForm(amount)).method_54663(16777215));
                      }

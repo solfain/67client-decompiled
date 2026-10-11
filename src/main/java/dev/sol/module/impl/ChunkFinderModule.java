@@ -35,7 +35,7 @@ public final class ChunkFinderModule extends Module {
    private int lastMergeRadius;
 
    public ChunkFinderModule() {
-      super("Chunk Finder", "Highlights Donut SMP chunks that match a rare world signal worth checking.", Category.WORLD);
+      super("Chunk Finder", "Highlights Donut SMP chunks that might have a base.", Category.WORLD);
    }
 
    protected void onEnable() {
@@ -182,7 +182,7 @@ public final class ChunkFinderModule extends Module {
       if (SolClient.notifications() != null) {
          NotificationManager var10000 = SolClient.notifications();
          int var10001 = chunk.method_33940();
-         var10000.pushInfo("Chunk Finder · X " + var10001 + " Z " + chunk.method_33942());
+         var10000.pushInfo("Chunk Finder: X " + var10001 + " Z " + chunk.method_33942());
       }
 
    }

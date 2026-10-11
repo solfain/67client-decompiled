@@ -13,19 +13,19 @@ import net.minecraft.class_310;
 public class AutoTpaModule extends Module {
    public final ModeSetting mode = (ModeSetting)this.addSetting(new ModeSetting("Mode", "Which request to send.", "TPA", new String[]{"TPA", "TPAHere"}));
    public final StringSetting target = (StringSetting)this.addSetting(new StringSetting("Target", "Player to send the request to.", "", 32, "Steve"));
-   public final SliderSetting delay = (SliderSetting)this.addSetting(new SliderSetting("Delay", "Time between requests — lower is faster.", (double)2000.0F, (double)250.0F, (double)10000.0F, (double)50.0F, "ms"));
-   public final SliderSetting humanize = (SliderSetting)this.addSetting(new SliderSetting("Humanize", "Random +/- swing on each delay so the timing isn't a fixed, bot-like interval. 0 = off.", (double)25.0F, (double)0.0F, (double)60.0F, (double)5.0F, "%"));
+   public final SliderSetting delay = (SliderSetting)this.addSetting(new SliderSetting("Delay", "Time between requests. Lower is faster", (double)2000.0F, (double)250.0F, (double)10000.0F, (double)50.0F, "ms"));
+   public final SliderSetting humanize = (SliderSetting)this.addSetting(new SliderSetting("Humanize", "Adds a random change to each delay so it does not look like a bot. 0 = off.", (double)25.0F, (double)0.0F, (double)60.0F, (double)5.0F, "%"));
    public final BooleanSetting notify = (BooleanSetting)this.addSetting(new BooleanSetting("Notify", "Show a notification each time a request is sent.", false));
    private long nextSendAtMs = -1L;
    private String lastSent;
 
    public AutoTpaModule() {
-      super("AutoTPA", "Spams TPA requests at a target on a humanized timer.", Category.PLAYER);
+      super("AutoTPA", "Sends TPA requests to a player with random delays.", Category.PLAYER);
    }
 
    protected void onEnable() {
       if (((String)this.target.get()).trim().isEmpty()) {
-         SolClient.notifications().pushInfo("AutoTPA · set a Target first");
+         SolClient.notifications().pushInfo("AutoTPA: set a target first");
       }
 
       this.lastSent = null;
@@ -49,7 +49,7 @@ public class AutoTpaModule extends Module {
                mc.field_1724.field_3944.method_45730(cmd);
                this.lastSent = cmd;
                if ((Boolean)this.notify.get()) {
-                  SolClient.notifications().pushInfo("AutoTPA · /null");
+                  SolClient.notifications().pushInfo("AutoTPA: /" + cmd);
                }
 
                this.nextSendAtMs = this.scheduleNext();
