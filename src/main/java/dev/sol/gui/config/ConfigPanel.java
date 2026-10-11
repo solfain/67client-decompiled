@@ -84,9 +84,9 @@ public class ConfigPanel {
          this.cardH = 434.0F;
          this.cardX = (uiWidth - 600.0F) / 2.0F;
          this.cardY = (uiHeight - this.cardH) / 2.0F;
-         vg.glow(this.cardX, this.cardY, 600.0F, this.cardH, 18.0F, 22.0F, Colors.withAlpha(-16777216, 0.45F));
-         vg.rectVaryingGradient(this.cardX, this.cardY, 600.0F, this.cardH, 18.0F, 18.0F, 18.0F, 18.0F, theme.background(), theme.backgroundTo());
-         vg.rectOutline(this.cardX, this.cardY, 600.0F, this.cardH, 18.0F, 1.2F, Colors.withAlpha(theme.accent(), 0.3F));
+         vg.glow(this.cardX, this.cardY, 600.0F, this.cardH, 10.0F, 22.0F, Colors.withAlpha(-16777216, 0.45F));
+         vg.rect(this.cardX, this.cardY, 600.0F, this.cardH, 10.0F, Colors.withAlpha(theme.background(), 0.97F));
+         vg.rectOutline(this.cardX, this.cardY, 600.0F, this.cardH, 10.0F, 1.0F, theme.outline());
          this.renderHeader(vg, theme, mx, my);
          this.hits.clear();
          float rowY = this.cardY + 64.0F;
@@ -109,36 +109,33 @@ public class ConfigPanel {
    private void renderHeader(NVGRenderer vg, Theme theme, float mx, float my) {
       float gx = this.cardX + 18.0F;
       float gy = this.cardY + 22.0F;
-      vg.rect(gx + 4.0F, gy + 3.0F, 15.0F, 12.0F, 3.0F, Colors.withAlpha(theme.accent(), 0.45F));
-      vg.rect(gx, gy, 15.0F, 12.0F, 3.0F, theme.accentBright());
-      vg.text("Configs", gx + 28.0F, this.cardY + 26.0F, 19.0F, theme.textPrimary());
+      vg.rectOutline(gx + 1.0F, gy + 1.0F, 13.0F, 13.0F, 2.0F, 1.4F, theme.accent());
+      vg.line(gx + 4.0F, gy + 5.5F, gx + 11.0F, gy + 5.5F, 1.4F, theme.accent());
+      vg.line(gx + 4.0F, gy + 9.5F, gx + 9.0F, gy + 9.5F, 1.4F, theme.accent());
+      vg.textBold("Configs", gx + 28.0F, this.cardY + 26.0F, 19.0F, theme.textPrimary());
       vg.text("Save, activate & share your full client setup", gx + 28.0F, this.cardY + 44.0F, 12.0F, theme.textMuted());
       this.closeSize = 16.0F;
       this.closeX = this.cardX + 600.0F - 18.0F - this.closeSize;
       this.closeY = this.cardY + 20.0F;
       boolean hover = mx >= this.closeX - 4.0F && mx <= this.closeX + this.closeSize + 4.0F && my >= this.closeY - 4.0F && my <= this.closeY + this.closeSize + 4.0F;
       if (hover) {
-         vg.rect(this.closeX - 5.0F, this.closeY - 5.0F, this.closeSize + 10.0F, this.closeSize + 10.0F, 6.0F, Colors.withAlpha(theme.accent(), 0.18F));
+         vg.rect(this.closeX - 5.0F, this.closeY - 5.0F, this.closeSize + 10.0F, this.closeSize + 10.0F, 4.0F, theme.rowHover());
       }
 
-      vg.cross(this.closeX, this.closeY, this.closeSize, 1.8F, hover ? theme.accentBright() : theme.textMuted());
-      vg.rect(this.cardX + 18.0F, this.cardY + 64.0F - 2.0F, 564.0F, 1.0F, 0.5F, Colors.withAlpha(theme.accent(), 0.2F));
+      vg.cross(this.closeX, this.closeY, this.closeSize, 1.8F, hover ? theme.textPrimary() : theme.textMuted());
+      vg.rect(this.cardX, this.cardY + 64.0F - 2.0F, 600.0F, 1.0F, 0.0F, theme.outline());
    }
 
    private void renderSlot(NVGRenderer vg, Theme theme, ConfigStore.Slot slot, float x, float y, float w, float mx, float my, boolean active) {
       boolean rowHover = mx >= x && mx <= x + w && my >= y && my <= y + 60.0F;
-      int fill = active ? theme.moduleActiveFill() : Colors.withAlpha(-16777216, rowHover ? 0.32F : 0.22F);
-      vg.rect(x, y, w, 60.0F, 12.0F, fill);
-      if (active) {
-         vg.rect(x, y + 10.0F, 3.0F, 40.0F, 1.5F, theme.accentBright());
-         vg.rectOutline(x, y, w, 60.0F, 12.0F, 1.1F, Colors.withAlpha(theme.accent(), 0.5F));
-      }
+      int fill = active ? Colors.lerp(theme.surface(), theme.accent(), 0.10F) : (rowHover ? Colors.lerp(theme.surface(), -1, 0.03F) : theme.surface());
+      vg.rect(x, y, w, 60.0F, 8.0F, fill);
+      vg.rectOutline(x, y, w, 60.0F, 8.0F, 1.0F, active ? Colors.withAlpha(theme.accent(), 0.85F) : theme.outline());
 
       float dotX = x + 16.0F;
       float dotY = y + 30.0F;
       if (active) {
-         vg.circleGlow(dotX, dotY, 4.0F, 5.0F, theme.accent());
-         vg.circle(dotX, dotY, 4.0F, theme.accentBright());
+         vg.circle(dotX, dotY, 4.0F, theme.accent());
       } else if (slot.filled()) {
          vg.circle(dotX, dotY, 3.5F, theme.statusEnabled());
       } else {
@@ -162,21 +159,21 @@ public class ConfigPanel {
    }
 
    private void renderRenameField(NVGRenderer vg, Theme theme, float x, float y, float w) {
-      vg.rect(x, y, w, 20.0F, 10.0F, Colors.withAlpha(-16777216, 0.5F));
-      vg.rectOutline(x, y, w, 20.0F, 10.0F, 1.2F, Colors.withAlpha(theme.accentBright(), 0.9F));
+      vg.rect(x, y, w, 20.0F, 4.0F, Colors.withAlpha(-16777216, 0.5F));
+      vg.rectOutline(x, y, w, 20.0F, 4.0F, 1.0F, theme.accent());
       float tx = x + 8.0F;
       float ty = y + 10.0F;
       float tw = vg.text(this.renameBuffer.toString(), tx, ty, 12.5F, theme.textPrimary());
       if (System.nanoTime() / 400000000L % 2L == 0L) {
-         vg.rect(tx + tw + 1.5F, ty - 6.0F, 1.4F, 12.0F, 0.7F, theme.accentBright());
+         vg.rect(tx + tw + 1.5F, ty - 6.0F, 1.2F, 12.0F, 0.0F, theme.accent());
       }
 
    }
 
    private void drawTag(NVGRenderer vg, Theme theme, float x, float y, String label) {
       float tw = vg.textWidth(label, 9.5F);
-      vg.rect(x, y - 7.0F, tw + 12.0F, 14.0F, 7.0F, Colors.withAlpha(theme.accent(), 0.22F));
-      vg.text(label, x + 6.0F, y, 9.5F, theme.accentBright());
+      vg.rect(x, y - 7.0F, tw + 12.0F, 14.0F, 3.0F, theme.accent());
+      vg.textBold(label, x + 6.0F, y, 9.5F, theme.onAccent());
    }
 
    private void layoutButtons(NVGRenderer vg, Theme theme, ConfigStore.Slot slot, float rowRight, float rowY, float mx, float my) {
@@ -249,16 +246,14 @@ public class ConfigPanel {
       int accent = danger ? -45730 : theme.accent();
       int accentBright = danger ? -37252 : theme.accentBright();
       if (primary) {
-         int top = hover ? Colors.lighten(accentBright, 0.1F) : accentBright;
-         vg.rectGradient(x, y, w, h, h / 2.0F, top, accent, true);
+         vg.rect(x, y, w, h, 6.0F, hover ? Colors.lighten(accent, 0.12F) : accent);
+         vg.textBold(label, x + (w - vg.textWidthBold(label, font)) / 2.0F, y + h / 2.0F, font, theme.onAccent());
+      } else {
          if (hover) {
-            vg.glow(x, y, w, h, h / 2.0F, 5.0F, Colors.withAlpha(accent, 0.35F));
+            vg.rect(x, y, w, h, 6.0F, theme.rowHover());
          }
 
-         vg.text(label, x + (w - vg.textWidth(label, font)) / 2.0F, y + h / 2.0F, font, -15593706);
-      } else {
-         vg.rect(x, y, w, h, h / 2.0F, Colors.withAlpha(-1, hover ? 0.12F : 0.06F));
-         vg.rectOutline(x, y, w, h, h / 2.0F, 1.0F, Colors.withAlpha(hover ? accentBright : accent, hover ? 0.7F : 0.28F));
+         vg.rectOutline(x, y, w, h, 6.0F, 1.0F, hover ? (danger ? accent : theme.textDisabled()) : theme.outline());
          int rest = danger ? Colors.withAlpha(accent, 0.85F) : theme.textMuted();
          vg.text(label, x + (w - vg.textWidth(label, font)) / 2.0F, y + h / 2.0F, font, hover ? (danger ? accentBright : theme.textPrimary()) : rest);
       }
@@ -272,16 +267,16 @@ public class ConfigPanel {
    }
 
    private void renderConfirm(NVGRenderer vg, Theme theme, float mx, float my, float uiWidth, float uiHeight) {
-      vg.rect(this.cardX, this.cardY, 600.0F, this.cardH, 18.0F, Colors.withAlpha(-16316918, 0.55F));
+      vg.rect(this.cardX, this.cardY, 600.0F, this.cardH, 10.0F, Colors.withAlpha(-16316918, 0.6F));
       this.confirmCardW = 380.0F;
       this.confirmCardH = 148.0F;
       this.confirmCardX = (uiWidth - this.confirmCardW) / 2.0F;
       this.confirmCardY = (uiHeight - this.confirmCardH) / 2.0F;
       boolean danger = this.pendingConfirm.action() == ConfigPanel.Action.DELETE;
-      vg.glow(this.confirmCardX, this.confirmCardY, this.confirmCardW, this.confirmCardH, 16.0F, 20.0F, Colors.withAlpha(-16777216, 0.5F));
-      vg.rectVaryingGradient(this.confirmCardX, this.confirmCardY, this.confirmCardW, this.confirmCardH, 16.0F, 16.0F, 16.0F, 16.0F, theme.headerTop(), theme.background());
-      vg.rectOutline(this.confirmCardX, this.confirmCardY, this.confirmCardW, this.confirmCardH, 16.0F, 1.2F, Colors.withAlpha(danger ? -45730 : theme.accent(), 0.45F));
-      vg.text(this.pendingConfirm.title(), this.confirmCardX + 22.0F, this.confirmCardY + 34.0F, 16.0F, theme.textPrimary());
+      vg.glow(this.confirmCardX, this.confirmCardY, this.confirmCardW, this.confirmCardH, 10.0F, 20.0F, Colors.withAlpha(-16777216, 0.5F));
+      vg.rect(this.confirmCardX, this.confirmCardY, this.confirmCardW, this.confirmCardH, 10.0F, theme.background());
+      vg.rectOutline(this.confirmCardX, this.confirmCardY, this.confirmCardW, this.confirmCardH, 10.0F, 1.0F, danger ? Colors.withAlpha(-45730, 0.7F) : theme.outline());
+      vg.textBold(this.pendingConfirm.title(), this.confirmCardX + 22.0F, this.confirmCardY + 34.0F, 16.0F, theme.textPrimary());
       vg.text(this.pendingConfirm.body(), this.confirmCardX + 22.0F, this.confirmCardY + 58.0F, 12.0F, theme.textMuted());
       float by = this.confirmCardY + this.confirmCardH - 30.0F - 20.0F;
       this.confirmOkW = 118.0F;

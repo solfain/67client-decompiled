@@ -1,17 +1,20 @@
 package dev.sol.hud.components;
 
 import dev.sol.hud.HudComponent;
+import dev.sol.hud.HudStyle;
 import dev.sol.render.nanovg.NVGRenderer;
 import dev.sol.theme.Theme;
 import dev.sol.theme.ThemeManager;
-import dev.sol.util.Colors;
+import java.util.Locale;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
+/** Small readout: letter-spaced caption + bold value on a glass panel with a top accent rule. */
 public class InfoHud extends HudComponent {
-   private static final float HEIGHT = 22.0F;
-   private static final float FONT_SIZE = 13.0F;
-   private static final float PAD_X = 9.0F;
+   private static final float HEIGHT = 20.0F;
+   private static final float CAPTION = 8.5F;
+   private static final float VALUE = 11.5F;
+   private static final float GAP = 6.0F;
    private ThemeManager themes;
    private String label;
    private Supplier<String> value;
@@ -19,7 +22,7 @@ public class InfoHud extends HudComponent {
    public InfoHud(String id, ThemeManager themes, String label, Supplier<String> value, float defaultFx, float defaultFy, BooleanSupplier visible) {
       super(id, defaultFx, defaultFy, visible);
       this.themes = themes;
-      this.label = label;
+      this.label = label.toUpperCase(Locale.ROOT);
       this.value = value;
    }
 
@@ -32,20 +35,19 @@ public class InfoHud extends HudComponent {
    }
 
    public float measureWidth(NVGRenderer vg) {
-      return 9.0F + vg.textWidth(this.label, 13.0F) + 5.0F + vg.textWidth(this.currentValue(), 13.0F) + 9.0F;
+      return HudStyle.PAD + HudStyle.spacedWidth(vg, this.label, CAPTION, true) + GAP + vg.textWidthBold(this.currentValue(), VALUE) + HudStyle.PAD;
    }
 
    public float measureHeight(NVGRenderer vg) {
-      return 22.0F;
+      return HEIGHT;
    }
 
    public void render(NVGRenderer vg, float x, float y, float w, float h) {
       Theme theme = this.themes.current();
-      float cy = y + h / 2.0F;
-      vg.rect(x, y, w, h, 5.0F, Colors.withAlpha(-15790317, 0.72F));
-      vg.rect(x, y + 5.0F, 2.0F, h - 10.0F, 1.0F, theme.accent());
-      float tx = x + 9.0F;
-      tx += vg.text(this.label, tx, cy, 13.0F, theme.accent());
-      vg.text(this.currentValue(), tx + 5.0F, cy, 13.0F, theme.textPrimary());
+      HudStyle.panel(vg, theme, x, y, w, h);
+      float cy = y + HudStyle.RULE / 2.0F + h / 2.0F;
+      float tx = x + HudStyle.PAD;
+      tx += HudStyle.spaced(vg, this.label, tx, cy, CAPTION, theme.accent(), true) + GAP;
+      vg.textBold(this.currentValue(), tx, cy, VALUE, theme.textPrimary());
    }
 }

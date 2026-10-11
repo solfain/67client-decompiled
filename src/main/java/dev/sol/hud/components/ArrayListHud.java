@@ -1,6 +1,7 @@
 package dev.sol.hud.components;
 
 import dev.sol.hud.HudComponent;
+import dev.sol.hud.HudStyle;
 import dev.sol.module.Category;
 import dev.sol.module.Module;
 import dev.sol.module.ModuleManager;
@@ -18,11 +19,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
 
+/**
+ * Enabled-module list. No row backgrounds: bold text with a soft shadow and a thin accent
+ * tick on the outer edge. Rows ease in/out horizontally and fade toward a lighter tint
+ * further down the list.
+ */
 public class ArrayListHud extends HudComponent {
-   private static final float ENTRY_HEIGHT = 20.0F;
-   private static final float FONT_SIZE = 13.5F;
-   private static final float PAD_X = 8.0F;
-   private static final float STRIP_W = 2.5F;
+   private static final float ROW = 15.0F;
+   private static final float FONT = 12.0F;
+   private static final float TICK_W = 1.5F;
+   private static final float TICK_GAP = 5.0F;
    private ModuleManager modules;
    private Modules.HudModule hudModule;
    private ThemeManager themes;
@@ -40,7 +46,7 @@ public class ArrayListHud extends HudComponent {
 
       for(Module module : this.modules.all()) {
          if (module.getCategory() != Category.CLIENT) {
-            Animation anim = (Animation)this.slide.computeIfAbsent(module, (m) -> new Animation(240.0F, m.isEnabled() ? 1.0F : 0.0F, Easing.EASE_OUT_CUBIC));
+            Animation anim = (Animation)this.slide.computeIfAbsent(module, (m) -> new Animation(220.0F, m.isEnabled() ? 1.0F : 0.0F, Easing.EASE_OUT_CUBIC));
             anim.setTarget(module.isEnabled() ? 1.0F : 0.0F);
             if (module.isEnabled() || anim.value() > 0.01F) {
                list.add(module);
@@ -48,7 +54,7 @@ public class ArrayListHud extends HudComponent {
          }
       }
 
-      list.sort(Comparator.comparingDouble((Module m) -> (double)vg.textWidthBold(m.getName(), 13.5F)).reversed());
+      list.sort(Comparator.comparingDouble((Module m) -> (double)vg.textWidthBold(m.getName(), FONT)).reversed());
       return list;
    }
 
@@ -56,7 +62,7 @@ public class ArrayListHud extends HudComponent {
       float max = 40.0F;
 
       for(Module m : this.animatedEntries(vg)) {
-         max = Math.max(max, vg.textWidthBold(m.getName(), 13.5F) + 16.0F + 2.5F + 2.0F);
+         max = Math.max(max, vg.textWidthBold(m.getName(), FONT) + TICK_GAP + TICK_W + 2.0F);
       }
 
       return max;
@@ -66,37 +72,43 @@ public class ArrayListHud extends HudComponent {
       float h = 0.0F;
 
       for(Module m : this.animatedEntries(vg)) {
-         h += 20.0F * ((Animation)this.slide.get(m)).value();
+         h += ROW * ((Animation)this.slide.get(m)).value();
       }
 
-      return Math.max(20.0F, h);
+      return Math.max(ROW, h);
    }
 
    public void render(NVGRenderer vg, float x, float y, float w, float h) {
       Theme theme = this.themes.current();
       boolean sync = (Boolean)this.hudModule.themeSync.get();
       boolean right = this.rightAnchored();
+      int base = sync ? theme.accent() : (Integer)this.hudModule.listColor.get();
+      List<Module> entries = this.animatedEntries(vg);
+      int count = Math.max(1, entries.size() - 1);
       float rowY = y;
 
-      for(Module m : this.animatedEntries(vg)) {
+      for(int i = 0; i < entries.size(); ++i) {
+         Module m = (Module)entries.get(i);
          float t = ((Animation)this.slide.get(m)).value();
          if (!(t <= 0.01F)) {
-            int accent = sync ? theme.accent() : (Integer)this.hudModule.listColor.get();
-            int accentBright = sync ? theme.accentBright() : Colors.lighten(accent, 0.35F);
-            float textW = vg.textWidthBold(m.getName(), 13.5F);
-            float barW = textW + 16.0F + 2.5F + 2.0F;
-            float slideOff = (1.0F - t) * (barW + 12.0F) * (float)(right ? 1 : -1);
-            float barX = (float)Math.round((right ? x + w - barW : x) + slideOff);
-            float rowTop = (float)Math.round(rowY);
+            int color = Colors.lerp(base, Colors.lighten(base, 0.45F), (float)i / (float)count);
+            float textW = vg.textWidthBold(m.getName(), FONT);
+            float slideOff = (1.0F - t) * (textW + 20.0F) * (float)(right ? 1 : -1);
+            float cy = (float)Math.round(rowY + ROW / 2.0F);
             vg.save();
             vg.alpha(t);
-            vg.rect(barX, rowTop, barW, 20.0F, 0.0F, Colors.withAlpha(-15790317, 0.72F));
-            float lineX = right ? barX + barW - 2.0F : barX;
-            vg.rect(lineX, rowTop, 2.0F, 20.0F, 0.0F, accent);
-            float textX = (float)Math.round(right ? barX + 8.0F : barX + 2.5F + 2.0F + 8.0F - 2.0F);
-            vg.textBold(m.getName(), textX, rowTop + 10.0F, 13.5F, Colors.lerp(accent, accentBright, 0.25F));
+            if (right) {
+               float tickX = x + w - TICK_W + slideOff;
+               vg.rect(tickX, cy - 4.5F, TICK_W, 9.0F, 0.0F, color);
+               HudStyle.shadowed(vg, m.getName(), (float)Math.round(tickX - TICK_GAP - textW), cy, FONT, color, true);
+            } else {
+               float tickX = x + slideOff;
+               vg.rect(tickX, cy - 4.5F, TICK_W, 9.0F, 0.0F, color);
+               HudStyle.shadowed(vg, m.getName(), (float)Math.round(tickX + TICK_W + TICK_GAP), cy, FONT, color, true);
+            }
+
             vg.restore();
-            rowY += 20.0F * t;
+            rowY += ROW * t;
          }
       }
 

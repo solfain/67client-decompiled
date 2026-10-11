@@ -1,6 +1,7 @@
 package dev.sol.notification;
 
 import dev.sol.hud.HudComponent;
+import dev.sol.hud.HudStyle;
 import dev.sol.hud.HudDragController;
 import dev.sol.module.Modules;
 import dev.sol.render.anim.Animation;
@@ -110,12 +111,13 @@ public class NotificationManager extends HudComponent {
                float age = (float)(System.nanoTime() - toast.bornNanos) / 1.0E9F;
                float fadeOut = Math.clamp((life + 0.3F - age) / 0.3F, 0.0F, 1.0F);
                float slide = toast.slide.value();
-               float toastH = this.drawToast(vg, theme, 168.0F, yCursor, slide, fadeOut, toast.title, toast.subtitle, toast.weather, toast.accent);
+               float remaining = Math.clamp(1.0F - age / Math.max(0.1F, life), 0.0F, 1.0F);
+               float toastH = this.drawToast(vg, theme, 168.0F, yCursor, slide, fadeOut, remaining, toast.title, toast.subtitle, toast.weather, toast.accent);
                yCursor -= toastH + 6.0F;
             }
 
             if (alive.isEmpty() && editing) {
-               this.drawToast(vg, theme, 168.0F, yCursor, 1.0F, 0.5F, "Notification", (String)null, (Weather)null, true);
+               this.drawToast(vg, theme, 168.0F, yCursor, 1.0F, 0.5F, 0.6F, "Notification", (String)null, (Weather)null, true);
             }
 
             vg.restore();
@@ -124,39 +126,42 @@ public class NotificationManager extends HudComponent {
       }
    }
 
-   private float drawToast(NVGRenderer vg, Theme theme, float rightEdge, float bottom, float slide, float fadeOut, String title, String subtitle, Weather weather, boolean accent) {
+   private float drawToast(NVGRenderer vg, Theme theme, float rightEdge, float bottom, float slide, float fadeOut, float remaining, String title, String subtitle, Weather weather, boolean accent) {
       boolean twoLine = subtitle != null;
-      float h = twoLine ? 42.0F : 30.0F;
-      float glyphW = weather != null ? 26.0F : 0.0F;
-      float textStart = 16.0F + glyphW;
-      float textW = Math.max(vg.textWidth(title, 13.5F), twoLine ? vg.textWidth(subtitle, 11.0F) : 0.0F);
+      float h = twoLine ? 40.0F : 28.0F;
+      float chip = 16.0F;
+      float textStart = 9.0F + chip + 9.0F;
+      float textW = Math.max(vg.textWidthBold(title, 12.0F), twoLine ? vg.textWidth(subtitle, 10.5F) : 0.0F);
       float w = textStart + textW + 12.0F;
       float x = rightEdge - w + (1.0F - slide) * (w + 10.0F);
       float y = bottom - h;
-      int strip = accent ? theme.accent() : theme.textDisabled();
       vg.save();
       vg.alpha(fadeOut);
-      vg.glow(x, y, w, h, 3.0F, 5.0F, Colors.withAlpha(-16777216, 0.3F * fadeOut));
-      vg.rect(x, y, w, h, 3.0F, theme.headerTop());
-      vg.rect(x, y, 2.0F, h, 1.0F, strip);
-            if (weather != null) {
-         this.drawWeatherGlyph(vg, x + 12.0F + 2.0F + glyphW / 2.0F - 4.0F, y + h / 2.0F, weather, strip, theme.accentBright());
-      }
-
-      if (twoLine) {
-         if (accent) {
-            vg.text(title, x + textStart, y + h / 2.0F - 8.0F, 13.5F, theme.accent());
-         } else {
-            vg.text(title, x + textStart, y + h / 2.0F - 8.0F, 13.5F, theme.textPrimary());
-         }
-
-         vg.text(subtitle, x + textStart, y + h / 2.0F + 8.0F, 11.0F, theme.textMuted());
+      HudStyle.plain(vg, x, y, w, h);
+      // status chip
+      float chipX = x + 9.0F;
+      float chipY = y + (h - chip) / 2.0F;
+      if (weather != null) {
+         vg.rect(chipX - 2.0F, chipY - 2.0F, chip + 4.0F, chip + 4.0F, 1.0F, Colors.withAlpha(theme.accent(), 0.14F));
+         this.drawWeatherGlyph(vg, chipX + chip / 2.0F, chipY + chip / 2.0F - 1.0F, weather, theme.textMuted(), theme.accent());
       } else if (accent) {
-         vg.text(title, x + textStart, y + h / 2.0F, 13.5F, theme.accent());
+         vg.rect(chipX, chipY, chip, chip, 1.0F, theme.accent());
+         vg.checkmark(chipX + 3.5F, chipY + 3.5F, chip - 7.0F, 1.6F, theme.onAccent());
       } else {
-         vg.text(title, x + textStart, y + h / 2.0F, 13.5F, theme.textMuted());
+         vg.rectOutline(chipX, chipY, chip, chip, 1.0F, 1.0F, Colors.withAlpha(-1, 0.25F));
+         vg.cross(chipX + 4.5F, chipY + 4.5F, chip - 9.0F, 1.4F, theme.textMuted());
       }
 
+      float tx = x + textStart;
+      if (twoLine) {
+         vg.textBold(title, tx, y + h / 2.0F - 7.0F, 12.0F, theme.textPrimary());
+         vg.text(subtitle, tx, y + h / 2.0F + 7.5F, 10.5F, theme.textMuted());
+      } else {
+         vg.textBold(title, tx, y + h / 2.0F, 12.0F, accent ? theme.textPrimary() : theme.textMuted());
+      }
+
+      // lifetime bar along the bottom edge
+      vg.rect(x, y + h - 1.5F, w * remaining, 1.5F, 0.0F, accent ? theme.accent() : Colors.withAlpha(-1, 0.3F));
       vg.restore();
       return h;
    }

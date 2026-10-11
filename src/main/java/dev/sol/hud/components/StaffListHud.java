@@ -1,6 +1,7 @@
 package dev.sol.hud.components;
 
 import dev.sol.hud.HudComponent;
+import dev.sol.hud.HudStyle;
 import dev.sol.module.impl.StaffListModule;
 import dev.sol.render.anim.Animation;
 import dev.sol.render.anim.Easing;
@@ -109,7 +110,7 @@ public class StaffListHud extends HudComponent {
       List<StaffEntry> staff = this.module.staff();
       float content = 92.0F;
       String count = Integer.toString(staff.size());
-      content = Math.max(content, vg.textWidth("STAFF", 9.0F) + 10.0F + vg.textWidth(count, 8.5F) + 9.0F);
+      content = Math.max(content, HudStyle.headerWidth(vg, "Staff", count) - 16.0F);
 
       for(RowAnim r : this.layoutRows(staff)) {
          content = Math.max(content, this.rowWidth(vg, r.entry));
@@ -134,7 +135,7 @@ public class StaffListHud extends HudComponent {
          listH = 16.0F;
       }
 
-      float h = 28.0F + listH + 8.0F;
+      float h = HudStyle.RULE + HudStyle.HEADER_H + 4.0F + listH + 6.0F;
       if (staff.size() > this.shownCount(staff)) {
          h += 13.0F;
       }
@@ -145,10 +146,8 @@ public class StaffListHud extends HudComponent {
    public void render(NVGRenderer vg, float x, float y, float w, float h) {
       Theme theme = this.themes.current();
       List<StaffEntry> staff = this.module.staff();
-      vg.glow(x, y, w, h, 13.0F, 8.0F, Colors.withAlpha(-16777216, 0.3F));
-      vg.rectGradient(x, y, w, h, 10.0F, theme.background(), theme.backgroundTo(), true);
-      this.drawHeader(vg, theme, x, y, w, staff.size());
-      float rowY = y + 8.0F + 15.0F + 5.0F;
+      HudStyle.panel(vg, theme, x, y, w, h);
+      float rowY = HudStyle.header(vg, theme, "Staff", Integer.toString(staff.size()), x, y, w);
       if (staff.isEmpty()) {
          float cy = rowY + 8.0F;
          vg.checkmark(x + 8.0F, cy - 4.0F, 8.0F, 1.7F, -11870592);
@@ -168,20 +167,6 @@ public class StaffListHud extends HudComponent {
          }
       }
 
-   }
-
-   private void drawHeader(NVGRenderer vg, Theme theme, float x, float y, float w, int count) {
-      float cy = y + 8.0F + 7.5F;
-      vg.text("STAFF", x + 8.0F, cy, 9.0F, theme.textPrimary());
-      String s = Integer.toString(count);
-      float sw = vg.textWidth(s, 8.5F);
-      float bw = sw + 9.0F;
-      float bx = x + w - 8.0F - bw;
-      float by = cy - 6.25F;
-      boolean any = count > 0;
-      vg.rect(bx, by, bw, 12.5F, 6.0F, Colors.withAlpha(theme.accent(), any ? 0.2F : 0.1F));
-      vg.rectOutline(bx, by, bw, 12.5F, 6.0F, 1.0F, Colors.withAlpha(theme.accent(), any ? 0.5F : 0.22F));
-      vg.text(s, bx + 4.5F, cy, 8.5F, any ? theme.accentBright() : theme.textMuted());
    }
 
    private void drawRow(NVGRenderer vg, Theme theme, StaffEntry e, float x, float rowY, float w, float t) {
@@ -207,25 +192,16 @@ public class StaffListHud extends HudComponent {
    }
 
    private void drawStar(NVGRenderer vg, float cx, float cy, float r, int color, boolean vanished) {
+      vg.save();
+      vg.translate(cx, cy);
+      vg.rotate(((float)Math.PI / 4F));
       if (vanished) {
-         vg.save();
-         vg.translate(cx, cy);
-         vg.rotate(((float)Math.PI / 4F));
-         vg.rectOutline(-r * 0.55F, -r * 0.55F, r * 1.1F, r * 1.1F, r * 0.25F, 1.2F, Colors.withAlpha(color, 0.55F));
-         vg.restore();
+         vg.rectOutline(-r * 0.55F, -r * 0.55F, r * 1.1F, r * 1.1F, 0.0F, 1.2F, Colors.withAlpha(color, 0.55F));
       } else {
-         int bright = Colors.lighten(color, 0.4F);
-         vg.circleGlow(cx, cy, r * 0.5F, r * 1.3F, Colors.withAlpha(color, 0.5F));
-         int ray = Colors.withAlpha(bright, 0.9F);
-         vg.line(cx, cy - r, cx, cy + r, 1.2F, ray);
-         vg.line(cx - r, cy, cx + r, cy, 1.2F, ray);
-         vg.save();
-         vg.translate(cx, cy);
-         vg.rotate(((float)Math.PI / 4F));
-         vg.rect(-r * 0.5F, -r * 0.5F, r, r, r * 0.22F, color);
-         vg.restore();
+         vg.rect(-r * 0.6F, -r * 0.6F, r * 1.2F, r * 1.2F, 0.0F, color);
       }
 
+      vg.restore();
    }
 
    private void drawPingBars(NVGRenderer vg, float x, float cy, int latency, Theme theme) {
@@ -237,7 +213,7 @@ public class StaffListHud extends HudComponent {
          float bx = x + (float)i * 3.0F;
          float by = cy + 4.0F - bh;
          int c = i < bars ? col : Colors.withAlpha(theme.textDisabled(), 0.45F);
-         vg.rect(bx, by, 2.0F, bh, 0.5F, c);
+         vg.rect(bx, by, 2.0F, bh, 0.0F, c);
       }
 
    }

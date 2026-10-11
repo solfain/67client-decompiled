@@ -4,6 +4,7 @@ import com.mojang.blaze3d.textures.GpuTexture;
 import dev.sol.SolClient;
 import dev.sol.hud.HudDragController;
 import dev.sol.hud.HudManager;
+import dev.sol.hud.HudStyle;
 import dev.sol.module.impl.CustomCrosshairModule;
 import dev.sol.module.impl.MotionBlurModule;
 import dev.sol.notification.NotificationManager;
@@ -124,7 +125,7 @@ public final class OverlayRenderer {
       Theme theme = SolClient.themes().current();
       float mx = uiMouseX();
       float my = uiMouseY();
-      vg.text("Drag to move  ·  scroll to resize", (uiWidth - vg.textWidth("Drag to move  ·  scroll to resize", 14.0F)) / 2.0F, 22.0F, 14.0F, Colors.withAlpha(theme.textMuted(), 0.9F));
+      HudStyle.spaced(vg, "DRAG TO MOVE  ·  SCROLL TO RESIZE", (uiWidth - HudStyle.spacedWidth(vg, "DRAG TO MOVE  ·  SCROLL TO RESIZE", 10.0F, true)) / 2.0F, 22.0F, 10.0F, Colors.withAlpha(theme.textMuted(), 0.9F), true);
 
       for(HudManager.Placement p : hudManager.layout(vg, uiWidth, uiHeight, true)) {
          boolean hidden = !p.component().visible();
@@ -136,13 +137,22 @@ public final class OverlayRenderer {
             vg.restore();
          }
 
-         int outline = active ? theme.accentBright() : Colors.withAlpha(theme.accent(), 0.5F);
-         vg.rectOutline(p.getFloat() - 3.0F, p.getFloat2() - 3.0F, p.getFloat3() + 6.0F, p.getFloat4() + 6.0F, 6.0F, active ? 1.6F : 1.0F, outline);
-         vg.rect(p.getFloat() + p.getFloat3() - 2.0F, p.getFloat2() + p.getFloat4() - 2.0F, 6.0F, 6.0F, 2.0F, outline);
+         int outline = active ? theme.accent() : Colors.withAlpha(-1, 0.35F);
+         float bx = p.getFloat() - 3.0F;
+         float by = p.getFloat2() - 3.0F;
+         float bw = p.getFloat3() + 6.0F;
+         float bh = p.getFloat4() + 6.0F;
+         if (active) {
+            vg.rect(bx, by, bw, bh, 0.0F, Colors.withAlpha(theme.accent(), 0.06F));
+         }
+
+         HudStyle.brackets(vg, bx, by, bw, bh, 7.0F, active ? 1.6F : 1.0F, outline);
          if (active) {
             float var10000 = p.component().getScale();
             String pct = Math.round(var10000 * 100.0F) + "%";
-            vg.text(pct, p.getFloat() + p.getFloat3() + 6.0F, p.getFloat2() + p.getFloat4() / 2.0F, 11.0F, theme.accentBright());
+            float pw = vg.textWidthBold(pct, 9.5F) + 8.0F;
+            vg.rect(bx + bw - pw, by + bh + 3.0F, pw, 13.0F, 1.0F, theme.accent());
+            vg.textBold(pct, bx + bw - pw + 4.0F, by + bh + 9.5F, 9.5F, theme.onAccent());
          }
       }
 

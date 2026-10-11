@@ -1,6 +1,8 @@
 package dev.sol.hud.components;
 
 import dev.sol.hud.HudComponent;
+import dev.sol.hud.HudStyle;
+import dev.sol.gui.ClickGuiScreen;
 import dev.sol.module.Modules;
 import dev.sol.render.nanovg.NVGImages;
 import dev.sol.render.nanovg.NVGRenderer;
@@ -65,13 +67,12 @@ public class SpotifyHud extends HudComponent {
       SpotifyState state = this.state();
       Theme theme = this.themes.current();
       if (state.active() || !(Boolean)this.module.hideWhenIdle.get()) {
-         vg.glow(x, y, w, h, 13.0F, 8.0F, Colors.withAlpha(-16777216, 0.3F));
-         vg.rectGradient(x, y, w, h, 13.0F, Colors.withAlpha(-15264995, 0.92F), Colors.withAlpha(-15856878, 0.92F), true);
+         HudStyle.panel(vg, theme, x, y, w, h);
          float ax = x + 10.0F;
          float ay = y + 10.0F;
          int art = this.demo() ? -1 : NVGImages.fromFile(this.service.artPath(), state.artVersion());
          if (!this.demo() && art > 0) {
-            this.drawRoundedImage(vg, art, ax, ay, 54.0F, 8.0F);
+            this.drawRoundedImage(vg, art, ax, ay, 54.0F, 1.0F);
          } else {
             this.drawVinyl(vg, theme, ax, ay, 54.0F);
          }
@@ -80,13 +81,16 @@ public class SpotifyHud extends HudComponent {
             vg.text("Nothing playing", x + 76.0F, y + h / 2.0F, 13.5F, theme.textMuted());
          } else {
             float controlsX = (Boolean)this.module.controls.get() ? x + w - 84.0F : x + w - 12.0F;
-            vg.textTruncated(state.title(), x + 76.0F, y + 20.0F, 14.0F, theme.textPrimary(), controlsX - (x + 76.0F) - 6.0F);
+            vg.save();
+            vg.scissor(x + 76.0F, y, controlsX - (x + 76.0F) - 6.0F, h);
+            vg.textBold(state.title(), x + 76.0F, y + 20.0F, 13.5F, theme.textPrimary());
+            vg.restore();
             vg.textTruncated(state.artist(), x + 76.0F, y + 38.0F, 11.5F, theme.textMuted(), controlsX - (x + 76.0F) - 6.0F);
             if ((Boolean)this.module.controls.get()) {
                float cy = y + 22.0F;
                int idle = theme.textMuted();
                this.drawPrev(vg, x + w - 76.0F, cy, idle);
-               this.drawPlayPause(vg, x + w - 52.0F, cy, theme.accentBright(), state.playing());
+               this.drawPlayPause(vg, x + w - 52.0F, cy, theme.accent(), state.playing());
                this.drawNext(vg, x + w - 28.0F, cy, idle);
             }
 
@@ -97,9 +101,8 @@ public class SpotifyHud extends HudComponent {
             vg.text(time(state.livePosMs()), barX, y + 49.0F, 9.5F, theme.textDisabled());
             String total = time(state.durMs());
             vg.text(total, barX + barW - vg.textWidth(total, 9.5F), y + 49.0F, 9.5F, theme.textDisabled());
-            vg.rect(barX, barY, barW, 4.0F, 2.0F, Colors.withAlpha(-16777216, 0.5F));
-            vg.rectGradient(barX, barY, Math.max(4.0F, barW * frac), 4.0F, 2.0F, theme.accent(), theme.accentBright(), false);
-            vg.circle(barX + barW * frac, barY + 2.0F, 4.0F, -1);
+            HudStyle.bar(vg, barX, barY + 1.0F, barW, 2.0F, frac, theme.accent());
+            vg.rect(barX + barW * frac - 1.0F, barY - 1.5F, 2.0F, 7.0F, 0.0F, -1);
             if ((Boolean)this.module.volume.get()) {
                int vol = state.volume();
                float vFrac = Math.clamp((float)(vol < 0 ? 0 : vol) / 100.0F, 0.0F, 1.0F);
@@ -107,9 +110,8 @@ public class SpotifyHud extends HudComponent {
                float vBarW = w - 36.0F - 46.0F;
                float vBarY = y + 80.0F - 2.0F;
                this.drawSpeaker(vg, x + 18.0F, y + 80.0F, theme.textMuted(), vol == 0);
-               vg.rect(vBarX, vBarY, vBarW, 4.0F, 2.0F, Colors.withAlpha(-16777216, 0.5F));
-               vg.rectGradient(vBarX, vBarY, Math.max(4.0F, vBarW * vFrac), 4.0F, 2.0F, theme.accent(), theme.accentBright(), false);
-               vg.circle(vBarX + vBarW * vFrac, y + 80.0F, 4.0F, -1);
+               HudStyle.bar(vg, vBarX, vBarY + 1.0F, vBarW, 2.0F, vFrac, theme.accent());
+               vg.rect(vBarX + vBarW * vFrac - 1.0F, vBarY - 1.5F, 2.0F, 7.0F, 0.0F, -1);
                String label = vol < 0 ? "--" : vol + "%";
                vg.text(label, x + w - vg.textWidth(label, 9.5F) - 12.0F, y + 80.0F, 9.5F, theme.textDisabled());
             }
@@ -202,14 +204,9 @@ public class SpotifyHud extends HudComponent {
    }
 
    private void drawVinyl(NVGRenderer vg, Theme theme, float x, float y, float size) {
-      float cx = x + size / 2.0F;
-      float cy = y + size / 2.0F;
-      vg.rect(x, y, size, size, 8.0F, Colors.withAlpha(-16119795, 0.9F));
-      vg.circle(cx, cy, size * 0.4F, -15330789);
-      vg.circleOutline(cx, cy, size * 0.3F, 1.0F, Colors.withAlpha(theme.accent(), 0.35F));
-      vg.circleOutline(cx, cy, size * 0.22F, 1.0F, Colors.withAlpha(theme.accent(), 0.25F));
-      vg.circle(cx, cy, size * 0.12F, theme.accent());
-      vg.textGradient("Sol", cx - vg.textWidth("Sol", 9.0F) / 2.0F, cy, 9.0F, -1, -1122834);
+      vg.rect(x, y, size, size, 1.0F, Colors.withAlpha(-16119795, 0.9F));
+      vg.rectOutline(x, y, size, size, 1.0F, 1.0F, Colors.withAlpha(-1, 0.08F));
+      ClickGuiScreen.drawSun(vg, x + size / 2.0F, y + size / 2.0F, size * 0.13F, theme.accent());
    }
 
    private void drawPrev(NVGRenderer vg, float cx, float cy, int color) {
@@ -223,10 +220,10 @@ public class SpotifyHud extends HudComponent {
    }
 
    private void drawPlayPause(NVGRenderer vg, float cx, float cy, int color, boolean playing) {
-      vg.circleOutline(cx, cy, 10.0F, 1.4F, color);
+      vg.rectOutline(cx - 10.0F, cy - 10.0F, 20.0F, 20.0F, 2.0F, 1.4F, color);
       if (playing) {
-         vg.rect(cx - 3.5F, cy - 4.5F, 2.4F, 9.0F, 1.2F, color);
-         vg.rect(cx + 1.1F, cy - 4.5F, 2.4F, 9.0F, 1.2F, color);
+         vg.rect(cx - 3.5F, cy - 4.5F, 2.4F, 9.0F, 0.0F, color);
+         vg.rect(cx + 1.1F, cy - 4.5F, 2.4F, 9.0F, 0.0F, color);
       } else {
          this.triangle(vg, cx - 2.5F, cy, 7.0F, color);
       }

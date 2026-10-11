@@ -1,6 +1,7 @@
 package dev.sol.hud.components;
 
 import dev.sol.hud.HudComponent;
+import dev.sol.hud.HudStyle;
 import dev.sol.render.nanovg.NVGImages;
 import dev.sol.render.nanovg.NVGRenderer;
 import dev.sol.theme.Theme;
@@ -14,12 +15,12 @@ import net.minecraft.class_2960;
 import net.minecraft.class_310;
 import net.minecraft.class_7923;
 
+/** Armor: item icons on a glass panel, each with a durability percentage underneath. */
 public class ArmorHud extends HudComponent {
    private static final class_1304[] SLOTS;
-   private static final float ICON = 22.0F;
-   private static final float PAD = 7.0F;
-   private static final float GAP = 6.0F;
-   private static final float BAR_H = 3.0F;
+   private static final float ICON = 18.0F;
+   private static final float CELL = 28.0F;
+   private static final float PCT = 8.5F;
    private ThemeManager themes;
 
    public ArmorHud(ThemeManager themes, BooleanSupplier visible) {
@@ -28,44 +29,53 @@ public class ArmorHud extends HudComponent {
    }
 
    public float measureWidth(NVGRenderer vg) {
-      return 14.0F + (float)SLOTS.length * 22.0F + (float)(SLOTS.length - 1) * 6.0F;
+      return 6.0F + (float)SLOTS.length * CELL + 6.0F - 4.0F;
    }
 
    public float measureHeight(NVGRenderer vg) {
-      return 38.0F;
+      return HudStyle.RULE + 5.0F + ICON + 3.0F + 10.0F + 3.0F;
    }
 
    public void render(NVGRenderer vg, float x, float y, float w, float h) {
       Theme theme = this.themes.current();
       class_1657 player = class_310.method_1551().field_1724;
       if (player != null) {
-         vg.rectGradient(x, y, w, h, 9.0F, theme.background(), theme.backgroundTo(), true);
-         float ix = x + 7.0F;
+         HudStyle.panel(vg, theme, x, y, w, h);
+         float cx = x + 6.0F;
+         float iy = y + HudStyle.RULE + 5.0F;
 
          for(class_1304 slot : SLOTS) {
             class_1799 stack = player.method_6118(slot);
-            float iy = y + 4.0F;
+            float ix = cx + (CELL - 4.0F - ICON) / 2.0F;
+            float labelY = iy + ICON + 3.0F + 5.0F;
             if (stack.method_7960()) {
-               vg.rectOutline(ix, iy, 22.0F, 22.0F, 5.0F, 1.0F, Colors.withAlpha(theme.textDisabled(), 0.5F));
+               vg.rectOutline(ix + 2.0F, iy + 2.0F, ICON - 4.0F, ICON - 4.0F, 1.0F, 1.0F, Colors.withAlpha(-1, 0.12F));
+               String dash = "-";
+               vg.text(dash, cx + (CELL - 4.0F - vg.textWidth(dash, PCT)) / 2.0F, labelY, PCT, theme.textDisabled());
             } else {
                class_2960 itemId = class_7923.field_41178.method_10221(stack.method_7909());
                int image = NVGImages.fromResource(class_2960.method_60655(itemId.method_12836(), "textures/item/" + itemId.method_12832() + ".png"));
                if (image > 0) {
-                  vg.imagePattern(image, ix, iy, 22.0F, 22.0F, ix, iy, 22.0F, 22.0F, 1.0F);
+                  vg.imagePattern(image, ix, iy, ICON, ICON, ix, iy, ICON, ICON, 1.0F);
                } else {
-                  vg.rect(ix, iy, 22.0F, 22.0F, 5.0F, Colors.withAlpha(theme.accent(), 0.3F));
+                  vg.rect(ix, iy, ICON, ICON, 1.0F, Colors.withAlpha(theme.accent(), 0.3F));
                }
 
+               String label;
+               int color;
                if (stack.method_7963()) {
                   float frac = 1.0F - (float)stack.method_7919() / (float)stack.method_7936();
-                  int barColor = Colors.lerp(-1684147, -11671924, frac);
-                  float barY = iy + 22.0F + 3.0F;
-                  vg.rect(ix, barY, 22.0F, 3.0F, 1.5F, Colors.withAlpha(-16777216, 0.45F));
-                  vg.rect(ix, barY, Math.max(3.0F, 22.0F * frac), 3.0F, 1.5F, barColor);
+                  label = Math.round(frac * 100.0F) + "%";
+                  color = Colors.lerp(-1684147, -11671924, frac);
+               } else {
+                  label = "\u221e";
+                  color = theme.textMuted();
                }
+
+               vg.textBold(label, cx + (CELL - 4.0F - vg.textWidthBold(label, PCT)) / 2.0F, labelY, PCT, color);
             }
 
-            ix += 28.0F;
+            cx += CELL;
          }
       }
 

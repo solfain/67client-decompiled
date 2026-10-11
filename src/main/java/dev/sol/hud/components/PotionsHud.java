@@ -1,6 +1,8 @@
 package dev.sol.hud.components;
 
 import dev.sol.hud.HudComponent;
+import dev.sol.hud.HudDragController;
+import dev.sol.hud.HudStyle;
 import dev.sol.render.nanovg.NVGImages;
 import dev.sol.render.nanovg.NVGRenderer;
 import dev.sol.theme.Theme;
@@ -16,11 +18,11 @@ import net.minecraft.class_1657;
 import net.minecraft.class_2960;
 import net.minecraft.class_310;
 
+/** Potion effects: one glass panel with an "EFFECTS" header and hairline-separated rows. */
 public class PotionsHud extends HudComponent {
-   private static final float ROW = 24.0F;
-   private static final float ICON = 18.0F;
-   private static final float PAD = 7.0F;
-   private static final float FONT = 12.5F;
+   private static final float ROW = 19.0F;
+   private static final float ICON = 14.0F;
+   private static final float FONT = 11.0F;
    private ThemeManager themes;
 
    public PotionsHud(ThemeManager themes, BooleanSupplier visible) {
@@ -47,7 +49,7 @@ public class PotionsHud extends HudComponent {
 
    private static String timer(class_1293 effect) {
       if (effect.method_48559()) {
-         return "∞";
+         return "\u221e";
       } else {
          int seconds = effect.method_5584() / 20;
          return String.format("%d:%02d", seconds / 60, seconds % 60);
@@ -55,44 +57,54 @@ public class PotionsHud extends HudComponent {
    }
 
    public float measureWidth(NVGRenderer vg) {
-      float max = 110.0F;
+      List<class_1293> effects = this.effects();
+      float max = Math.max(120.0F, HudStyle.headerWidth(vg, "Effects", Integer.toString(effects.size())));
 
-      for(class_1293 effect : this.effects()) {
-         max = Math.max(max, 31.0F + vg.textWidth(label(effect), 12.5F) + 10.0F + vg.textWidth(timer(effect), 12.5F) + 7.0F);
+      for(class_1293 effect : effects) {
+         max = Math.max(max, HudStyle.PAD + ICON + 6.0F + vg.textWidth(label(effect), FONT) + 14.0F + vg.textWidthBold(timer(effect), FONT) + HudStyle.PAD);
       }
 
       return max;
    }
 
    public float measureHeight(NVGRenderer vg) {
-      return Math.max(24.0F, (float)this.effects().size() * 24.0F);
+      int n = Math.max(1, this.effects().size());
+      return HudStyle.RULE + HudStyle.HEADER_H + 4.0F + (float)n * ROW + 3.0F;
    }
 
    public void render(NVGRenderer vg, float x, float y, float w, float h) {
       Theme theme = this.themes.current();
       List<class_1293> effects = this.effects();
-      if (!effects.isEmpty()) {
-         boolean right = this.rightAnchored();
-         float rowY = y;
+      if (effects.isEmpty() && !HudDragController.isEditing()) {
+         return;
+      }
 
-         for(class_1293 effect : effects) {
-            float labelW = vg.textWidth(label(effect), 12.5F);
-            float timerW = vg.textWidth(timer(effect), 12.5F);
-            float rowW = 31.0F + labelW + 10.0F + timerW + 7.0F;
-            float rowX = right ? x + w - rowW : x;
-            float cy = rowY + 12.0F;
-            vg.rect(rowX, rowY + 1.0F, rowW, 22.0F, 7.0F, Colors.withAlpha(-15462118, 0.78F));
+      HudStyle.panel(vg, theme, x, y, w, h);
+      float rowY = HudStyle.header(vg, theme, "Effects", Integer.toString(effects.size()), x, y, w);
+      if (effects.isEmpty()) {
+         vg.text("No active effects", x + HudStyle.PAD, rowY + ROW / 2.0F, FONT, theme.textDisabled());
+      } else {
+         for(int i = 0; i < effects.size(); ++i) {
+            class_1293 effect = (class_1293)effects.get(i);
+            float cy = rowY + ROW / 2.0F;
+            float ix = x + HudStyle.PAD;
             class_2960 effectId = (class_2960)effect.method_5579().method_40230().map((k) -> k.method_29177()).orElse(null);
             if (effectId != null) {
                int image = NVGImages.fromResource(class_2960.method_60655(effectId.method_12836(), "textures/mob_effect/" + effectId.method_12832() + ".png"));
                if (image > 0) {
-                  vg.imagePattern(image, rowX + 7.0F, cy - 9.0F, 18.0F, 18.0F, rowX + 7.0F, cy - 9.0F, 18.0F, 18.0F, 1.0F);
+                  vg.imagePattern(image, ix, cy - ICON / 2.0F, ICON, ICON, ix, cy - ICON / 2.0F, ICON, ICON, 1.0F);
                }
             }
 
-            vg.text(label(effect), rowX + 7.0F + 18.0F + 6.0F, cy, 12.5F, theme.textPrimary());
-            vg.textGradient(timer(effect), rowX + rowW - 7.0F - timerW, cy, 12.5F, theme.accentBright(), theme.accent());
-            rowY += 24.0F;
+            vg.text(label(effect), ix + ICON + 6.0F, cy, FONT, theme.textPrimary());
+            String t = timer(effect);
+            boolean ending = !effect.method_48559() && effect.method_5584() < 200;
+            vg.textBold(t, x + w - HudStyle.PAD - vg.textWidthBold(t, FONT), cy, FONT, ending ? -495247 : theme.accent());
+            if (i < effects.size() - 1) {
+               vg.rect(x + HudStyle.PAD, rowY + ROW, w - HudStyle.PAD * 2.0F, 1.0F, 0.0F, Colors.withAlpha(-1, 0.04F));
+            }
+
+            rowY += ROW;
          }
       }
 

@@ -1,5 +1,6 @@
 package dev.sol.render;
 
+import dev.sol.hud.HudStyle;
 import dev.sol.SolClient;
 import dev.sol.module.ModuleManager;
 import dev.sol.module.Modules;
@@ -286,25 +287,25 @@ public final class WorldNametagRenderer {
       float gap = 5.0F * s;
       boolean hasHealth = tag.healthFrac >= 0.0F;
       float barH = 3.0F * s;
-      float nameW = vg.textWidth(tag.name, fontMain);
+      float nameW = vg.textWidthBold(tag.name, fontMain);
       float suffixW = tag.suffix != null ? gap + vg.textWidth(tag.suffix, fontSub) : 0.0F;
       float w = nameW + suffixW + padX * 2.0F;
       float textRowH = fontMain + padY * 2.0F;
       float h = textRowH + (hasHealth ? barH + padY : 0.0F);
       float x = uiX - w / 2.0F;
       float y = uiY - h;
-      float radius = Math.min(6.0F * s, h / 2.0F);
+      float radius = Math.min(2.0F * s, h / 2.0F);
       boolean fade = tag.opacity < 0.999F;
       if (fade) {
          vg.save();
          vg.alpha(tag.opacity);
       }
 
-      vg.glow(x, y, w, h, radius, 4.0F, Colors.withAlpha(tag.accent, 0.12F));
-      vg.rectGradient(x, y, w, h, radius, theme.background(), theme.backgroundTo(), true);
+      vg.rect(x, y, w, h, radius, HudStyle.panelColor());
+      vg.rect(x, y, w, 1.5F * s, 0.0F, tag.accent);
       float cy = y + padY + fontMain / 2.0F;
       float tx = x + padX;
-      tx += vg.textGradient(tag.name, tx, cy, fontMain, accentBright, tag.accent);
+      tx += vg.textBold(tag.name, tx, cy, fontMain, theme.textPrimary());
       if (tag.suffix != null) {
          tx += gap;
          vg.text(tag.suffix, tx, cy, fontSub, theme.textMuted());
@@ -314,9 +315,9 @@ public final class WorldNametagRenderer {
          float barY = y + textRowH;
          float barX = x + padX;
          float barW = w - padX * 2.0F;
-         vg.rect(barX, barY, barW, barH, barH / 2.0F, Colors.withAlpha(-16777216, 0.55F));
+         vg.rect(barX, barY, barW, barH, 0.0F, Colors.withAlpha(-1, 0.10F));
          int hpColor = Colors.lerp(-2080450, -11671924, tag.healthFrac);
-         vg.rect(barX, barY, Math.max(barH, barW * tag.healthFrac), barH, barH / 2.0F, hpColor);
+         vg.rect(barX, barY, barW * tag.healthFrac, barH, 0.0F, hpColor);
       }
 
       if (fade) {

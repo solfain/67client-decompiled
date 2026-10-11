@@ -165,11 +165,10 @@ public class IconPickerScreen extends class_437 implements NvgDrawable {
          Theme theme = this.themes.current();
          Layout l = this.layout();
          boolean blink = System.nanoTime() / 400000000L % 2L == 0L;
-         vg.glow(l.getFloat(), l.getFloat2(), l.panelW(), l.panelH(), 14.0F, 17.0F, Colors.withAlpha(-16777216, 0.45F));
-         vg.glow(l.getFloat(), l.getFloat2(), l.panelW(), l.panelH(), 14.0F, 8.0F, Colors.withAlpha(theme.accent(), 0.28F));
-         vg.rectOutline(l.getFloat(), l.getFloat2(), l.panelW(), l.panelH(), 14.0F, 1.4F, Colors.withAlpha(theme.accentBright(), 0.75F));
-         vg.rectOutline(l.getFloat() + 2.2F, l.getFloat2() + 2.2F, l.panelW() - 4.4F, l.panelH() - 4.4F, 11.8F, 1.0F, Colors.withAlpha(theme.accentBright(), 0.13F));
-         vg.textGradient(this.model.title(), l.getFloat() + 12.0F, l.getFloat2() + 16.0F, 16.0F, theme.accentBright(), theme.accent());
+         vg.glow(l.getFloat(), l.getFloat2(), l.panelW(), l.panelH(), 10.0F, 17.0F, Colors.withAlpha(-16777216, 0.45F));
+         vg.rect(l.getFloat(), l.getFloat2(), l.panelW(), l.panelH(), 10.0F, Colors.withAlpha(theme.background(), 0.97F));
+         vg.rectOutline(l.getFloat(), l.getFloat2(), l.panelW(), l.panelH(), 10.0F, 1.0F, theme.outline());
+         vg.textBold(this.model.title(), l.getFloat() + 12.0F, l.getFloat2() + 16.0F, 16.0F, theme.textPrimary());
          String hint = "Left-click: toggle   ·   Right-click: color   ·   " + this.model.activeCount() + " active";
          vg.text(hint, l.getFloat() + 12.0F, l.getFloat2() + 31.0F, 11.0F, theme.textDisabled());
          float closeCx = l.getFloat() + l.panelW() - 12.0F - 3.0F;
@@ -208,13 +207,12 @@ public class IconPickerScreen extends class_437 implements NvgDrawable {
          this.selChipRect[2] = chipX + 116.0F;
          this.selChipRect[3] = sy + 22.0F;
          boolean chipHover = inRect(mouseX, mouseY, this.selChipRect);
-         vg.rect(chipX, sy, 116.0F, 22.0F, 11.0F, this.selectedOnly ? Colors.withAlpha(theme.accent(), 0.22F) : Colors.withAlpha(-16777216, 0.4F));
-         vg.rectOutline(chipX, sy, 116.0F, 22.0F, 11.0F, 1.1F, Colors.withAlpha(!this.selectedOnly && !chipHover ? theme.accent() : theme.accentBright(), this.selectedOnly ? 0.9F : 0.4F));
+         vg.rect(chipX, sy, 116.0F, 22.0F, 6.0F, this.selectedOnly ? Colors.withAlpha(theme.accent(), 0.22F) : Colors.withAlpha(-16777216, 0.4F));
+         vg.rectOutline(chipX, sy, 116.0F, 22.0F, 6.0F, 1.0F, this.selectedOnly ? theme.accent() : (chipHover ? theme.textDisabled() : theme.outline()));
          float dotX = chipX + 13.0F;
          float dotY = sy + 11.0F;
          if (this.selectedOnly) {
             vg.circle(dotX, dotY, 4.0F, theme.statusEnabled());
-            vg.circleGlow(dotX, dotY, 4.0F, 4.0F, Colors.withAlpha(theme.statusEnabled(), 0.5F));
          } else {
             vg.circleOutline(dotX, dotY, 4.0F, 1.4F, theme.textMuted());
          }
@@ -284,10 +282,10 @@ public class IconPickerScreen extends class_437 implements NvgDrawable {
       this.popupRect[1] = cardY;
       this.popupRect[2] = cardX + 220.0F;
       this.popupRect[3] = cardY + cardH;
-      vg.glow(cardX, cardY, 220.0F, cardH, 12.0F, 14.0F, Colors.withAlpha(theme.accent(), 0.3F));
-      vg.rectGradient(cardX, cardY, 220.0F, cardH, 12.0F, theme.background(), theme.backgroundTo(), true);
-      vg.rectOutline(cardX, cardY, 220.0F, cardH, 12.0F, 1.4F, Colors.withAlpha(theme.accentBright(), 0.7F));
-      vg.textGradient(this.colorTitle, cardX + 12.0F, cardY + 14.0F, 12.5F, theme.accentBright(), theme.accent());
+      vg.glow(cardX, cardY, 220.0F, cardH, 8.0F, 14.0F, Colors.withAlpha(-16777216, 0.45F));
+      vg.rect(cardX, cardY, 220.0F, cardH, 8.0F, theme.background());
+      vg.rectOutline(cardX, cardY, 220.0F, cardH, 8.0F, 1.0F, theme.outline());
+      vg.textBold(this.colorTitle, cardX + 12.0F, cardY + 14.0F, 12.5F, theme.textPrimary());
       this.colorWidget.setBounds(wx, cardY + 26.0F, 196.0F);
       this.colorWidget.render(vg, OverlayRenderer.uiMouseX(), OverlayRenderer.uiMouseY());
    }
