@@ -18,7 +18,9 @@ One centred window. No sidebar and no floating panels.
   Left-click a card to toggle it. Right-click it (or click the `···`) to open its settings window.
 - **Themes view**: accent swatches for Sol (default orange), Ember, Indigo, Ocean, Mint, Frost and Rainbow, plus custom accents with a colour picker.
 - **Fonts**: Poppins by default ("Clean"). You can switch to Monocraft ("Pixel") in ClickGUI → Font.
-- **HUD**: sun watermark, a flat module list with a thin accent edge, and flat info pills.
+- **HUD**: smoked-glass panels with a thin accent rule on top, letter-spaced captions and bold values. No glows or gradients. The module list is plain shadowed text with an accent tick, the radar is square, toasts have a status chip and a lifetime bar, and HUD edit mode uses corner brackets.
+
+  ![HUD preview](docs/hud-preview.png)
 
 ## Jump circles
 
