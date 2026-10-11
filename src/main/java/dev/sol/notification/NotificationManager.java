@@ -29,7 +29,7 @@ public class NotificationManager extends HudComponent {
    private final List<Toast> toasts = new ArrayList();
 
    public NotificationManager(ThemeManager themes, Modules.HudModule hud) {
-      super("notifications", 0.99F, 0.71F, () -> hud.isEnabled() && (Boolean)hud.notifications.get());
+      super("notifications", 0.5F, 0.045F, () -> hud.isEnabled() && (Boolean)hud.notifications.get());
       this.themes = themes;
       this.hud = hud;
    }
@@ -104,7 +104,9 @@ public class NotificationManager extends HudComponent {
             vg.save();
             vg.translate((float)Math.round(boxX), (float)Math.round(boxY));
             vg.scale(scale);
-            float yCursor = 30.0F;
+            int align = this.getFx() < 0.34F ? 0 : (this.getFx() > 0.66F ? 2 : 1);
+            boolean down = this.getFy() < 0.5F;
+            float yCursor = down ? 0.0F : 30.0F;
 
             for(int i = alive.size() - 1; i >= 0; --i) {
                Toast toast = (Toast)alive.get(i);
@@ -112,12 +114,12 @@ public class NotificationManager extends HudComponent {
                float fadeOut = Math.clamp((life + 0.3F - age) / 0.3F, 0.0F, 1.0F);
                float slide = toast.slide.value();
                float remaining = Math.clamp(1.0F - age / Math.max(0.1F, life), 0.0F, 1.0F);
-               float toastH = this.drawToast(vg, theme, 168.0F, yCursor, slide, fadeOut, remaining, toast.title, toast.subtitle, toast.weather, toast.accent);
-               yCursor -= toastH + 6.0F;
+               float toastH = this.drawToast(vg, theme, align, down, yCursor, slide, fadeOut, remaining, toast.title, toast.subtitle, toast.weather, toast.accent);
+               yCursor += down ? toastH + 6.0F : -(toastH + 6.0F);
             }
 
             if (alive.isEmpty() && editing) {
-               this.drawToast(vg, theme, 168.0F, yCursor, 1.0F, 0.5F, 0.6F, "Notification", (String)null, (Weather)null, true);
+               this.drawToast(vg, theme, align, down, yCursor, 1.0F, 0.5F, 0.6F, "Notification", (String)null, (Weather)null, true);
             }
 
             vg.restore();
@@ -126,15 +128,24 @@ public class NotificationManager extends HudComponent {
       }
    }
 
-   private float drawToast(NVGRenderer vg, Theme theme, float rightEdge, float bottom, float slide, float fadeOut, float remaining, String title, String subtitle, Weather weather, boolean accent) {
+   private float drawToast(NVGRenderer vg, Theme theme, int align, boolean down, float anchorY, float slide, float fadeOut, float remaining, String title, String subtitle, Weather weather, boolean accent) {
       boolean twoLine = subtitle != null;
       float h = twoLine ? 40.0F : 28.0F;
       float chip = 16.0F;
       float textStart = 9.0F + chip + 9.0F;
       float textW = Math.max(vg.textWidthBold(title, 12.0F), twoLine ? vg.textWidth(subtitle, 10.5F) : 0.0F);
       float w = textStart + textW + 12.0F;
-      float x = rightEdge - w + (1.0F - slide) * (w + 10.0F);
-      float y = bottom - h;
+      float hide = 1.0F - slide;
+      float x;
+      float y = down ? anchorY : anchorY - h;
+      if (align == 0) {
+         x = -hide * (w + 10.0F);
+      } else if (align == 2) {
+         x = 168.0F - w + hide * (w + 10.0F);
+      } else {
+         x = (168.0F - w) / 2.0F;
+         y += (down ? -1.0F : 1.0F) * hide * (h + 8.0F);
+      }
       vg.save();
       vg.alpha(fadeOut);
       HudStyle.plain(vg, x, y, w, h);

@@ -34,15 +34,15 @@ public class HudManager {
       Modules.HudModule hud = modules.hud;
       this.components.add(new WatermarkHud(themes, () -> hud.isEnabled() && (Boolean)hud.watermark.get()));
       this.components.add(new ArrayListHud(modules, hud, themes, () -> hud.isEnabled() && (Boolean)hud.arrayList.get()));
-      this.components.add(new InfoHud("fps", themes, "FPS", () -> Integer.toString(class_310.method_1551().method_47599()), 0.006F, 0.985F, () -> hud.isEnabled() && (Boolean)hud.fps.get()));
-      this.components.add(new InfoHud("ping", themes, "Ping", HudManager::pingString, 0.055F, 0.985F, () -> hud.isEnabled() && (Boolean)hud.ping.get()));
-      this.components.add(new InfoHud("coords", themes, "XYZ", HudManager::coordsString, 0.115F, 0.985F, () -> hud.isEnabled() && (Boolean)hud.coordinates.get()));
-      this.components.add(new InfoHud("direction", themes, "Facing", HudManager::directionString, 0.24F, 0.985F, () -> hud.isEnabled() && (Boolean)hud.direction.get()));
-      this.components.add(new InfoHud("tps", themes, "TPS", () -> String.format("%.1f", TpsTracker.get()), 0.33F, 0.985F, () -> hud.isEnabled() && (Boolean)hud.tps.get()));
+      this.components.add(new InfoHud("fps", themes, "FPS", () -> Integer.toString(class_310.method_1551().method_47599()), 0.997F, 0.042F, () -> hud.isEnabled() && (Boolean)hud.fps.get()));
+      this.components.add(new InfoHud("ping", themes, "Ping", HudManager::pingString, 0.997F, 0.076F, () -> hud.isEnabled() && (Boolean)hud.ping.get()));
+      this.components.add(new InfoHud("coords", themes, "XYZ", HudManager::coordsString, 0.997F, 0.178F, () -> hud.isEnabled() && (Boolean)hud.coordinates.get()));
+      this.components.add(new InfoHud("direction", themes, "Facing", HudManager::directionString, 0.997F, 0.212F, () -> hud.isEnabled() && (Boolean)hud.direction.get()));
+      this.components.add(new InfoHud("tps", themes, "TPS", () -> String.format("%.1f", TpsTracker.get()), 0.997F, 0.11F, () -> hud.isEnabled() && (Boolean)hud.tps.get()));
       this.components.add(new InfoHud("cps", themes, "CPS", () -> {
          int var10000 = CpsTracker.get(0);
          return var10000 + " | " + CpsTracker.get(1);
-      }, 0.4F, 0.985F, () -> hud.isEnabled() && (Boolean)hud.cps.get()));
+      }, 0.997F, 0.144F, () -> hud.isEnabled() && (Boolean)hud.cps.get()));
       this.components.add(new ArmorHud(themes, () -> hud.isEnabled() && (Boolean)hud.armor.get()));
       this.components.add(new PotionsHud(themes, () -> hud.isEnabled() && (Boolean)hud.potions.get()));
       this.components.add(new KeystrokesHud(themes, () -> hud.isEnabled() && (Boolean)hud.keystrokes.get()));
@@ -132,6 +132,7 @@ public class HudManager {
 
    public JsonObject toJson() {
       JsonObject json = new JsonObject();
+      json.addProperty("_layout", 2);
 
       for(HudComponent component : this.components) {
          JsonObject entry = new JsonObject();
@@ -145,10 +146,15 @@ public class HudManager {
    }
 
    public void fromJson(JsonObject json) {
+      boolean current = json.has("_layout") && json.get("_layout").getAsInt() >= 2;
+
       for(HudComponent component : this.components) {
          JsonObject entry = json.getAsJsonObject(component.getId());
          if (entry != null && entry.has("fx") && entry.has("fy")) {
-            component.setPosition(entry.get("fx").getAsFloat(), entry.get("fy").getAsFloat());
+            if (current) {
+               component.setPosition(entry.get("fx").getAsFloat(), entry.get("fy").getAsFloat());
+            }
+
             if (entry.has("scale")) {
                component.setScale(entry.get("scale").getAsFloat());
             }

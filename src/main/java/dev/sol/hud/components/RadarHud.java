@@ -21,7 +21,7 @@ public class RadarHud extends HudComponent {
    private ThemeManager themes;
 
    public RadarHud(Modules.HudModule module, Modules.SusChunkFinderModule susFinder, ThemeManager themes, BooleanSupplier visible) {
-      super("radar", 0.006F, 0.45F, visible);
+      super("radar", 0.997F, 0.28F, visible);
       this.module = module;
       this.susFinder = susFinder;
       this.themes = themes;

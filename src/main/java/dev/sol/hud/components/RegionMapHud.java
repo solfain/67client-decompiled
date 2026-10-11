@@ -24,7 +24,7 @@ public class RegionMapHud extends HudComponent {
    private ThemeManager themes;
 
    public RegionMapHud(RegionMapModule module, ThemeManager themes) {
-      super("regionMap", 0.008F, 0.05F, module::isEnabled);
+      super("regionMap", 0.004F, 0.64F, module::isEnabled);
       this.module = module;
       this.themes = themes;
    }

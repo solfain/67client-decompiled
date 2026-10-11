@@ -25,7 +25,7 @@ public class PotionsHud extends HudComponent {
    private ThemeManager themes;
 
    public PotionsHud(ThemeManager themes, BooleanSupplier visible) {
-      super("potions", 0.995F, 0.6F, visible);
+      super("potions", 0.997F, 0.52F, visible);
       this.themes = themes;
    }
 

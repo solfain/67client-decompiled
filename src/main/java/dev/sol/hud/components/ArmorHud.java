@@ -23,7 +23,7 @@ public class ArmorHud extends HudComponent {
    private ThemeManager themes;
 
    public ArmorHud(ThemeManager themes, BooleanSupplier visible) {
-      super("armor", 0.5F, 0.8F, visible);
+      super("armor", 0.004F, 0.36F, visible);
       this.themes = themes;
    }
 

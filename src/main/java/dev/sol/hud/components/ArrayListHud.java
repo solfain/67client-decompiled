@@ -30,7 +30,7 @@ public class ArrayListHud extends HudComponent {
    private final Map<Module, Animation> slide = new HashMap();
 
    public ArrayListHud(ModuleManager modules, Modules.HudModule hudModule, ThemeManager themes, BooleanSupplier visible) {
-      super("arraylist", 1.0F, 0.008F, visible);
+      super("arraylist", 0.004F, 0.008F, visible);
       this.modules = modules;
       this.hudModule = hudModule;
       this.themes = themes;

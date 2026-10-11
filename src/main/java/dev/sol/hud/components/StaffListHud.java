@@ -42,7 +42,7 @@ public class StaffListHud extends HudComponent {
    private final Map<String, RowAnim> rows;
 
    public StaffListHud(StaffListModule module, ThemeManager themes) {
-      super("staffList", 0.008F, 0.27F, module::isEnabled);
+      super("staffList", 0.004F, 0.45F, module::isEnabled);
       this.rows = new LinkedHashMap();
       this.module = module;
       this.themes = themes;

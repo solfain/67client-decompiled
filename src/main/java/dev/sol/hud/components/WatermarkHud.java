@@ -18,7 +18,7 @@ public class WatermarkHud extends HudComponent {
    private ThemeManager themes;
 
    public WatermarkHud(ThemeManager themes, BooleanSupplier visible) {
-      super("watermark", 0.006F, 0.01F, visible);
+      super("watermark", 0.997F, 0.008F, visible);
       this.themes = themes;
    }
 

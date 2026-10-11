@@ -24,7 +24,7 @@ public class KeystrokesHud extends HudComponent {
    private final Map<String, Animation> press = new HashMap();
 
    public KeystrokesHud(ThemeManager themes, BooleanSupplier visible) {
-      super("keystrokes", 0.03F, 0.72F, visible);
+      super("keystrokes", 0.997F, 0.985F, visible);
       this.themes = themes;
    }
 

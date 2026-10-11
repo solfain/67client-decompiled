@@ -32,7 +32,7 @@ public class SpotifyHud extends HudComponent {
    private static final long DEMO_START = System.nanoTime();
 
    public SpotifyHud(Modules.SpotifyModule module, SpotifyService service, ThemeManager themes) {
-      super("spotify", 0.5F, 0.965F, module::isEnabled);
+      super("spotify", 0.997F, 0.8F, module::isEnabled);
       this.module = module;
       this.service = service;
       this.themes = themes;
