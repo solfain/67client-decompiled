@@ -14,7 +14,8 @@ public final class Modules {
    }
 
    public static class BlockOutlineModule extends Module {
-      public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Outline color", -6237441));
+      public final BooleanSetting themeColor = (BooleanSetting)this.addSetting(new BooleanSetting("Theme Color", "Use the theme color", true));
+      public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Color when Theme Color is off", -6237441));
       public final BooleanSetting rainbow = (BooleanSetting)this.addSetting(new BooleanSetting("Rainbow", "Cycle the outline through the rainbow", false));
       public final SliderSetting glow = (SliderSetting)this.addSetting(new SliderSetting("Glow", "Outer glow intensity", (double)60.0F, (double)0.0F, (double)100.0F, (double)5.0F, "%"));
       public final SliderSetting thickness = (SliderSetting)this.addSetting(new SliderSetting("Thickness", "Core line width", (double)2.5F, (double)1.0F, (double)6.0F, (double)0.5F, "px"));

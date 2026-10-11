@@ -1,5 +1,6 @@
 package dev.sol.module.impl;
 
+import dev.sol.SolClient;
 import dev.sol.module.Category;
 import dev.sol.module.Module;
 import dev.sol.render.nanovg.NVGRenderer;
@@ -15,7 +16,8 @@ public class CustomCrosshairModule extends Module {
    public final SliderSetting size = (SliderSetting)this.addSetting(new SliderSetting("Size", "Overall crosshair size", (double)7.0F, (double)2.0F, (double)24.0F, (double)1.0F, "px"));
    public final SliderSetting thickness = (SliderSetting)this.addSetting(new SliderSetting("Thickness", "Line / dot thickness", (double)2.0F, (double)1.0F, (double)6.0F, (double)0.5F, "px"));
    public final SliderSetting gap = (SliderSetting)this.addSetting(new SliderSetting("Gap", "Center gap for line styles", (double)3.0F, (double)0.0F, (double)12.0F, (double)1.0F, "px"));
-   public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Crosshair color", -6237441));
+   public final BooleanSetting themeColor = (BooleanSetting)this.addSetting(new BooleanSetting("Theme Color", "Use the theme color", true));
+   public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Color when Theme Color is off", -6237441));
    public final BooleanSetting rainbow = (BooleanSetting)this.addSetting(new BooleanSetting("Rainbow", "Cycle through the rainbow", false));
    public final BooleanSetting centerDot = (BooleanSetting)this.addSetting(new BooleanSetting("Center Dot", "Add a filled dot at the very center", false));
    public final BooleanSetting outline = (BooleanSetting)this.addSetting(new BooleanSetting("Outline", "Dark border so it is easy to see", true));
@@ -35,7 +37,7 @@ public class CustomCrosshairModule extends Module {
          float hue = (float)(System.nanoTime() % 3000000000L) / 3.0E9F;
          return -16777216 | Colors.hsvToRgb(hue, 0.85F, 1.0F) & 16777215;
       } else {
-         return (Integer)this.color.get();
+         return (Boolean)this.themeColor.get() ? SolClient.themes().current().accent() | -16777216 : (Integer)this.color.get();
       }
    }
 

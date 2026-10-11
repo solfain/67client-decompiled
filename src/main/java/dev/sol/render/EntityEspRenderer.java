@@ -1,5 +1,6 @@
 package dev.sol.render;
 
+import dev.sol.SolClient;
 import dev.sol.module.impl.MobEspModule;
 import dev.sol.module.impl.PlayerEspModule;
 import dev.sol.util.Colors;
@@ -25,7 +26,7 @@ public final class EntityEspRenderer {
       class_310 mc = class_310.method_1551();
       class_638 level = mc.field_1687;
       if (level != null && mc.field_1724 != null) {
-         int color = (Integer)module.color.get();
+         int color = (Boolean)module.themeColor.get() ? SolClient.themes().current().accent() | -16777216 : (Integer)module.color.get();
          boolean glow = module.style.check("Glow");
          boolean tracers = (Boolean)module.tracers.get();
          Vector3fc forward = tracers ? mc.field_1773.method_19418().method_19335() : null;

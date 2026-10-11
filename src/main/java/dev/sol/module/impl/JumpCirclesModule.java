@@ -1,5 +1,6 @@
 package dev.sol.module.impl;
 
+import dev.sol.SolClient;
 import dev.sol.module.Category;
 import dev.sol.module.Module;
 import dev.sol.settings.BooleanSetting;
@@ -15,7 +16,8 @@ import net.minecraft.class_746;
 public class JumpCirclesModule extends Module {
    public final ModeSetting style = (ModeSetting)this.addSetting(new ModeSetting("Style", "Ripple: rings that grow outward. Halo: a spinning ring. Pulse: a disc that flashes twice.", "Ripple", new String[]{"Ripple", "Halo", "Pulse"}));
    public final SliderSetting size = (SliderSetting)this.addSetting(new SliderSetting("Size", "Effect radius in blocks", (double)1.0F, (double)0.5F, (double)3.0F, 0.1, "x"));
-   public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Effect color (alpha is animated)", -6237441));
+   public final BooleanSetting themeColor = (BooleanSetting)this.addSetting(new BooleanSetting("Theme Color", "Use the theme color", true));
+   public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Color when Theme Color is off", -6237441));
    public final SliderSetting lifetime = (SliderSetting)this.addSetting(new SliderSetting("Lifetime", "How long each effect lasts", (double)1.2F, (double)0.4F, (double)4.0F, 0.1, "s"));
    public final SliderSetting rings = (SliderSetting)this.addSetting(new SliderSetting("Rings", "Ripple: number of rings", (double)3.0F, (double)1.0F, (double)5.0F, (double)1.0F));
    public final SliderSetting spin = (SliderSetting)this.addSetting(new SliderSetting("Spin", "Halo: rotation speed", (double)120.0F, (double)0.0F, (double)360.0F, (double)10.0F, "\u00b0/s"));
@@ -42,7 +44,7 @@ public class JumpCirclesModule extends Module {
    }
 
    public int baseRgb() {
-      return (Integer)this.color.get() & 16777215;
+      return ((Boolean)this.themeColor.get() ? SolClient.themes().current().accent() : (Integer)this.color.get()) & 16777215;
    }
 
    public void onPlayerJump(class_746 player) {

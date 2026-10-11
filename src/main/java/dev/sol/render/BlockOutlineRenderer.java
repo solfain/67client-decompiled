@@ -1,5 +1,6 @@
 package dev.sol.render;
 
+import dev.sol.SolClient;
 import dev.sol.module.Modules;
 import dev.sol.util.Colors;
 import net.minecraft.class_12074;
@@ -54,7 +55,7 @@ public final class BlockOutlineRenderer {
       if ((Boolean)module.rainbow.get()) {
          return Colors.hsvToRgb((float)(seconds * (double)42.0F % (double)360.0F), 0.75F, 1.0F);
       } else {
-         int base = (Integer)module.color.get() | -16777216;
+         int base = ((Boolean)module.themeColor.get() ? SolClient.themes().current().accent() : (Integer)module.color.get()) | -16777216;
          if (module.animation.check("Gradient Flow")) {
             float[] hsv = Colors.rgbToHsv(base);
             float hue = (hsv[0] + (float)(Math.sin(seconds * 1.6) * (double)28.0F)) % 360.0F;

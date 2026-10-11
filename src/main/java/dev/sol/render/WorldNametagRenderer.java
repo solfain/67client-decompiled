@@ -30,7 +30,6 @@ import net.minecraft.class_8961;
 import org.joml.Matrix3x2fStack;
 
 public final class WorldNametagRenderer {
-   private static final int SPAWNER_ACCENT = -22733;
    private static final int MAX_TAGS = 80;
 
    private WorldNametagRenderer() {
@@ -123,7 +122,7 @@ public final class WorldNametagRenderer {
                         double cz = (double)pos.method_10260() + (double)0.5F;
                         double distSq = self.method_5649(cx, (double)pos.method_10264() + (double)0.5F, cz);
                         String suffix = showDist ? (int)Math.sqrt(distSq) + "m" : null;
-                        tags.add(new Tag(Math.sqrt(distSq), cx, cy, cz, spawnerName(level, pos), suffix, -22733, -1.0F, 1.0F, spawnerOpacity));
+                        tags.add(new Tag(Math.sqrt(distSq), cx, cy, cz, spawnerName(level, pos), suffix, SolClient.themes().current().accent() | -16777216, -1.0F, 1.0F, spawnerOpacity));
                      }
                   }
 
