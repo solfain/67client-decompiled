@@ -10,12 +10,12 @@ import dev.sol.settings.SliderSetting;
 import dev.sol.util.Colors;
 
 public class CustomCrosshairModule extends Module {
-   private static final int SOL_ORANGE = -26368;
+   private static final int FROST = -6237441;
    public final ModeSetting style = (ModeSetting)this.addSetting(new ModeSetting("Style", "Crosshair shape", "Cross", new String[]{"Dot", "Cross", "Circle", "T-Shape", "Brackets", "Chevron", "Sol"}));
    public final SliderSetting size = (SliderSetting)this.addSetting(new SliderSetting("Size", "Overall crosshair size", (double)7.0F, (double)2.0F, (double)24.0F, (double)1.0F, "px"));
    public final SliderSetting thickness = (SliderSetting)this.addSetting(new SliderSetting("Thickness", "Line / dot thickness", (double)2.0F, (double)1.0F, (double)6.0F, (double)0.5F, "px"));
    public final SliderSetting gap = (SliderSetting)this.addSetting(new SliderSetting("Gap", "Center gap for line styles", (double)3.0F, (double)0.0F, (double)12.0F, (double)1.0F, "px"));
-   public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Crosshair color", -26368));
+   public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Crosshair color", -6237441));
    public final BooleanSetting rainbow = (BooleanSetting)this.addSetting(new BooleanSetting("Rainbow", "Cycle through the rainbow", false));
    public final BooleanSetting centerDot = (BooleanSetting)this.addSetting(new BooleanSetting("Center Dot", "Add a filled dot at the very center", false));
    public final BooleanSetting outline = (BooleanSetting)this.addSetting(new BooleanSetting("Outline", "Dark border so it is easy to see", true));

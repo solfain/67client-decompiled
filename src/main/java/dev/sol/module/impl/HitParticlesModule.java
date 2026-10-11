@@ -24,7 +24,7 @@ public class HitParticlesModule extends Module {
    public final SliderSetting size = (SliderSetting)this.addSetting(new SliderSetting("Size", "Particle scale", (double)1.0F, 0.3, (double)3.0F, 0.1, "x"));
    public final SliderSetting lifetime = (SliderSetting)this.addSetting(new SliderSetting("Lifetime", "How long the burst lingers", 0.7, 0.3, (double)2.0F, 0.1, "s"));
    public final SliderSetting spread = (SliderSetting)this.addSetting(new SliderSetting("Spread", "How far particles fly out", (double)1.0F, 0.3, (double)2.5F, 0.1, "x"));
-   public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Particle tint", -26368));
+   public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Particle tint", -6237441));
    public final BooleanSetting rainbow = (BooleanSetting)this.addSetting(new BooleanSetting("Rainbow", "Cycle each burst through the rainbow", false));
    public final SliderSetting glow = (SliderSetting)this.addSetting(new SliderSetting("Glow", "Soft outer halo intensity", (double)65.0F, (double)0.0F, (double)100.0F, (double)5.0F, "%"));
    public final BooleanSetting shockwave = (BooleanSetting)this.addSetting(new BooleanSetting("Shockwave", "Expanding ring on each hit", true));

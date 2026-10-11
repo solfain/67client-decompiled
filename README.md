@@ -14,7 +14,7 @@ Put it in your mods folder with Fabric Loader and Fabric API.
 
 Press Right Shift to open it. Modules are cards, sorted into tabs at the top. Left click a card to turn it on or off. Right click it to change its settings. Start typing to search.
 
-There are themes (Sol, Ember, Indigo, Ocean, Mint, Frost and Rainbow) and two fonts (Poppins and Monocraft).
+The default color is Frost (light blue). Other themes are Sol, Ember, Indigo, Ocean, Mint and Rainbow. There are also two fonts, Poppins and Monocraft.
 
 ## HUD
 

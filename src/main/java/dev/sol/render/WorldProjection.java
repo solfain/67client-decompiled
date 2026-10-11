@@ -6,11 +6,17 @@ import net.minecraft.class_310;
 import net.minecraft.class_4184;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
+import org.joml.Vector3f;
+import org.joml.Vector3fc;
 import org.joml.Vector4f;
 
 public final class WorldProjection {
    private static final Matrix4f mvp = new Matrix4f();
    private static final Vector4f scratch = new Vector4f();
+   private static final Matrix4f inverse = new Matrix4f();
+   private static final Vector3f centerOrigin = new Vector3f();
+   private static final Vector3f centerDir = new Vector3f();
+   private static boolean centerValid;
    private static class_243 camPos;
    private static int fbWidth;
    private static int fbHeight;
@@ -34,12 +40,54 @@ public final class WorldProjection {
          fbHeight = target.field_1481;
          WorldProjection.partialTick = partialTick;
          valid = true;
+         updateCenter();
       }
 
    }
 
+   private static void updateCenter() {
+      centerValid = false;
+      inverse.set(mvp);
+      if (Math.abs(inverse.determinant()) < 1.0E-12F) {
+         return;
+      }
+
+      inverse.invert();
+      Vector4f near = new Vector4f(0.0F, 0.0F, -1.0F, 1.0F);
+      Vector4f mid = new Vector4f(0.0F, 0.0F, 0.0F, 1.0F);
+      inverse.transform(near);
+      inverse.transform(mid);
+      if (Math.abs(near.w) < 1.0E-6F || Math.abs(mid.w) < 1.0E-6F) {
+         return;
+      }
+
+      Vector3f a = new Vector3f(near.x / near.w, near.y / near.w, near.z / near.w);
+      Vector3f b = new Vector3f(mid.x / mid.w, mid.y / mid.w, mid.z / mid.w);
+      Vector3f dir = b.sub(a, new Vector3f());
+      if (dir.lengthSquared() < 1.0E-12F || !Float.isFinite(dir.x) || !Float.isFinite(dir.y) || !Float.isFinite(dir.z)) {
+         return;
+      }
+
+      dir.normalize();
+      float along = -a.dot(dir);
+      centerOrigin.set(a).fma(along, dir);
+      centerDir.set(dir);
+      centerValid = true;
+   }
+
+   public static boolean screenCenter(float distance, Vector3fc forward, Vector3f out) {
+      if (!valid || !centerValid) {
+         return false;
+      } else {
+         float sign = centerDir.dot(forward.x(), forward.y(), forward.z()) < 0.0F ? -1.0F : 1.0F;
+         out.set(centerDir).mul(sign * distance).add(centerOrigin);
+         return true;
+      }
+   }
+
    public static void invalidate() {
       valid = false;
+      centerValid = false;
    }
 
    public static boolean isValid() {

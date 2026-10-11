@@ -4,7 +4,7 @@ import dev.sol.util.Colors;
 
 public class RainbowTheme extends Theme {
    public RainbowTheme() {
-      super("Rainbow", -26368, false);
+      super("Rainbow", -6237441, false);
    }
 
    public int accent() {

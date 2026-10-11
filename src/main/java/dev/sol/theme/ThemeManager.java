@@ -7,17 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ThemeManager {
-   public static final int SOL = -26368;
+   public static final int FROST = -6237441;
    private final List<Theme> themes = new ArrayList();
    private Theme current;
 
    public ThemeManager() {
+      this.themes.add(new Theme("Frost", -6237441, false));
       this.themes.add(new Theme("Sol", -26368, false));
       this.themes.add(new Theme("Ember", -1356483, false));
       this.themes.add(new Theme("Indigo", -9673729, false));
       this.themes.add(new Theme("Ocean", -14836752, false));
       this.themes.add(new Theme("Mint", -13249650, false));
-      this.themes.add(new Theme("Frost", -6237441, false));
       this.themes.add(new RainbowTheme());
       this.current = (Theme)this.themes.getFirst();
    }
@@ -61,6 +61,7 @@ public class ThemeManager {
    public JsonObject toJson() {
       JsonObject json = new JsonObject();
       json.addProperty("current", this.current.getName());
+      json.addProperty("version", 2);
       JsonArray customs = new JsonArray();
 
       for(Theme t : this.themes) {
@@ -88,6 +89,9 @@ public class ThemeManager {
 
          if (json.has("current")) {
             String name = json.get("current").getAsString();
+            if (!json.has("version") && name.equals("Sol")) {
+               name = "Frost";
+            }
 
             for(Theme t : this.themes) {
                if (t.getName().equals(name)) {

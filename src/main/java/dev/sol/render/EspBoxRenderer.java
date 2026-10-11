@@ -68,6 +68,12 @@ public final class EspBoxRenderer {
       float sx = fx * 0.35F;
       float sy = fy * 0.35F;
       float sz = fz * 0.35F;
+      Vector3f center = new Vector3f();
+      if (WorldProjection.screenCenter(0.35F, forward, center)) {
+         sx = center.x;
+         sy = center.y;
+         sz = center.z;
+      }
       float ex = (float)(tx - cam.field_1352);
       float ey = (float)(ty - cam.field_1351);
       float ez = (float)(tz - cam.field_1350);

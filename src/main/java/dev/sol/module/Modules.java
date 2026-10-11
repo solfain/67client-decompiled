@@ -14,7 +14,7 @@ public final class Modules {
    }
 
    public static class BlockOutlineModule extends Module {
-      public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Outline color", -26368));
+      public final ColorSetting color = (ColorSetting)this.addSetting(new ColorSetting("Color", "Outline color", -6237441));
       public final BooleanSetting rainbow = (BooleanSetting)this.addSetting(new BooleanSetting("Rainbow", "Cycle the outline through the rainbow", false));
       public final SliderSetting glow = (SliderSetting)this.addSetting(new SliderSetting("Glow", "Outer glow intensity", (double)60.0F, (double)0.0F, (double)100.0F, (double)5.0F, "%"));
       public final SliderSetting thickness = (SliderSetting)this.addSetting(new SliderSetting("Thickness", "Core line width", (double)2.5F, (double)1.0F, (double)6.0F, (double)0.5F, "px"));
@@ -52,7 +52,7 @@ public final class Modules {
       public final BooleanSetting keystrokes = (BooleanSetting)this.addSetting(new BooleanSetting("Keystrokes", "WASD + mouse + space display", false));
       public final BooleanSetting radar = (BooleanSetting)this.addSetting(new BooleanSetting("Radar", "Circular player radar", true));
       public final BooleanSetting themeSync = (BooleanSetting)this.addSetting(new BooleanSetting("List Theme Sync", "ArrayList follows the theme color", true));
-      public final ColorSetting listColor = (ColorSetting)this.addSetting(new ColorSetting("List Color", "ArrayList color when Theme Sync is off", -26368));
+      public final ColorSetting listColor = (ColorSetting)this.addSetting(new ColorSetting("List Color", "ArrayList color when Theme Sync is off", -6237441));
       public final SliderSetting radarRange = (SliderSetting)this.addSetting(new SliderSetting("Radar Range", "Scan radius in blocks", (double)48.0F, (double)16.0F, (double)128.0F, (double)4.0F, "m"));
       public final BooleanSetting radarHeads = (BooleanSetting)this.addSetting(new BooleanSetting("Radar Heads", "Skin faces instead of dots", true));
       public final BooleanSetting notifications = (BooleanSetting)this.addSetting(new BooleanSetting("Notifications", "Show a popup when a module turns on or off", true));
